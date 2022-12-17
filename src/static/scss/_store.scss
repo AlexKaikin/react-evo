@@ -1,0 +1,26 @@
+.store {
+    display: flex;
+
+    .container {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        background-color: #f0f0f0;
+        padding: 10px 20px;
+        border-radius: 40px;
+        font-size: 2rem;
+
+        .store__search {
+            background-color: white;
+            padding: 0px 10px;
+            border-radius: 20px;
+            display: flex;
+        }
+
+        .store__info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    }
+}
