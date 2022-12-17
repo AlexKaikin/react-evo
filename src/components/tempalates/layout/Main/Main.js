@@ -15,12 +15,12 @@ const Main = props => {
     return  <main className='main'>
                 <Suspense fallback={<div className='container'>Загрузка...</div>}>
                     <Routes>
-                        <Route path='/' element={<Navigate to='/products' />} />
-                        <Route path='/products' element={<Products />} />
-                        <Route path='/products/:id' element={<Product />} />
-                        <Route path='/contacts' element={<Contacts />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
+                        <Route exact path='/' element={<Navigate to='/products' />} />
+                        <Route exact path='/products' element={<Products />} />
+                        <Route exact path='/products/:id' element={<Product />} />
+                        <Route exact path='/contacts' element={<Contacts />} />
+                        <Route exact path='/login' element={<Login />} />
+                        <Route exact path='/register' element={<Register />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
                 </Suspense>

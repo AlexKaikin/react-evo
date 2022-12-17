@@ -1,11 +1,27 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 
 const Header = props => {
-    const [authShow, setAuthShow] = useState('')
+    const [authShow, setAuthShow] = useState(false)
+    
     const AuthShowChange = () => {
-        (authShow) ? setAuthShow('') : setAuthShow('show')
+        if(authShow){
+            setAuthShow(false)
+            document.body.removeEventListener('click', bodyClick)
+        } else {
+            setAuthShow(true)
+            document.body.addEventListener('click', bodyClick)
+        }
+    }
+
+    const authRef = useRef()
+
+    const bodyClick = (e) => {
+        if(!e.path.includes(authRef.current)) {
+            setAuthShow(false)
+            document.body.removeEventListener('click', bodyClick)
+        }
     }
 
     return  <header className='header'>
@@ -19,11 +35,11 @@ const Header = props => {
                             <li className='nav__item'><NavLink to="/contacts" className='nav__link'>Контакты</NavLink></li>
                         </ul>
                     </nav>
-                    <div className='auth'>
-                        <button onClick={AuthShowChange}><i className="bi bi-person-circle"></i> Личный кабинет <i className="bi bi-chevron-down"></i></button>
-                        <ul className={`auth__items ${authShow}`}>
-                            <li className='auth__item'><NavLink to='/login' className='auth__link'>Вход</NavLink></li>
-                            <li className='auth__item'><NavLink to='/register' className='auth__link'>Регистрация</NavLink></li>
+                    <div ref={authRef} className='auth'>
+                        <button onClick={AuthShowChange}><i className="bi bi-person-circle"></i> Личный кабинет</button>
+                        <ul className={authShow ? 'auth__items show' : 'auth__items' }>
+                            <li className='auth__item'><NavLink to='/login' onClick={AuthShowChange} className='auth__link'>Вход</NavLink></li>
+                            <li className='auth__item'><NavLink to='/register' onClick={AuthShowChange} className='auth__link'>Регистрация</NavLink></li>
                         </ul>
                     </div>
                 </div>
