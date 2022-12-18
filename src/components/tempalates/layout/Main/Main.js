@@ -16,7 +16,7 @@ const Main = props => {
                 <Suspense fallback={<div className='container'>Загрузка...</div>}>
                     <Routes>
                         <Route exact path='/' element={<Navigate to='/products' />} />
-                        <Route exact path='/products' element={<Products />} />
+                        <Route exact path='/products' element={<Products products={props.products} />} />
                         <Route exact path='/products/:id' element={<Product />} />
                         <Route exact path='/contacts' element={<Contacts />} />
                         <Route exact path='/login' element={<Login />} />

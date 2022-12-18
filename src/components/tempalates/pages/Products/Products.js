@@ -8,32 +8,7 @@ import imgDefault from '../../../../static/img/products/1.jpg'
 const Products = props => {
     const productsCategoryItems = ['Все', 'Красные', 'Зелёные', 'Белые']
     const productsSortItems = ['новые', 'популярные', 'убывание цены', 'возрастание цены']
-    const productItems = [
-        {
-            id: 1,
-            img: '',
-            title: 'Шу Пуэр',
-            price: '500',
-        },
-        {
-            id: 2,
-            img: '',
-            title: 'Шу Пуэр',
-            price: '500',
-        },
-        {
-            id: 3,
-            img: '',
-            title: 'Шу Пуэр',
-            price: '500',
-        },
-        {
-            id: 4,
-            img: '',
-            title: 'Шу Пуэр',
-            price: '500',
-        }
-    ]
+    const productItems = props.products
 
     return  <>
                 <Store />
