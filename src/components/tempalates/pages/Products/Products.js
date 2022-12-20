@@ -1,16 +1,24 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 
 import Store from '../../layout/Store/Store'
-import imgDefault from '../../../../static/img/products/1.jpg'
-import { useDispatch, useSelector } from 'react-redux'
+import imgDefault from '../../../../static/img/products/no.jpg'
 import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
+import { setProducts } from '../../../../redux/productsSlice'
 
 
 const Products = props => {
-    const productsCategoryItems = useSelector((state) => state.productsFilter.category)
-    const productsSortItems = useSelector((state) => state.productsFilter.sort)
-    const productItems = useSelector((state) => state.products.productItems)
+    const productsCategoryItems = useSelector(state => state.productsFilter.category)
+    const productsSortItems = useSelector(state => state.productsFilter.sort)
+    const productItems = useSelector(state => state.products.productItems)
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        axios.get('http://localhost:3004/products/')
+        .then(res => dispatch(setProducts(res.data)))
+    }, [dispatch])
 
     return  <>
                 <Store />

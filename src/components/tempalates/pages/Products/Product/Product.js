@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import Store from '../../../layout/Store/Store'
-import imgDefault from '../../../../../static/img/products/1.jpg'
+import imgDefault from '../../../../../static/img/products/no.jpg'
 
 
 const Product = props => {

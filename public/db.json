@@ -2,43 +2,43 @@
     "products": [
         {
             "id": 1,
-            "img": "",
+            "img": "http://localhost:3000/products/1.jpg",
             "title": "Шу Пуэр",
             "price": 500
         },
         {
             "id": 2,
-            "img": "",
+            "img": "http://localhost:3000/products/2.jpg",
             "title": "Шу Пуэр",
             "price": 600
         },
         {
             "id": 3,
-            "img": "",
+            "img": "http://localhost:3000/products/3.jpg",
             "title": "Шу Пуэр",
             "price": 700
         },
         {
             "id": 4,
-            "img": "",
+            "img": "http://localhost:3000/products/4.jpg",
             "title": "Шу Пуэр",
             "price": 800
         },
         {
             "id": 5,
-            "img": "",
+            "img": "http://localhost:3000/products/5.jpg",
             "title": "Шу Пуэр",
             "price": 800
         },
         {
             "id": 6,
-            "img": "",
+            "img": "http://localhost:3000/products/6.jpg",
             "title": "Шу Пуэр",
             "price": 800
         },
         {
             "id": 7,
-            "img": "",
+            "img": "http://localhost:3000/products/1.jpg",
             "title": "Шу Пуэр",
             "price": 800
         }
