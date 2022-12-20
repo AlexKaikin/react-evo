@@ -3,19 +3,21 @@ import { Link } from 'react-router-dom'
 
 import Store from '../../layout/Store/Store'
 import imgDefault from '../../../../static/img/products/1.jpg'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
 
 
 const Products = props => {
-    const productsCategoryItems = ['Все', 'Красные', 'Зелёные', 'Белые']
-    const productsSortItems = ['новые', 'популярные', 'убывание цены', 'возрастание цены']
-    const productItems = props.products
+    const productsCategoryItems = useSelector((state) => state.productsFilter.category)
+    const productsSortItems = useSelector((state) => state.productsFilter.sort)
+    const productItems = useSelector((state) => state.products.productItems)
 
     return  <>
                 <Store />
                 <div className='section filter'>
                     <div className='container'>
                         <ProductsCategory productsCategoryItems={productsCategoryItems}/>
-                        <ProductsSort productsSortItems={productsSortItems} />
+                        <ProductsSort productsSortItems={productsSortItems}/>
                     </div>
                 </div>
                 <div className='section products'>
@@ -42,25 +44,24 @@ const ProductItems = props => {
 }
 
 const ProductsCategory = props => {
-    const [categoryActive, setCategoryActive] = useState(props.productsCategoryItems[0])
-
-    const changeCategory = (e) => {
-        setCategoryActive(e.currentTarget.innerText)
-    }
-
+    const dispatch = useDispatch()
+    const changeCategory = (e) => dispatch(setCategoryActive(e.currentTarget.innerText))
+    
     return  <div className='filter__category'>
                 { 
                     props.productsCategoryItems?.map(item => {
                         return  <button 
-                                    key={item}
-                                    className={ (categoryActive === item) ? 'btn active' : 'btn'}
-                                    onClick={changeCategory}>{item}</button>
+                                    key={item.id}
+                                    className={ (item.isActive) ? 'btn active' : 'btn'}
+                                    onClick={changeCategory}>{item.title}</button>
                     }) 
                 }
             </div>
 }
 
 const ProductsSort = props => {
+    const sortRef = useRef()
+    const dispatch = useDispatch()
     const [sortShow, setSortShow] = useState(false)
 
     const sortShowChange = () => {
@@ -73,10 +74,8 @@ const ProductsSort = props => {
         }
     }
 
-    const [sortActive, setSortActive] = useState(props.productsSortItems[0])
-
     const changeSort = (e) => {
-        setSortActive(e.currentTarget.innerText)
+        dispatch(setSortActive(e.currentTarget.innerText))
         setSortShow(false)
         document.body.removeEventListener('click', bodyClick)
     }
@@ -88,15 +87,15 @@ const ProductsSort = props => {
         }
     }
 
-    const sortRef = useRef()
-
     return  <div ref={sortRef} className='filter__sort sort'>
-                Сортировка: <button onClick={sortShowChange}>{sortActive}</button>
+                Сортировка: <button onClick={sortShowChange}>
+                    { props.productsSortItems?.map(item => item.isActive && item.title) }
+                    </button>
 
                 <div className={sortShow ? 'sort__items show' : 'sort__items'}>
                     { 
                         props.productsSortItems?.map(item => {
-                            return  <button key={item} onClick={changeSort}>{item}</button>
+                            return  <button key={item.id} onClick={changeSort}>{item.title}</button>
                         }) 
                     }
                 </div>

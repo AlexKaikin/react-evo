@@ -8,6 +8,12 @@
         .product__item {
           flex: 0 0 23%;
           text-align: center;
+          transition: all .5s ease 0s;
+
+          &:hover {
+            box-shadow: 0 0 20px 0 gainsboro;
+            border-radius: 10px;
+          }
   
           @media only screen and (max-width : 767px) {
               flex: 0 0 48%;
@@ -20,6 +26,7 @@
           .product__img {
             overflow: hidden;
             position: relative;
+            margin-top: 10px;
             padding: 0 0 100% 0;
   
             img{
@@ -44,7 +51,7 @@
   
           .product__price{
               color: #6a6a6a;
-              margin: 0px 30px;
+              margin: 0px 30px 20px 0;
           }
         }
       }
