@@ -52,7 +52,7 @@ export const productsFilterSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
+// Action
 export const { setCategoryActive, setSortActive } = productsFilterSlice.actions
 
 export default productsFilterSlice.reducer

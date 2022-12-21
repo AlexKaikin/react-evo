@@ -4,43 +4,57 @@
             "id": 1,
             "img": "http://localhost:3000/products/1.jpg",
             "title": "Шу Пуэр",
-            "price": 500
+            "price": 500,
+            "category": "red",
+            "rating": 5
         },
         {
             "id": 2,
             "img": "http://localhost:3000/products/2.jpg",
             "title": "Шу Пуэр",
-            "price": 600
+            "price": 600,
+            "category": "red",
+            "rating": 2
         },
         {
             "id": 3,
             "img": "http://localhost:3000/products/3.jpg",
             "title": "Шу Пуэр",
-            "price": 700
+            "price": 700,
+            "category": "green",
+            "rating": 3
         },
         {
             "id": 4,
             "img": "http://localhost:3000/products/4.jpg",
             "title": "Шу Пуэр",
-            "price": 800
+            "price": 800,
+            "category": "white",
+            "rating": 1
         },
         {
             "id": 5,
             "img": "http://localhost:3000/products/5.jpg",
             "title": "Шу Пуэр",
-            "price": 800
+            "price": 800,
+            "category": "red",
+            "rating": 5
         },
         {
             "id": 6,
             "img": "http://localhost:3000/products/6.jpg",
             "title": "Шу Пуэр",
-            "price": 800
+            "price": 800,
+            "category": "red",
+            "rating": 2
         },
         {
             "id": 7,
             "img": "http://localhost:3000/products/1.jpg",
             "title": "Шу Пуэр",
-            "price": 800
+            "price": 800,
+            "category": "red",
+            "rating": 4
         }
     ]
 }

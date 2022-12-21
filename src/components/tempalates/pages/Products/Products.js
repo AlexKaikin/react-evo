@@ -1,37 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
+import ContentLoader from 'react-content-loader'
 
 import Store from '../../layout/Store/Store'
 import imgDefault from '../../../../static/img/products/no.jpg'
 import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
-import { setProducts } from '../../../../redux/productsSlice'
+import { getProducts } from '../../../../redux/productsSlice'
 
 
 const Products = props => {
     const productsCategoryItems = useSelector(state => state.productsFilter.category)
     const productsSortItems = useSelector(state => state.productsFilter.sort)
     const productItems = useSelector(state => state.products.productItems)
+    const isLoaded = useSelector(state => state.products.isLoaded)
     const dispatch = useDispatch()
+
+    const categoryActive = productsCategoryItems?.find(item => item.isActive).type
+    const sortActive = productsSortItems?.find(item => item.isActive).type
     
     useEffect(() => {
-        axios.get('http://localhost:3004/products/')
-        .then(res => dispatch(setProducts(res.data)))
-    }, [dispatch])
+        dispatch(getProducts(categoryActive, sortActive))
+    }, [dispatch, categoryActive, sortActive])
 
     return  <>
                 <Store />
                 <div className='section filter'>
                     <div className='container'>
-                        <ProductsCategory productsCategoryItems={productsCategoryItems}/>
+                        <ProductsCategory productsCategoryItems={productsCategoryItems} />
                         <ProductsSort productsSortItems={productsSortItems}/>
                     </div>
                 </div>
                 <div className='section products'>
                     <div className='container'>
                         <div className='products__items product'>
-                            <ProductItems productItems={productItems} />
+                            <ProductItems productItems={productItems} isLoaded={isLoaded} />
                         </div>
                     </div>
                 </div>
@@ -41,6 +44,8 @@ const Products = props => {
 export default Products
 
 const ProductItems = props => {
+    if(!props.isLoaded) return props.productItems.map(item => <ProductsLoader key={item.id} />)
+
     return  props.productItems?.map(item => {
                 return  <div key={item.id} className='product__item'>
                             <div className='product__img'><img src={item.img ? item.img : imgDefault} alt='' /></div>
@@ -97,7 +102,8 @@ const ProductsSort = props => {
 
     return  <div ref={sortRef} className='filter__sort sort'>
                 Сортировка: <button onClick={sortShowChange}>
-                    { props.productsSortItems?.map(item => item.isActive && item.title) }
+                        { props.productsSortItems?.map(item => item.isActive && item.title) }
+                        {/* { props.productsSortItems?.find(item => item.isActive).title } */}
                     </button>
 
                 <div className={sortShow ? 'sort__items show' : 'sort__items'}>
@@ -109,3 +115,18 @@ const ProductsSort = props => {
                 </div>
             </div>
 }
+
+const ProductsLoader = (props) => (
+    <ContentLoader 
+      speed={2}
+      width={175}
+      height={175}
+      viewBox="0 0 175 175"
+      backgroundColor="#f3f3f3"
+      foregroundColor="#ecebeb"
+      {...props}
+    >
+      <circle cx="87" cy="62" r="60" /> 
+      <rect x="27" y="138" rx="5" ry="5" width="118" height="23" />
+    </ContentLoader>
+  )
