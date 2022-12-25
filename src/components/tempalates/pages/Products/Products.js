@@ -48,9 +48,9 @@ const ProductItems = props => {
 
     return  props.productItems?.map(item => {
                 return  <div key={item.id} className='product__item'>
-                            <div className='product__img'><img src={item.img ? item.img : imgDefault} alt='' /></div>
+                            <div className='product__img'><img src={item.imgUrl ? item.imgUrl : imgDefault} alt='' /></div>
                             <div className='product__title'><Link to={`/products/${item.id}`}>{item.title}</Link></div>
-                            <div className='product__price'>{item.price} руб./100 грамм</div>
+                            <div className='product__price'>{item.price} {item.currency}/{item.volume} {item.volumeMeasurement}</div>
                         </div>
                     
             }) 
@@ -94,7 +94,8 @@ const ProductsSort = props => {
     }
 
     const bodyClick = (e) => {
-        if(!e.path.includes(sortRef.current)) {
+        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(!path.includes(sortRef.current)) {
             setSortShow(false)
             document.body.removeEventListener('click', bodyClick)
         }

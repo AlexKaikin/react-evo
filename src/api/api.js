@@ -7,7 +7,7 @@ const instance = axios.create({
 
 export const productsAPI = {
     getProducts(categoryActive, sortActive) {
-        const category = categoryActive === 'all' ? `` : `category=${categoryActive}&`
+        const category = categoryActive === 'null' ? `` : `category=${categoryActive}&`
 
         switch(sortActive) {
             case 'priceDecrease':
@@ -23,4 +23,7 @@ export const productsAPI = {
                 return instance.get(`products/?${category}_sort=id&_order=desc`)
           }
     },
+    getProduct(id) {
+        return instance.get(`products/${id}`)
+    }
 }

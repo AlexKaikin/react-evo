@@ -42,6 +42,12 @@ body {
   padding: 0 10px;
 }
 
+.section__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
 a {
   color: black;
 }
@@ -53,12 +59,15 @@ p {
 .btn {
   padding: 15px 30px;
   background-color: $primary;
+  border: 2px solid white;
   color: white;
   border-radius: 30px;
   transition: all .5s ease 0s;
 
   &:hover {
-    background-color: #2fb828;
+    background-color: $primary;
+    border: 2px solid white;
+    box-shadow: 0 0 0 3px $primary;
   }
 }
 
@@ -67,5 +76,7 @@ p {
 @import './_store';
 @import './_filter';
 @import './_products';
+@import './_cart';
+@import './_compare';
 @import './_product';
 @import './_footer';

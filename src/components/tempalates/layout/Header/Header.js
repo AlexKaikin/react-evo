@@ -18,7 +18,8 @@ const Header = props => {
     const authRef = useRef()
 
     const bodyClick = (e) => {
-        if(!e.path.includes(authRef.current)) {
+        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(!path.includes(authRef.current)) {
             setAuthShow(false)
             document.body.removeEventListener('click', bodyClick)
         }

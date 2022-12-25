@@ -1,0 +1,112 @@
+.section.cart {
+    .container {
+        max-width: 700px;
+
+        .cart__items {
+            margin-bottom: 20px;
+            
+            .cart__item.product {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 40px;
+
+                .product__img {
+                    flex: 0 0 auto;
+
+                    width: 100px;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                .product__title {
+                    font-weight: bold;
+                    flex: 1 1 auto;
+                }
+
+                .product__quantity{
+                    flex: 0 0 130px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+    
+                    .quantity__title{
+                        opacity: .5;
+                    }
+    
+                    .quantity__content{
+                        font-size: 1.5rem;
+                        background-color: #f0f0f0;
+                        padding: 5px 20px;
+                        border-radius: 30px;
+                        display: inline-block;
+    
+                        .quantity__number{
+                            margin: 0 10px;
+                            display: inline-block;
+                            width: 25px;
+                            text-align: center;
+                        }
+                    }
+    
+                    
+                }
+
+                .product__cost {
+                    flex: 0 0 100px;
+
+                    span {
+                        font-weight: bold;
+                    }
+                }
+
+                .product__delete.delete {
+                    .delete__btn {
+                        font-size: 1rem;
+                        border: 1px solid silver;
+                        width: 40px;
+                        height: 40px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding-top: 2px;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+
+        .cart__total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+
+            span {
+                font-weight: bold;
+            }
+        }
+
+        .cart__btn {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+
+            .btn__prev {
+                background-color: transparent;
+                border: 2px solid silver;
+                color: #4b4b4b;
+
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+
+            .btn__buy {
+                //border: 2px solid $primary;
+            }
+        }
+    }
+}

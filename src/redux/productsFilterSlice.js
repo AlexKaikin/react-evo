@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   category: [
-    { id: 1, title: 'Все', type: 'all', isActive: true }, 
+    { id: 1, title: 'Все', type: 'null', isActive: true }, 
     { id: 2, title: 'Красные', type: 'red', isActive: false }, 
     { id: 3, title: 'Зелёные', type: 'green', isActive: false }, 
     { id: 4, title: 'Белые', type: 'white', isActive: false },

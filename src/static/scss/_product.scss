@@ -14,12 +14,17 @@
 
             .img__items{
                 width: 150px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                overflow: auto;
 
                 .img__item {
                     border: 5px solid transparent;
                     border-radius: 50%;
                     padding: 5px;
                     transition: all .5s ease 0s;
+                    cursor: pointer;
 
                     img {
                         width: 100%;
@@ -51,28 +56,35 @@
             .product__info.info {
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 5px;
                 margin-bottom: 40px;
                 font-size: 1.3rem;
 
                 button {
                     background-color: #f0f0f0;
-                    width: 40px;
-                    height: 40px;
+                    width: 45px;
+                    height: 45px;
                     border-radius: 50%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     transition: all .5s ease 0s;
+                    border: 2px solid white;
 
                     .bi-heart {
                         position: relative;
                         top: 2px;
                     }
 
-                    &:hover, &:active {
+                    &.active {
                         background-color: $primary;
                         color: white;
+                    }
+
+                    &:hover {
+                        background-color: $primary;
+                        color: white;
+                        box-shadow: 0 0 0 3px $primary;
                     }
                 }
 
@@ -85,6 +97,7 @@
 
             .product__title{
                 font-size: 2rem;
+                line-height: 2rem;
                 margin-bottom: 20px;
                 font-weight: bold;
             }
@@ -136,6 +149,43 @@
 
         .product__content-container{
             flex: 1 1 100%;
+        }
+
+        .tab {
+            margin-top: 40px;
+
+            .tab__titles {
+                display: flex;
+                gap: 5px;
+                margin-bottom: 20px;
+
+                .tab__title {
+                    padding: 10px 20px;
+                    border-radius: 40px;
+                    color: black;
+                    background-color: #f0f0f0;
+
+                    &.active {
+                        background-color: $primary;
+                        color: white;
+                    }
+
+                    &:hover {
+                        background-color: $primary;
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .product__text {
+            //margin-top: 40px;
+        }
+
+        .product__property {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         
     }

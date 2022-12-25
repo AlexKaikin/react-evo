@@ -90,12 +90,15 @@
 
 ::-webkit-scrollbar { // width
     width: 10px;
+    
 }
 ::-webkit-scrollbar-track { // Track
     background: #f1f1f1;
+    border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb { // Handle
     background: #888;
+    border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover { // Handle on hover
     background: #555;

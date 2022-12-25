@@ -15,9 +15,15 @@
                 background-color: #f9f9f9;
                 color: black;
 
-                &.active, &:hover {
+                &.active {
                     background-color: black;
                     color: white;
+                }
+
+                &:hover {
+                    background-color: black;
+                    color: white;
+                    box-shadow: none;
                 }
 
             }
