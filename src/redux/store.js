@@ -6,6 +6,7 @@ import productsFilterReducer from './productsFilterSlice'
 import cartReducer from './cartSlice'
 import compareReducer from './compareSlice'
 import favoritesReducer from './favoritesSlice'
+import searchProductReducer from './searchProductsSlice'
 
 
 export const store = configureStore({
@@ -16,5 +17,6 @@ export const store = configureStore({
     cart: cartReducer,
     compare: compareReducer,
     favorites: favoritesReducer,
+    search: searchProductReducer,
   },
 })

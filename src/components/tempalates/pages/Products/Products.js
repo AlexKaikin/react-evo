@@ -7,6 +7,7 @@ import Store from '../../layout/Store/Store'
 import imgDefault from '../../../../static/img/products/no.jpg'
 import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
 import { getProducts } from '../../../../redux/productsSlice'
+import Pagination from '../../../common/Pagination/Pagination'
 
 
 const Products = props => {
@@ -16,18 +17,29 @@ const Products = props => {
     const isLoaded = useSelector(state => state.products.isLoaded)
     const dispatch = useDispatch()
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const totalItems = useSelector(state => state.products.totalItems)
+    const limitItems = useSelector(state => state.products.limitItems)
+    const pagesCount = Math.ceil(totalItems / limitItems)
+
     const categoryActive = productsCategoryItems?.find(item => item.isActive).type
+    const changeCategory = (e) => {
+        setCurrentPage(1)
+        dispatch(setCategoryActive(e.currentTarget.innerText))
+    }
+
     const sortActive = productsSortItems?.find(item => item.isActive).type
     
     useEffect(() => {
-        dispatch(getProducts(categoryActive, sortActive))
-    }, [dispatch, categoryActive, sortActive])
+        dispatch(getProducts(categoryActive, sortActive, currentPage, limitItems))
+        window.scrollTo(0, 0)
+    }, [dispatch, categoryActive, sortActive, currentPage, limitItems])
 
     return  <>
                 <Store />
                 <div className='section filter'>
                     <div className='container'>
-                        <ProductsCategory productsCategoryItems={productsCategoryItems} />
+                        <ProductsCategory productsCategoryItems={productsCategoryItems} changeCategory={changeCategory} />
                         <ProductsSort productsSortItems={productsSortItems}/>
                     </div>
                 </div>
@@ -36,6 +48,7 @@ const Products = props => {
                         <div className='products__items product'>
                             <ProductItems productItems={productItems} isLoaded={isLoaded} />
                         </div>
+                        <Pagination pagesCount={pagesCount} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     </div>
                 </div>
             </>
@@ -57,16 +70,13 @@ const ProductItems = props => {
 }
 
 const ProductsCategory = props => {
-    const dispatch = useDispatch()
-    const changeCategory = (e) => dispatch(setCategoryActive(e.currentTarget.innerText))
-    
     return  <div className='filter__category'>
                 { 
                     props.productsCategoryItems?.map(item => {
                         return  <button 
                                     key={item.id}
                                     className={ (item.isActive) ? 'btn active' : 'btn'}
-                                    onClick={changeCategory}>{item.title}</button>
+                                    onClick={props.changeCategory}>{item.title}</button>
                     }) 
                 }
             </div>

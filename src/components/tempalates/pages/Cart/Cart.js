@@ -38,8 +38,21 @@ const Cart = props => {
 export default Cart
 
 const CartItems = props => {
-    const quantityChange = () => {
+    // проверка введённого значения в количество товара
+    const quantityBlur = (e) => {
+        // let number = +e.target.value
+        // if(Number.isNaN(number) || number < 1){ // если значение NaN или отрицательное, то
+        //     setQuantity(1)
+        //     setCost(productItem.price)
+        // }
+    }
 
+    // изменить количество товара через input
+    const quantityChange = (e) => {
+        // if(!Number.isNaN(+e.target.value)){ // если значение не NaN, то... 
+        //     setQuantity(+e.target.value)
+        //     setCost(productItem.price * (+e.target.value))
+        // }
     }
 
     const dispatch = useDispatch()
@@ -79,7 +92,7 @@ const CartItems = props => {
                     <div className='product__quantity quantity'>
                         <div className='quantity__content'>
                             <button onClick={() => Decriment(item.id)}><i className="bi bi-dash-lg"></i></button> 
-                            <input type="text" onChange={quantityChange} value={item.quantity} className="quantity__number" min="1" max="7" />
+                            <input type="text" onBlur={quantityBlur} onChange={quantityChange} value={item.quantity} className="quantity__number" min="1" max="7" />
                             <button onClick={() => Increment(item.id)}><i className="bi bi-plus-lg"></i></button>
                         </div>
                     </div>

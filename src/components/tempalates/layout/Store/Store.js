@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { getCart } from '../../../../redux/cartSlice'
 import { getCompare } from '../../../../redux/compareSlice'
 import { getFavorites } from '../../../../redux/favoritesSlice'
+import { getSearchProducts } from '../../../../redux/searchProductsSlice'
 
 
 const Store = props => {
@@ -13,7 +14,7 @@ const Store = props => {
     const compareItems = useSelector(state => state.compare.compareItems)
     const favoritesItems = useSelector(state => state.favorites.favoritesItems)
 
-    const showCartChange = () => {
+    const showCartClick = () => {
         if(showCart){
             setShowCart(false)
             document.body.removeEventListener('click', bodyClick)
@@ -33,6 +34,21 @@ const Store = props => {
         }
     }
 
+    // форма поиска
+    const [searchValue, setSearchValue] = useState('')
+    const SearchValueChange = (e) => {
+        setSearchValue(e.target.value)
+    }
+
+    const navigate = useNavigate() // редирект на страницу поиска
+    const searchClick = (e, searchValue) => {
+        e.preventDefault()
+        if(searchValue !== '') {
+            dispatch(getSearchProducts(searchValue))
+            navigate(`/search/?q=${searchValue}`)
+        }
+    }
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -46,23 +62,23 @@ const Store = props => {
                 <div className="container">
                     <div className="store__search">
                         <form action="#" className="form">
-                            <input type="text" placeholder="Найти товар..." required />
-                            <button className=""><i className="bi bi-search"></i></button>
+                            <input onChange={SearchValueChange} value={searchValue} type="text" placeholder="Найти товар..." required />
+                            <button onClick={(e) => searchClick(e, searchValue)} type="submit" className=""><i className="bi bi-search"></i></button>
                         </form>
                     </div>
 
                     <div className='store__info items'>
                         <NavLink to='/compare' className='item bookmark'>
-                            { compareItems.length > 0 ? <div className='count'>{compareItems.length}</div> : null }
+                            { compareItems.length > 0 && <div className='count'>{compareItems.length}</div> }
                             <i className="bi bi-bookmarks"></i>
                         </NavLink>
                         <NavLink to='/favorites' className='item'>
-                            { favoritesItems.length > 0 ? <div className='count'>{favoritesItems.length}</div> : null }
+                            { favoritesItems.length > 0 && <div className='count'>{favoritesItems.length}</div> }
                             <i className="bi bi-heart"></i>
                         </NavLink>
                         <div ref={cartRef} className='item cart-block'>
-                            { cartItems.length > 0 ? <div className='count'>{cartItems.length}</div> : null }
-                            <button onClick={showCartChange} className="cart">
+                            { cartItems.length > 0 && <div className='count'>{cartItems.length}</div> }
+                            <button onClick={showCartClick} className="cart">
                                 <i className="bi bi-bag"></i>
                             </button>
                             <div className={showCart ? 'cart__items show' : 'cart__items'}>

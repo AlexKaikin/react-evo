@@ -6,10 +6,11 @@ const   Products =      React.lazy(() => import('../../pages/Products/Products')
         Product =       React.lazy(() => import('../../pages/Products/Product/Product')),
         Cart =          React.lazy(() => import('../../pages/Cart/Cart')),
         Compare =       React.lazy(() => import('../../pages/Compare/Compare')),
-        Favorites =       React.lazy(() => import('../../pages/Favorites/Favorites')),
+        Favorites =     React.lazy(() => import('../../pages/Favorites/Favorites')),
         Contacts =      React.lazy(() => import('../../pages/Contacts/Contacts')),
         Login =         React.lazy(() => import('../../pages/Login/Login')),
         Register =      React.lazy(() => import('../../pages/Register/Register')),
+        Search =        React.lazy(() => import('../../pages/Search/Search')),
         NotFound =      React.lazy(() => import('../../pages/NotFound/NotFound'))
         
 
@@ -27,6 +28,7 @@ const Main = props => {
                         <Route exact path='/contacts' element={<Contacts />} />
                         <Route exact path='/login' element={<Login />} />
                         <Route exact path='/register' element={<Register />} />
+                        <Route exact path='/search' element={<Search />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
                 </Suspense>

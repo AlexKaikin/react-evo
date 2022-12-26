@@ -5,12 +5,11 @@ import { productsAPI } from '../api/api'
 const initialState = {
   productItems: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, ],
   isLoaded: false,
-  totalItems: 0,
-  limitItems: 8,
+  query: '',
 }
 
-export const productsSlice = createSlice({
-  name: 'products',
+export const searchProductsSlice = createSlice({
+  name: 'search',
   initialState,
   reducers: {
     setProducts: (state, action) => {
@@ -26,25 +25,23 @@ export const productsSlice = createSlice({
         isLoaded: action.payload,
       }
     },
-    setTotalItems: (state, action) => {
+    setQuery: (state, action) => {
       return {
         ...state,
-        totalItems: +action.payload,
+        query: action.payload,
       }
     },
   },
 })
 
 // Action
-export const { setProducts, setLoaded, setTotalItems } = productsSlice.actions
+export const { setProducts, setLoaded, setQuery } = searchProductsSlice.actions
 
-export default productsSlice.reducer
+export default searchProductsSlice.reducer
 
 // thunk
-export const getProducts = (categoryActive, sortActive, currentPage, limitItems) => dispatch => {
+export const getSearchProducts = (searchValue) => dispatch => {
   dispatch(setLoaded(false))
-  productsAPI.getProducts(categoryActive, sortActive, currentPage, limitItems).then(res => {
-    dispatch(setProducts(res.data))
-    dispatch(setTotalItems(res.headers['x-total-count']))
-  })
+  productsAPI.getSearchProducts(searchValue).then(res => dispatch(setProducts(res.data)))
+  dispatch(setQuery(searchValue))
 }
