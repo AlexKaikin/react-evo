@@ -7,6 +7,7 @@ const initialState = {
   isLoaded: false,
   totalItems: 0,
   limitItems: 8,
+  currentPage: 1,
 }
 
 export const productsSlice = createSlice({
@@ -32,11 +33,17 @@ export const productsSlice = createSlice({
         totalItems: +action.payload,
       }
     },
+    setCurrentPage: (state, action) => {
+      return {
+        ...state,
+        currentPage: action.payload,
+      }
+    },
   },
 })
 
 // Action
-export const { setProducts, setLoaded, setTotalItems } = productsSlice.actions
+export const { setProducts, setLoaded, setTotalItems, setCurrentPage } = productsSlice.actions
 
 export default productsSlice.reducer
 

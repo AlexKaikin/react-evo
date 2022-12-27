@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3004/',
+    baseURL: 'https://json-server-react-evo.vercel.app/',
     withCredentials: true,
 })
 

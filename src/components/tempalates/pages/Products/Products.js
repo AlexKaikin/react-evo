@@ -4,27 +4,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import ContentLoader from 'react-content-loader'
 
 import Store from '../../layout/Store/Store'
-import imgDefault from '../../../../static/img/products/no.jpg'
 import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
-import { getProducts } from '../../../../redux/productsSlice'
+import { getProducts, setCurrentPage } from '../../../../redux/productsSlice'
 import Pagination from '../../../common/Pagination/Pagination'
 
 
 const Products = props => {
+    const dispatch = useDispatch()
+    const prodactsState = useSelector(state => state.products)
+
+    const { productItems, isLoaded } = prodactsState
+
     const productsCategoryItems = useSelector(state => state.productsFilter.category)
     const productsSortItems = useSelector(state => state.productsFilter.sort)
-    const productItems = useSelector(state => state.products.productItems)
-    const isLoaded = useSelector(state => state.products.isLoaded)
-    const dispatch = useDispatch()
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const totalItems = useSelector(state => state.products.totalItems)
-    const limitItems = useSelector(state => state.products.limitItems)
+    // пагинация
+    const { currentPage, totalItems, limitItems } = prodactsState
     const pagesCount = Math.ceil(totalItems / limitItems)
+    const currentPageChange = (number) => dispatch(setCurrentPage(number))
 
+    // активная категория
     const categoryActive = productsCategoryItems?.find(item => item.isActive).type
+    // смена категории
     const changeCategory = (e) => {
-        setCurrentPage(1)
+        dispatch(setCurrentPage(1))
         dispatch(setCategoryActive(e.currentTarget.innerText))
     }
 
@@ -48,7 +51,7 @@ const Products = props => {
                         <div className='products__items product'>
                             <ProductItems productItems={productItems} isLoaded={isLoaded} />
                         </div>
-                        <Pagination pagesCount={pagesCount} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                        <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
             </>
@@ -61,11 +64,10 @@ const ProductItems = props => {
 
     return  props.productItems?.map(item => {
                 return  <div key={item.id} className='product__item'>
-                            <div className='product__img'><img src={item.imgUrl ? item.imgUrl : imgDefault} alt='' /></div>
+                            <div className='product__img'><img src={item.imgUrl} alt={`${item.imgUrl} фото`} /></div>
                             <div className='product__title'><Link to={`/products/${item.id}`}>{item.title}</Link></div>
                             <div className='product__price'>{item.price} {item.currency}/{item.volume} {item.volumeMeasurement}</div>
                         </div>
-                    
             }) 
 }
 
