@@ -65,6 +65,7 @@ const Store = props => {
                             <input onChange={SearchValueChange} value={searchValue} type="text" placeholder="Найти товар..." required />
                             <button onClick={(e) => searchClick(e, searchValue)} type="submit" className=""><i className="bi bi-search"></i></button>
                         </form>
+                        {/* <button className='mobile__search'><i className="bi bi-search"></i></button> */}
                     </div>
 
                     <div className='store__info items'>

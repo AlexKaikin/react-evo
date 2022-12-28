@@ -25,12 +25,8 @@ const Products = props => {
 
     // активная категория
     const categoryActive = productsCategoryItems?.find(item => item.isActive).type
-    // смена категории
-    const changeCategory = (e) => {
-        dispatch(setCurrentPage(1))
-        dispatch(setCategoryActive(e.currentTarget.innerText))
-    }
-
+    
+    // активная сортировка
     const sortActive = productsSortItems?.find(item => item.isActive).type
     
     useEffect(() => {
@@ -42,7 +38,7 @@ const Products = props => {
                 <Store />
                 <div className='section filter'>
                     <div className='container'>
-                        <ProductsCategory productsCategoryItems={productsCategoryItems} changeCategory={changeCategory} />
+                        <ProductsCategory productsCategoryItems={productsCategoryItems} />
                         <ProductsSort productsSortItems={productsSortItems}/>
                     </div>
                 </div>
@@ -72,15 +68,50 @@ const ProductItems = props => {
 }
 
 const ProductsCategory = props => {
-    return  <div className='filter__category'>
-                { 
-                    props.productsCategoryItems?.map(item => {
-                        return  <button 
-                                    key={item.id}
-                                    className={ (item.isActive) ? 'btn active' : 'btn'}
-                                    onClick={props.changeCategory}>{item.title}</button>
-                    }) 
-                }
+    const dispatch = useDispatch()
+    const categoryRef = useRef()
+    const [categoryShow, setCategoryShow] = useState(false)
+    const categoryShowChange = () => {
+        if(categoryShow){
+            setCategoryShow(false)
+            document.body.removeEventListener('click', bodyClick)
+        } else {
+            setCategoryShow(true)
+            document.body.addEventListener('click', bodyClick)
+        }
+    }
+    const bodyClick = (e) => {
+        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(!path.includes(categoryRef.current)) {
+            setCategoryShow(false)
+            document.body.removeEventListener('click', bodyClick)
+        }
+    }
+    
+    // смена категории
+    const changeCategory = (e) => {
+        dispatch(setCurrentPage(1))
+        dispatch(setCategoryActive(e.currentTarget.innerText))
+        setCategoryShow(false)
+        document.body.removeEventListener('click', bodyClick)
+    }
+
+    return  <div ref={categoryRef} className='filter__category'>
+                <button onClick={categoryShowChange} className='category__mobile'>
+                    <i className="bi bi-folder2-open"></i> 
+                    <span>{ props.productsCategoryItems?.map(item => item.isActive && item.title) }</span>
+                </button>
+                    <div className={categoryShow ? 'category__items show': 'category__items' }>
+                        { 
+                            props.productsCategoryItems?.map(item => {
+                                return  <button 
+                                            key={item.id}
+                                            className={ (item.isActive) ? 'btn active' : 'btn'}
+                                            onClick={changeCategory}>{item.title}</button>
+                            }) 
+                        }
+                    </div>
+                
             </div>
 }
 
@@ -114,7 +145,7 @@ const ProductsSort = props => {
     }
 
     return  <div ref={sortRef} className='filter__sort sort'>
-                Сортировка: <button onClick={sortShowChange}>
+                <i class="bi bi-sort-down"></i> <span>Сортировка:</span> <button onClick={sortShowChange}>
                         { props.productsSortItems?.map(item => item.isActive && item.title) }
                         {/* { props.productsSortItems?.find(item => item.isActive).title } */}
                     </button>

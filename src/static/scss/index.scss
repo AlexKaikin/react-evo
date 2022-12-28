@@ -11,15 +11,19 @@ body {
   line-height: 25px;
   background-color: gainsboro;
   padding: 50px 0;
+
+  @media only screen and (max-width : 940px) {
+    padding: 10px;
+  }
 }
 
 #root{
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  //min-height: 100%;
   overflow: hidden;
-  min-width: 320px;
-
+  min-width: 300px;
+  min-height: 600px;
   max-width: 1000px;
   background-color: white;
   margin: 0px auto;
@@ -29,6 +33,11 @@ body {
 
   .main{
       flex: 1 1 auto;
+  }
+
+  @media only screen and (max-width : 940px) {
+    padding: 5px;
+    border-radius: 10px;
   }
 }
 
@@ -40,6 +49,10 @@ body {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 10px;
+
+  @media only screen and (max-width : 530px) {
+    padding: 0 5px;
+  }
 }
 
 .section__title {
@@ -71,6 +84,33 @@ p {
   }
 }
 
+.form{
+  .form__field{
+    position: relative;
+    margin-bottom: 20px;
+
+    label{
+      position: absolute;
+      font-size: 13px;
+      top: 3px;
+      left: 10px;
+      opacity: .5;
+    }
+
+    input, textarea{
+      padding: 30px 10px 10px 10px;
+      transition: all .5s ease 0s;
+      width: 100%;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+    }
+  }
+
+  .form__checkbox {
+    margin-bottom: 20px;
+  }
+}
+
 
 @import './_header';
 @import './_store';
@@ -79,5 +119,6 @@ p {
 @import './_cart';
 @import './_compare';
 @import './_product';
+@import './_auth';
 @import './_pagination';
 @import './_footer';

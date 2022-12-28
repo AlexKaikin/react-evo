@@ -1,0 +1,23 @@
+.section.auth{
+    .container {
+        max-width: 300px;
+
+        .form {
+            .form_btn {
+                background-color: $primary;
+                border: 2px solid white;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                width: 100%;
+                transition: all .5s ease 0s;
+
+                &:hover {
+                    background-color: $primary;
+                    border: 2px solid white;
+                    box-shadow: 0 0 0 3px $primary;
+                }
+            }
+        }
+    }
+}

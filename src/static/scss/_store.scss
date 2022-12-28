@@ -11,15 +11,34 @@
         font-size: 2rem;
 
         .store__search {
-            //background-color: white;
-            box-shadow: 0px 0px 40px 0px #cecece;
-            padding: 5px 20px;
-            border-radius: 30px;
-            display: flex;
+            .form {
+                box-shadow: 0px 0px 40px 0px #cecece;
+                padding: 5px 20px;
+                border-radius: 30px;
+                display: flex;
+    
+                transition: all .5s ease 0s;
+                border: 3px solid white;
+            }
 
-            transition: all .5s ease 0s;
-            border: 3px solid white;
+            .mobile__search {
+                //display: none;
+            }
         }
+
+        @media only screen and (max-width : 600px) {
+            .store__search {
+                .form {
+                    //display: none;
+                }
+
+                .mobile__search {
+                    //display: inline-block;
+                }
+            }
+        }
+
+        
 
         .store__info.items {
             display: flex;
@@ -115,8 +134,26 @@
                     }
                 }
             }
+        }
 
-            
+        @media only screen and (max-width : 570px) {
+            gap: 10px;
+            padding: 10px 6px;
+
+            .store__search{
+                .form {
+                    padding: 0px 10px;
+
+                    input {
+                        font-size: 1.2rem;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .store__info.items {
+                gap: 10px;
+            }
         }
     }
 }

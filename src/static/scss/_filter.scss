@@ -8,29 +8,112 @@
 
         .filter__category {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            gap: 5px;
+            position: relative;
 
-            .btn {
-                padding: 10px 20px;
-                background-color: #f9f9f9;
-                color: black;
+            .category__items {
+                .btn {
+                    padding: 10px 20px;
+                    background-color: #f9f9f9;
+                    color: black;
+    
+                    &.active {
+                        background-color: black;
+                        color: white;
+                    }
+    
+                    &:hover {
+                        background-color: black;
+                        color: white;
+                        box-shadow: none;
+                    }
+    
+                }
+            }
 
-                &.active {
-                    background-color: black;
-                    color: white;
+            .category__mobile {
+                font-size: 1.5rem;
+
+                span {
+                    display: none;
+                }
+            }
+
+            @media only screen and (max-width : 750px) {
+                .category__mobile {
+                    
+                    span {
+                        display: inline-block;
+                        margin-left: 5px;
+                    }
                 }
 
-                &:hover {
-                    background-color: black;
-                    color: white;
-                    box-shadow: none;
-                }
+                .category__items {
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all .5s ease 0s;
 
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    background-color: $primary;
+                    padding: 20px;
+                    border-radius: 10px;
+                    position: absolute;
+                    top: 35px;
+                    left: 0;
+                    z-index: 1;
+
+                    &.show {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    .btn {
+                        color: white;
+                        text-align: left;
+                        width: max-content;
+                        transition: all .5s ease 0s;
+                        padding: 0;
+                        background-color: transparent;
+                        border: 0;
+                        border-bottom: 4px dotted transparent;
+                        border-radius: 0;
+
+                        &.active {
+                            padding: 0;
+                            background-color: transparent;
+                            border-bottom: 4px dotted white;
+                        }
+
+                        &:hover {
+                            padding: 0;
+                            border-radius: 0;
+                            background-color: transparent;
+                            border-bottom: 4px dotted white;
+                        }
+                    }
+                }
             }
         }
 
         .filter__sort.sort {
             position: relative;
+            
+
+            i {
+                position: relative;
+                left: 0;
+                top: 3px;
+                font-size: 1.5rem;
+            }
+
+            @media only screen and (max-width : 940px) {
+                span {
+                    display: none;
+                }
+            }
 
             button {
                 color: $primary;
