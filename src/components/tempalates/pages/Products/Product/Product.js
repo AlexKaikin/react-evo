@@ -10,16 +10,13 @@ import { getFavorites } from '../../../../../redux/favoritesSlice'
 
 
 const Product = props => {
-    const productItem = useSelector(state => state.product.productItem) // получить отвар
-
-    const isLoaded = useSelector(state => state.product.isLoaded)
+    const { productItem, isLoaded } = useSelector(state => state.product) // получить отвар
 
     const compareItems = useSelector(state => state.compare.compareItems) // получить товары для сранения
     const isCompare = compareItems.find(item => item.id === productItem.id) // проверить есть ли товар в списке для сравнения
 
     const favoritesItems = useSelector(state => state.favorites.favoritesItems) // получить избранные товары
     const isFavorites = favoritesItems.find(item => item.id === productItem.id) // проверить есть ли товар в избранных
-
 
     const [quantity, setQuantity] = useState(1) // для количества товара
     const [cost, setCost] = useState(productItem.price) // стоимость товара
@@ -120,10 +117,10 @@ const Product = props => {
     const productId = useParams().id // получить id товара из url
 
     useEffect(() => {
-        dispatch(getProduct(productId)) // получить товар
+        if(productItem.id !== +productId) dispatch(getProduct(productId)) // получить товар
         setImgActive(productItem.imgUrl)
         setCost(productItem.price) // синхронизация цены
-    }, [dispatch, productId, productItem.price, productItem.imgUrl])
+    }, [dispatch, productItem.id, productId, productItem.price, productItem.imgUrl])
 
     if(!isLoaded) return <Store />
 

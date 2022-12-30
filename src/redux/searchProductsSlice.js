@@ -3,7 +3,7 @@ import { productsAPI } from '../api/api'
 
 
 const initialState = {
-  productItems: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, ],
+  items: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, ],
   isLoaded: false,
   query: '',
 }
@@ -12,10 +12,10 @@ export const searchProductsSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setProducts: (state, action) => {
+    setSearchItems: (state, action) => {
       return {
         ...state,
-        productItems: action.payload,
+        items: action.payload,
         isLoaded: true,
       }
     },
@@ -35,13 +35,13 @@ export const searchProductsSlice = createSlice({
 })
 
 // Action
-export const { setProducts, setLoaded, setQuery } = searchProductsSlice.actions
+export const { setSearchItems, setLoaded, setQuery } = searchProductsSlice.actions
 
 export default searchProductsSlice.reducer
 
 // thunk
 export const getSearchProducts = (searchValue) => dispatch => {
   dispatch(setLoaded(false))
-  productsAPI.getSearchProducts(searchValue).then(res => dispatch(setProducts(res.data)))
+  productsAPI.getSearchProducts(searchValue).then(res => dispatch(setSearchItems(res.data)))
   dispatch(setQuery(searchValue))
 }

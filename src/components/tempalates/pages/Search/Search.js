@@ -1,20 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import ContentLoader from 'react-content-loader'
 
 import Store from '../../layout/Store/Store'
 import imgDefault from '../../../../static/img/products/no.jpg'
 //import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
-//import { getSearchProducts } from '../../../../redux/searchProductsSlice'
+import { getSearchProducts } from '../../../../redux/searchProductsSlice'
 
 
 const Search = props => {
     //const productsCategoryItems = useSelector(state => state.productsFilter.category)
     //const productsSortItems = useSelector(state => state.productsFilter.sort)
-    const productItems = useSelector(state => state.search.productItems)
-    const isLoaded = useSelector(state => state.search.isLoaded)
-    const query = useSelector(state => state.search.query)
+    const { items, isLoaded, query } = useSelector(state => state.search)
 
     //const categoryActive = productsCategoryItems?.find(item => item.isActive).type
     //const sortActive = productsSortItems?.find(item => item.isActive).type
@@ -22,11 +20,12 @@ const Search = props => {
     // const searchValue = document.location
     // console.log(searchValue)
     
-    //const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const searchValue = new URLSearchParams(useLocation().search).get('q')
 
-    // useEffect(() => {
-    //     //dispatch(getSearchProducts(categoryActive, sortActive))
-    // }, [dispatch, categoryActive, sortActive, searchValue])
+    useEffect(() => {
+        !query && dispatch(getSearchProducts(searchValue))
+    }, [dispatch, searchValue, query])
 
     return  <>
                 <Store />
@@ -40,7 +39,7 @@ const Search = props => {
                     <div className='container'>
                         <div className='section__title'>Результаты поиска по запросу «{query}»</div>
                         <div className='products__items product'>
-                            <ProductItems productItems={productItems} isLoaded={isLoaded} />
+                            <SearchItems items={items} isLoaded={isLoaded} />
                         </div>
                     </div>
                 </div>
@@ -49,11 +48,11 @@ const Search = props => {
 
 export default Search
 
-const ProductItems = props => {
+const SearchItems = props => {
     
-    if(!props.isLoaded) return props.productItems.map(item => <ProductsLoader key={item.id} />)
+    if(!props.isLoaded) return props.items.map(item => <ProductsLoader key={item.id} />)
 
-    return  props.productItems?.map(item => {
+    return  props.items?.map(item => {
                 return  <div key={item.id} className='product__item'>
                             <div className='product__img'><img src={item.imgUrl ? item.imgUrl : imgDefault} alt='' /></div>
                             <div className='product__title'><Link to={`/products/${item.id}`}>{item.title}</Link></div>
@@ -62,67 +61,6 @@ const ProductItems = props => {
                     
             }) 
 }
-
-// const ProductsCategory = props => {
-//     const dispatch = useDispatch()
-//     const changeCategory = (e) => dispatch(setCategoryActive(e.currentTarget.innerText))
-    
-//     return  <div className='filter__category'>
-//                 { 
-//                     props.productsCategoryItems?.map(item => {
-//                         return  <button 
-//                                     key={item.id}
-//                                     className={ (item.isActive) ? 'btn active' : 'btn'}
-//                                     onClick={changeCategory}>{item.title}</button>
-//                     }) 
-//                 }
-//             </div>
-// }
-
-// const ProductsSort = props => {
-//     const sortRef = useRef()
-//     const dispatch = useDispatch()
-//     const [sortShow, setSortShow] = useState(false)
-
-//     const sortShowChange = () => {
-//         if(sortShow){
-//             setSortShow(false)
-//             document.body.removeEventListener('click', bodyClick)
-//         } else {
-//             setSortShow(true)
-//             document.body.addEventListener('click', bodyClick)
-//         }
-//     }
-
-//     const changeSort = (e) => {
-//         dispatch(setSortActive(e.currentTarget.innerText))
-//         setSortShow(false)
-//         document.body.removeEventListener('click', bodyClick)
-//     }
-
-//     const bodyClick = (e) => {
-//         const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
-//         if(!path.includes(sortRef.current)) {
-//             setSortShow(false)
-//             document.body.removeEventListener('click', bodyClick)
-//         }
-//     }
-
-//     return  <div ref={sortRef} className='filter__sort sort'>
-//                 Сортировка: <button onClick={sortShowChange}>
-//                         { props.productsSortItems?.map(item => item.isActive && item.title) }
-//                         {/* { props.productsSortItems?.find(item => item.isActive).title } */}
-//                     </button>
-
-//                 <div className={sortShow ? 'sort__items show' : 'sort__items'}>
-//                     { 
-//                         props.productsSortItems?.map(item => {
-//                             return  <button key={item.id} onClick={changeSort}>{item.title}</button>
-//                         }) 
-//                     }
-//                 </div>
-//             </div>
-// }
 
 const ProductsLoader = (props) => (
     <ContentLoader 

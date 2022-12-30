@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  category: [
-    { id: 1, title: 'Все чаи', type: 'null', isActive: true }, 
+  categories: [
+    { id: 1, title: 'Все чаи', type: 'all', isActive: true }, 
     { id: 2, title: 'Красные', type: 'red', isActive: false }, 
     { id: 3, title: 'Зелёные', type: 'green', isActive: false }, 
     { id: 4, title: 'Белые', type: 'white', isActive: false },
   ],
-  sort: [
+  sortingItems: [
     { id: 1, title: 'новые', type: 'new', isActive: true }, 
     { id: 2, title: 'популярные', type: 'pop', isActive: false }, 
     { id: 3, title: 'убывание цены', type: 'priceDecrease', isActive: false }, 
@@ -21,7 +21,7 @@ export const productsFilterSlice = createSlice({
   reducers: {
     setCategoryActive: (state, action) => {
       const changeCategoryArray = () => {
-        return state.category.map(item => {
+        return state.categories.map(item => {
             if(item.title === action.payload){
                 return {...item, isActive: true}
             }
@@ -31,12 +31,12 @@ export const productsFilterSlice = createSlice({
 
       return {
         ...state,
-        category: changeCategoryArray()
+        categories: changeCategoryArray()
       }
     },
     setSortActive: (state, action) => {
       const changeSortArray = () => {
-        return state.sort.map(item => {
+        return state.sortingItems.map(item => {
             if(item.title === action.payload){
                 return {...item, isActive: true}
             }
@@ -46,7 +46,7 @@ export const productsFilterSlice = createSlice({
 
       return {
         ...state,
-        sort: changeSortArray()
+        sortingItems: changeSortArray()
       }
     },
   },

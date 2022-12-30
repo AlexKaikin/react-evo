@@ -16,29 +16,23 @@
                 padding: 5px 20px;
                 border-radius: 30px;
                 display: flex;
-    
+                position: relative;
                 transition: all .5s ease 0s;
                 border: 3px solid white;
-            }
 
-            .mobile__search {
-                //display: none;
-            }
-        }
-
-        @media only screen and (max-width : 600px) {
-            .store__search {
-                .form {
-                    //display: none;
-                }
-
-                .mobile__search {
-                    //display: inline-block;
+                .error {
+                    position: absolute;
+                    top: 62px;
+                    left: 0;
+                    z-index: 1;
+                    background-color: #f8d7da;
+                    color: #932029;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    font-size: 1rem;
                 }
             }
         }
-
-        
 
         .store__info.items {
             display: flex;

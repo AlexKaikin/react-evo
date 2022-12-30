@@ -7,7 +7,7 @@ const instance = axios.create({
 
 export const productsAPI = {
     getProducts(categoryActive, sortActive, currentPage, limitItems) {
-        const category = categoryActive === 'null' ? `` : `category=${categoryActive}&`
+        const category = categoryActive === 'all' ? `` : `category=${categoryActive}&`
         const pagination = `&_page=${currentPage}&_limit=${limitItems}`
 
         switch(sortActive) {

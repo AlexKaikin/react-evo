@@ -41,11 +41,18 @@ const Store = props => {
     }
 
     const navigate = useNavigate() // редирект на страницу поиска
+    const searchRef = useRef()
     const searchClick = (e, searchValue) => {
         e.preventDefault()
         if(searchValue !== '') {
             dispatch(getSearchProducts(searchValue))
             navigate(`/search/?q=${searchValue}`)
+        } else {
+            const error = '<p class="error">Пожалуйста, введите запрос</p>'
+            searchRef.current.insertAdjacentHTML('beforeend', error)
+            setTimeout(() => {
+                document.querySelector(".error").outerHTML = "";
+              }, 2000); 
         }
     }
 
@@ -61,7 +68,7 @@ const Store = props => {
     return  <section className='store'>
                 <div className="container">
                     <div className="store__search">
-                        <form action="#" className="form">
+                        <form ref={searchRef} action="#" className="form">
                             <input onChange={SearchValueChange} value={searchValue} type="text" placeholder="Найти товар..." required />
                             <button onClick={(e) => searchClick(e, searchValue)} type="submit" className=""><i className="bi bi-search"></i></button>
                         </form>

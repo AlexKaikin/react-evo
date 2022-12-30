@@ -51,10 +51,10 @@ const Header = props => {
                         <ul className={menuShow ? 'nav__items show' : 'nav__items'}>
                             <li className='nav__item'><NavLink to="/" onClick={menuShowChange} className='nav__link'>Главная</NavLink></li>
                             <li className='nav__item'><NavLink to="/products" onClick={menuShowChange} className='nav__link'>Товары</NavLink></li>
-                            <li className='nav__item'><NavLink to="/blog" onClick={menuShowChange} className='nav__link'>Статьи</NavLink></li>
+                            <li className='nav__item'><NavLink to="/posts" onClick={menuShowChange} className='nav__link'>Статьи</NavLink></li>
                             {/* <li className='nav__item'><NavLink to="/contacts" className='nav__link'>Контакты</NavLink></li> */}
                         </ul>
-                        <button onClick={menuShowChange} className='mobile__menu'><i class="bi bi-list"></i> Меню</button>
+                        <button onClick={menuShowChange} className='mobile__menu'><i className="bi bi-list"></i> Меню</button>
                     </nav>
                     
                     <div ref={authRef} className='auth'>
