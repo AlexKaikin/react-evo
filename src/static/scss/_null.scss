@@ -47,16 +47,13 @@
     font-size: inherit;
     cursor: pointer;
     background-color: transparent;
+    color: inherit;
   }
   
   input::-ms-clear {
     display: none;
   }
-  button {
-    cursor: pointer;
-    font-size: inherit;
-    background-color: transparent;
-  }
+
   button::-moz-focus-inner {
     padding: 0;
     border: 0;

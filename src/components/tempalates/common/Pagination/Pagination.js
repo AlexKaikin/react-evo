@@ -32,17 +32,17 @@ const Pagination = props => {
 
     return  <div className='pagination'>
                 { // стрелка назад
-                    currentPage > 1 &&  <div onClick={() => props.currentPageChange(currentPage - 1)} className='page'>
+                    currentPage > 1 &&  <button onClick={() => props.currentPageChange(currentPage - 1)} className='page'>
                                             <i className="bi bi-chevron-left"></i>
-                                        </div>
+                                        </button>
                 }
                 { // страницы
-                    pages?.map(page => <div key={page} onClick={() => currentPage !== page && props.currentPageChange(page)} className={currentPage === page ? 'page active' : 'page'}>{page}</div>) 
+                    pages?.map(page => <button key={page} onClick={() => currentPage !== page && props.currentPageChange(page)} className={currentPage === page ? 'page active' : 'page'}>{page}</button>) 
                 }
                 { // стрелка вперёд
-                    currentPage < pagesCount && <div onClick={() => props.currentPageChange(currentPage + 1)} className='page'>
+                    currentPage < pagesCount && <button onClick={() => props.currentPageChange(currentPage + 1)} className='page'>
                                     <i className="bi bi-chevron-right"></i>
-                                </div>
+                                </button>
                 }
             </div>
 }
