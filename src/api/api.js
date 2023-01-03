@@ -8,26 +8,27 @@ const instance = axios.create({
 export const productsAPI = {
     getProducts(categoryActive, sortActive, currentPage, limitItems) {
         const category = categoryActive === 'all' ? `` : `category=${categoryActive}&`
-        const pagination = `&_page=${currentPage}&_limit=${limitItems}`
+        const pagination = `_page=${currentPage}&_limit=${limitItems}`
+        const sorting = (sortActive) => {
+            switch(sortActive) {
+                case 'priceDecrease': return `_sort=price&_order=desc&`
+                case 'priceIncrease': return `_sort=price&_order=asc&`
+                case 'pop': return `_sort=rating&_order=desc&` 
+                default: return `_sort=id&_order=desc&`
+            }
+        }
 
-        switch(sortActive) {
-            case 'priceDecrease':
-                return instance.get(`products/?${category}_sort=price&_order=desc${pagination}`)
-          
-            case 'priceIncrease':
-                return instance.get(`products/?${category}_sort=price&_order=asc${pagination}`)
-
-            case 'pop':
-                return instance.get(`products/?${category}_sort=rating&_order=desc${pagination}`)
-          
-            default:
-                return instance.get(`products/?${category}_sort=id&_order=desc${pagination}`)
-          }
+        return instance.get(`products/?${ category + sorting(sortActive) + pagination }`)
     },
-    getSearchProducts(searchValue){
-        return instance.get(`products/?q=${searchValue}`)
-    },
+    
     getProduct(id) {
         return instance.get(`products/${id}`)
-    }
+    },
+}
+
+export const searchAPI = {
+    getSearchQuery(searchValue, currentPage, limitItems){
+        const pagination = `&_page=${currentPage}&_limit=${limitItems}`
+        return instance.get(`products/?q=${searchValue + pagination}`)
+    },
 }

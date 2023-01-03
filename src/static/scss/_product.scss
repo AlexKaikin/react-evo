@@ -63,6 +63,18 @@
                 gap: 5px;
                 margin-bottom: 40px;
                 font-size: 1.3rem;
+                position: relative;
+
+                .msg {
+                    position: absolute;
+                    top: -60px;
+                    left: 0px;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    color: #0f5132;
+                    background-color: #d1e7dd;
+                    font-size: 1rem;
+                }
 
                 button {
                     background-color: #f0f0f0;
@@ -86,8 +98,6 @@
                     }
 
                     &:hover {
-                        background-color: $primary;
-                        color: white;
                         box-shadow: 0 0 0 3px $primary;
                     }
                 }
@@ -151,6 +161,21 @@
             
         }
 
+        .product__addCart {
+            position: relative;
+
+            .msg {
+                position: absolute;
+                top: 70px;
+                left: 0px;
+                padding: 10px 20px;
+                border-radius: 10px;
+                color: #0f5132;
+                background-color: #d1e7dd;
+                font-size: 1rem;
+            }
+        }
+
         .product__content-container{
             flex: 1 1 100%;
         }
@@ -176,8 +201,6 @@
                     }
 
                     &:hover {
-                        background-color: #574e48;
-                        color: white;
                         box-shadow: 0 0 0 3px #574e48;
                     }
                 }

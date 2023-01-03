@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react'
-
-import Store from '../../../layout/Store/Store'
-import { getProduct } from '../../../../../redux/productSlice'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getCart } from '../../../../../redux/cartSlice'
-import { getCompare } from '../../../../../redux/compareSlice'
-import { getFavorites } from '../../../../../redux/favoritesSlice'
+
+import Store from '../../../layout/Store/Store'
+import { getProduct, productsSelector } from '../../../../../redux/productsSlice'
+import { getCart, getCompare, getFavorites, storeSelector } from '../../../../../redux/storeSlice'
 
 
 const Product = props => {
-    const { productItem, isLoaded } = useSelector(state => state.product) // получить отвар
+    const { productItem, isLoaded } = useSelector(productsSelector) // получить товар, индикатор загрузки
 
-    const compareItems = useSelector(state => state.compare.compareItems) // получить товары для сранения
+    const { compareItems, favoritesItems } = useSelector(storeSelector) // получить товары для сранения, избранные
+
     const isCompare = compareItems.find(item => item.id === productItem.id) // проверить есть ли товар в списке для сравнения
-
-    const favoritesItems = useSelector(state => state.favorites.favoritesItems) // получить избранные товары
     const isFavorites = favoritesItems.find(item => item.id === productItem.id) // проверить есть ли товар в избранных
 
     const [quantity, setQuantity] = useState(1) // для количества товара
@@ -51,6 +48,7 @@ const Product = props => {
             setCost(productItem.price * (+e.target.value))
         }
     }
+    const info = useRef()
 
     // добавить товар для сравнения
     const compareClick = () => {
@@ -58,26 +56,60 @@ const Product = props => {
         const findProduct = comapreItems.find(item => item.id === productItem.id) // проверить наличие товара в сравнении
         if(findProduct){
             comapreItems.splice(comapreItems.indexOf(findProduct), 1)
+
+            // сообщение о добавлении
+            const msg = '<p class="msg">Товар исключён из сравнения</p>'
+            info.current.insertAdjacentHTML('beforeend', msg)
+            setTimeout(() => {
+                if(document.querySelector(".msg")) document.querySelector(".msg").outerHTML = "";
+            }, 5000)
         } else {
             comapreItems.push(productItem)
+
+            // сообщение о добавлении
+            const msg = '<p class="msg">Товар добавлен для сравнения</p>'
+            info.current.insertAdjacentHTML('beforeend', msg)
+            setTimeout(() => {
+                if(document.querySelector(".msg")) document.querySelector(".msg").outerHTML = "";
+            }, 5000)
         }
         localStorage.setItem('compare', JSON.stringify(comapreItems))
         dispatch(getCompare())
+
+        
     }
 
-    // добавить отвар в избранное
+    // добавить товар в избранное
     const favoritesClick = () => {
         const favoritesItems = JSON.parse(localStorage.getItem('favorites')) || [] // запросить localStorage
         const findProduct = favoritesItems.find(item => item.id === productItem.id) // проверить наличие товара в избранном
         if(findProduct){
             favoritesItems.splice(favoritesItems.indexOf(findProduct), 1)
+
+            // сообщение о добавлении
+            const msg = '<p class="msg">Товар исключён из избранных</p>'
+            info.current.insertAdjacentHTML('beforeend', msg)
+            setTimeout(() => {
+                if(document.querySelector(".msg")) document.querySelector(".msg").outerHTML = "";
+            }, 5000)
         } else {
             favoritesItems.push(productItem)
+
+            // сообщение о добавлении
+            const msg = '<p class="msg">Товар добавлен в избранное</p>'
+            info.current.insertAdjacentHTML('beforeend', msg)
+            setTimeout(() => {
+                if(document.querySelector(".msg")) document.querySelector(".msg").outerHTML = "";
+            }, 5000)
         }
         localStorage.setItem('favorites', JSON.stringify(favoritesItems))
         
         dispatch(getFavorites())
+
+        
     }
+
+    const addCartRef = useRef()
 
     // добавить товар в корзину
     const addCartClick = () => {
@@ -97,6 +129,13 @@ const Product = props => {
         }
         localStorage.setItem('cart', JSON.stringify(cartItems))
         dispatch(getCart())
+
+        // сообщение о добавлении
+        const msg = '<p class="msg">Товар добавлен в корзину</p>'
+        addCartRef.current.insertAdjacentHTML('beforeend', msg)
+        setTimeout(() => {
+            if(document.querySelector(".msg")) document.querySelector(".msg").outerHTML = "";
+            }, 5000)
     }
 
     // рейтинг товара
@@ -123,6 +162,11 @@ const Product = props => {
     }, [dispatch, productItem.id, productId, productItem.price, productItem.imgUrl])
 
     if(!isLoaded) return <Store />
+    if(isLoaded === 'error') return     <>
+                                            <Store />
+                                            <div className='section__title'>Произошла ошибка</div>
+                                            <p>К сожалению, не удалось загрузить товар</p>
+                                        </>
 
     return  <>
                 <Store />
@@ -145,7 +189,7 @@ const Product = props => {
                         </div>
                         
                         <div className='product__title-container'>
-                            <div className='product__info info'>
+                            <div ref={info} className='product__info info'>
                                 <button onClick={compareClick} className={isCompare && 'active'}><i className="bi bi-bookmark"></i></button>
                                 <button onClick={favoritesClick} className={isFavorites && 'active'}><i className="bi bi-heart"></i></button>
                                 
@@ -170,7 +214,9 @@ const Product = props => {
                                 <div className='price__title'>Стоимость</div>
                                 <div className='price__number'>{cost} руб.</div>
                             </div>
-                            <button className='btn' onClick={addCartClick}>В корзину</button>
+                            <div ref={addCartRef} className='product__addCart'>
+                                <button className='btn' onClick={addCartClick}>В корзину</button>
+                            </div>
                         </div>
                         
                     </div>

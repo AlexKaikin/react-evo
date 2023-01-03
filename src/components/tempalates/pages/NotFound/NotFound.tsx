@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const NotFound = props => {
+const NotFound: React.FC = props => {
     return <div className='container'>Страница не найдена</div>
 }
 

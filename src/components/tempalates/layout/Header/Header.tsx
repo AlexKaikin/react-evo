@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 
-const Header = props => {
+const Header: React.FC = props => {
     const [authShow, setAuthShow] = useState(false)
     
     const AuthShowChange = () => {
@@ -15,9 +15,9 @@ const Header = props => {
         }
     }
 
-    const authRef = useRef()
+    const authRef = useRef<any>()
 
-    const bodyClick = (e) => {
+    const bodyClick = (e: any) => {
         const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
         if(!path.includes(authRef.current)) {
             setAuthShow(false)
@@ -35,8 +35,8 @@ const Header = props => {
             document.body.addEventListener('click', bodyClick2)
         }
     }
-    const menuRef = useRef()
-    const bodyClick2 = (e) => {
+    const menuRef = useRef<any>()
+    const bodyClick2 = (e: any) => {
         const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
         if(!path.includes(menuRef.current)) {
             setMenuShow(false)
@@ -50,9 +50,9 @@ const Header = props => {
                     <nav ref={menuRef} className='header__nav nav'>
                         <ul className={menuShow ? 'nav__items show' : 'nav__items'}>
                             <li className='nav__item'><NavLink to="/" onClick={menuShowChange} className='nav__link'>Главная</NavLink></li>
-                            <li className='nav__item'><NavLink to="/products" onClick={menuShowChange} className='nav__link'>Товары</NavLink></li>
-                            <li className='nav__item'><NavLink to="/posts" onClick={menuShowChange} className='nav__link'>Статьи</NavLink></li>
-                            {/* <li className='nav__item'><NavLink to="/contacts" className='nav__link'>Контакты</NavLink></li> */}
+                            <li className='nav__item'><NavLink to="/products" onClick={menuShowChange} className='nav__link'>Магазин</NavLink></li>
+                            <li className='nav__item'><NavLink to="/posts" onClick={menuShowChange} className='nav__link'>Блог</NavLink></li>
+                            <li className='nav__item'><NavLink to="/contacts" onClick={menuShowChange} className='nav__link'>Контакты</NavLink></li>
                         </ul>
                         <button onClick={menuShowChange} className='mobile__menu'><i className="bi bi-list"></i> Меню</button>
                     </nav>

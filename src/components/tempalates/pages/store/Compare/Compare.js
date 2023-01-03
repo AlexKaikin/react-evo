@@ -1,12 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCompare } from '../../../../redux/compareSlice'
-import Store from '../../layout/Store/Store'
+import { getCompare, storeSelector } from '../../../../../redux/storeSlice'
+import Store from '../../../layout/Store/Store'
 
 
 const Compare = props => {
-    const compareItems = useSelector(state => state.compare.compareItems)
+    const { compareItems } = useSelector(storeSelector)
 
     return  <>
                  <Store />

@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
-const Login = props => {
+const Register: React.FC = props => {
     return  <div className='section auth'>
                 <div className='container'>
-                    <div className='section__title'>Вход</div>
+                    <div className='section__title'>Регистрация</div>
                     <form className="form">
                             
                         <div className="form__field">
@@ -13,9 +14,16 @@ const Login = props => {
                         </div>
 
                         <div className="form__field">
+                            <label>Почта</label>
+                            <input type="email" name="email"  />
+                        </div>
+
+                        <div className="form__field">
                             <label>Пароль</label>
                             <input type="password" name="password"  />
                         </div>
+
+                        <p>У вас есть аккаунт? <Link to='/login'>Вход</Link></p>
 
                         <button className='form_btn'>Отправить</button>
 
@@ -24,4 +32,4 @@ const Login = props => {
             </div>
 }
 
-export default Login
+export default Register

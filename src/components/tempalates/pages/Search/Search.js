@@ -6,26 +6,28 @@ import ContentLoader from 'react-content-loader'
 import Store from '../../layout/Store/Store'
 import imgDefault from '../../../../static/img/products/no.jpg'
 //import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
-import { getSearchProducts } from '../../../../redux/searchProductsSlice'
+import { getSearchQuery, searchSelector, setCurrentPage } from '../../../../redux/searchSlice'
+import Pagination from '../../common/Pagination/Pagination'
 
 
 const Search = props => {
     //const productsCategoryItems = useSelector(state => state.productsFilter.category)
     //const productsSortItems = useSelector(state => state.productsFilter.sort)
-    const { items, isLoaded, query } = useSelector(state => state.search)
+    const { items, isLoaded, query, pagesCount, currentPage } = useSelector(searchSelector)
+
+    // пагинация
+    const currentPageChange = (number) => dispatch(setCurrentPage(number))
 
     //const categoryActive = productsCategoryItems?.find(item => item.isActive).type
     //const sortActive = productsSortItems?.find(item => item.isActive).type
-
-    // const searchValue = document.location
-    // console.log(searchValue)
     
     const dispatch = useDispatch()
     const searchValue = new URLSearchParams(useLocation().search).get('q')
 
     useEffect(() => {
-        !query && dispatch(getSearchProducts(searchValue))
-    }, [dispatch, searchValue, query])
+        dispatch(getSearchQuery(searchValue, currentPage))
+        window.scrollTo(0, 0)
+    }, [dispatch, searchValue, query, currentPage])
 
     return  <>
                 <Store />
@@ -38,9 +40,8 @@ const Search = props => {
                 <div className='section products'>
                     <div className='container'>
                         <div className='section__title'>Результаты поиска по запросу «{query}»</div>
-                        <div className='products__items product'>
-                            <SearchItems items={items} isLoaded={isLoaded} />
-                        </div>
+                        <SearchItems items={items} isLoaded={isLoaded} />
+                        <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
             </>
@@ -49,17 +50,21 @@ const Search = props => {
 export default Search
 
 const SearchItems = props => {
-    
     if(!props.isLoaded) return props.items.map(item => <ProductsLoader key={item.id} />)
+    if(props.items.length < 1) return <div>Товар не найден</div>
 
-    return  props.items?.map(item => {
-                return  <div key={item.id} className='product__item'>
-                            <div className='product__img'><img src={item.imgUrl ? item.imgUrl : imgDefault} alt='' /></div>
-                            <div className='product__title'><Link to={`/products/${item.id}`}>{item.title}</Link></div>
-                            <div className='product__price'>{item.price} {item.currency}/{item.volume} {item.volumeMeasurement}</div>
-                        </div>
-                    
-            }) 
+    return  <div className='products__items product'>
+                {
+                    props.items?.map(item => {
+                        return  <Link to={`/products/${item.id}`} key={item.id} className='product__item'>
+                                    <div className='product__img'><img src={item.imgUrl ? item.imgUrl : imgDefault} alt='' /></div>
+                                    <div className='product__title'>{item.title}</div>
+                                    <div className='product__price'>{item.price} {item.currency}/{item.volume} {item.volumeMeasurement}</div>
+                                </Link>
+                            
+                    }) 
+                }
+            </div>
 }
 
 const ProductsLoader = (props) => (

@@ -3,6 +3,11 @@
         max-width: 300px;
 
         .form {
+
+            a {
+                border-bottom: 1px solid black;
+            }
+
             .form_btn {
                 background-color: $primary;
                 border: 2px solid white;

@@ -1,18 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { getCart } from '../../../../redux/cartSlice'
-import { getCompare } from '../../../../redux/compareSlice'
-import { getFavorites } from '../../../../redux/favoritesSlice'
-import { getSearchProducts } from '../../../../redux/searchProductsSlice'
+import { getCart, getStore } from '../../../../redux/storeSlice'
 
 
 const Store = props => {
     const [showCart, setShowCart] = useState(false)
 
-    const cartItems = useSelector(state => state.cart.cartItems)
-    const compareItems = useSelector(state => state.compare.compareItems)
-    const favoritesItems = useSelector(state => state.favorites.favoritesItems)
+    const { cartItems, compareItems, favoritesItems } = useSelector(state => state.store)
 
     const showCartClick = () => {
         if(showCart){
@@ -45,23 +40,21 @@ const Store = props => {
     const searchClick = (e, searchValue) => {
         e.preventDefault()
         if(searchValue !== '') {
-            dispatch(getSearchProducts(searchValue))
+            //dispatch(getSearchProducts(searchValue, 1, 8))
             navigate(`/search/?q=${searchValue}`)
         } else {
             const error = '<p class="error">Пожалуйста, введите запрос</p>'
             searchRef.current.insertAdjacentHTML('beforeend', error)
             setTimeout(() => {
                 document.querySelector(".error").outerHTML = "";
-              }, 2000); 
+              }, 2000)
         }
     }
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCompare())
-        dispatch(getFavorites())
-        dispatch(getCart())
+        dispatch(getStore())
     }, [dispatch])
 
 
@@ -90,8 +83,8 @@ const Store = props => {
                                 <i className="bi bi-bag"></i>
                             </button>
                             <div className={showCart ? 'cart__items show' : 'cart__items'}>
-                                { cartItems.length > 0 ? <CartItems cartItems={cartItems} /> : <div>В корзине пусто</div> }
-                                <Link to='/cart' className='cart-link'>Перейти в корзину</Link>
+                                { cartItems.length > 0 ? <CartItems cartItems={cartItems} showCartClick={showCartClick} /> : <div>В корзине пусто</div> }
+                                <Link onClick={showCartClick} to='/cart' className='cart-link'>Перейти в корзину</Link>
                             </div>
                         </div>
                         
@@ -114,7 +107,7 @@ const CartItems = props => {
     }
 
     return props.cartItems?.map(item => <div key={item.id} className='cart__item'>
-                                            <div><Link to={`/products/${item.id}`}>{item.title}</Link></div>
+                                            <div><Link to={`/products/${item.id}`} onClick={props.showCartClick}>{item.title}</Link></div>
                                             <div><button onClick={() => deleteProductClick(item.id)} className='delete__btn'><i className="bi bi-x-lg"></i></button></div>
                                         </div>)
 }

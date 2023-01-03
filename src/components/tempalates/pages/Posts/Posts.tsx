@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const Posts = props => {
+const Posts: React.FC = props => {
     return <div className='container'>Статьи не найдены</div>
 }
 

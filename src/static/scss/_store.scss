@@ -20,6 +20,10 @@
                 transition: all .5s ease 0s;
                 border: 3px solid white;
 
+                &:hover {
+                    box-shadow: 0px 0px 0px 3px $primary;
+                }
+
                 .error {
                     position: absolute;
                     top: 62px;
@@ -71,7 +75,6 @@
                 .cart__items {
                     opacity: 0;
                     visibility: hidden;
-
                     position: absolute;
                     top: 50px;
                     right: 0;
@@ -80,6 +83,7 @@
                     flex-direction: column;
                     gap: 10px;
                     font-size: 1rem;
+                    color: white;
                     width: max-content;
                     padding: 20px;
                     border-radius: 10px;
@@ -101,10 +105,16 @@
 
                         a {
                             color: white;
+                            border-bottom: 1px solid transparent;
+                            transition: all .5s ease 0s;
+
+                            &:hover {
+                                border-bottom: 1px solid white;
+                            }
                         }
 
                         .delete__btn {
-                            font-size: 1rem;
+                            font-size: 0.7rem;
                             border: 1px solid rgb(255 255 255 / 50%);;
                             color: white;
                             width: 25px;
@@ -114,16 +124,28 @@
                             align-items: center;
                             padding-top: 2px;
                             border-radius: 50%;
+                            transition: all .5s ease 0s;
+
+                            &:hover {
+                                background-color: white;
+                                color: $primary;
+                            }
                         }
                     }
 
                     .cart-link {
                         background-color: white;
+                        border: 3px solid $primary;
                         color: black;
-                        padding: 10px 20px;
+                        padding: 7px 17px;
                         border-radius: 30px;
                         text-align: center;
                         margin-top: 10px;
+                        transition: all .5s ease 0s;
+
+                        &:hover {
+                            box-shadow: 0 0 0 3px white;
+                        }
                     }
                 }
             }

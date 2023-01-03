@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setCategoryActive } from '../../../../redux/productsFilterSlice'
+import { setCategoryActive } from '../../../../redux/filterSlice'
 import { setCurrentPage } from '../../../../redux/productsSlice'
 
 
-const Categories = props => {
+const Categories: React.FC<PropsType> = props => {
     const dispatch = useDispatch()
-    const categoryRef = useRef()
-    const [categoryShow, setCategoryShow] = useState(false)
+    const categoryRef = useRef(null)
+    const [categoryShow, setCategoryShow] = useState<boolean>(false)
     const categoryShowChange = () => {
         if(categoryShow){
             setCategoryShow(false)
@@ -17,7 +17,7 @@ const Categories = props => {
             document.body.addEventListener('click', bodyClick)
         }
     }
-    const bodyClick = (e) => {
+    const bodyClick = (e: any) => {
         const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
         if(!path.includes(categoryRef.current)) {
             setCategoryShow(false)
@@ -26,9 +26,9 @@ const Categories = props => {
     }
     
     // смена категории
-    const changeCategory = (e) => {
+    const changeCategory = (item: any) => {
         dispatch(setCurrentPage(1))
-        dispatch(setCategoryActive(e.currentTarget.innerText))
+        dispatch(setCategoryActive(item))
         setCategoryShow(false)
         document.body.removeEventListener('click', bodyClick)
     }
@@ -36,18 +36,30 @@ const Categories = props => {
     return  <div ref={categoryRef} className='filter__category'>
                 <button onClick={categoryShowChange} className='category__mobile'>
                     <i className="bi bi-folder2-open"></i> 
-                    <span>{ props.items?.map(item => item.isActive && item.title) }</span>
+                    <span>
+                        { props.items?.map(item => item.type === props.categoryActive && item.title) }
+                    </span>
                 </button>
-                    <div className={categoryShow ? 'category__items show': 'category__items' }>
-                        { 
-                            props.items?.map(item => {
-                                return  <button key={item.id} className={ item.isActive ? 'btn active' : 'btn'}
-                                            onClick={changeCategory}>{item.title}</button>
-                            }) 
-                        }
-                    </div>
-                
+                <div className={categoryShow ? 'category__items show': 'category__items' }>
+                    { 
+                        props.items?.map(item => {
+                            return  <button key={item.id} className={ item.type === props.categoryActive ? 'btn active' : 'btn'}
+                                        onClick={() => changeCategory(item.type)}>{item.title}</button>
+                        }) 
+                    }
+                </div>
             </div>
 }
 
 export default Categories
+
+type PropsType = {
+    items: ItemType[],
+    categoryActive: string
+}
+
+type ItemType = {
+    id: number,
+    title: string,
+    type: string
+}

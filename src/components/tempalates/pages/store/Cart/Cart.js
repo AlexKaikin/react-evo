@@ -1,13 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCart } from '../../../../redux/cartSlice'
-import Store from '../../layout/Store/Store'
+import { getCart, storeSelector } from '../../../../../redux/storeSlice'
+import Store from '../../../layout/Store/Store'
 
 
 const Cart = props => {
-    const cartItems = useSelector(state => state.cart.cartItems)
-    const totalCost = useSelector(state => state.cart.totalCost)
+    const { cartItems, totalCost } = useSelector(storeSelector)
 
     return  <>
                  <Store />

@@ -1,12 +1,12 @@
 import React from 'react'
 
 
-const Pagination = props => {
+const Pagination: React.FC<PropsType> = props => {
     const pagesCount = props.pagesCount // количество страниц
-    const currentPage = props.currentPage // ntreofz cnhfybwf
-    const pages = [] // массив страниц
+    const currentPage = props.currentPage // текущая страница
+    const pages: number[] = [] // массив страниц
 
-    const createPages = (pages, pagesCount, currentPage) => {
+    const createPages = (pages: number[], pagesCount: number, currentPage: number) => {
         if(pagesCount > 5) {
             if(currentPage > 4) {
                 for (let i = currentPage-2; i <= currentPage+2; i++) {
@@ -48,3 +48,9 @@ const Pagination = props => {
 }
 
 export default Pagination
+
+type PropsType = {
+    pagesCount: number,
+    currentPage: number,
+    currentPageChange: any,
+}

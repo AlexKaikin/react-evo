@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setSortActive } from '../../../../redux/productsFilterSlice'
+import { setSortActive } from '../../../../redux/filterSlice'
 
 
-const Sorting = props => {
-    const sortRef = useRef()
+const Sorting: React.FC<PropsType> = props => {
+    const sortRef = useRef<HTMLDivElement>(null)
     const dispatch = useDispatch()
-    const [sortShow, setSortShow] = useState(false)
+    const [sortShow, setSortShow] = useState<boolean>(false)
 
     const sortShowChange = () => {
         if(sortShow){
@@ -18,13 +18,13 @@ const Sorting = props => {
         }
     }
 
-    const changeSort = (e) => {
-        dispatch(setSortActive(e.currentTarget.innerText))
+    const changeSort = (item: any) => {
+        dispatch(setSortActive(item))
         setSortShow(false)
         document.body.removeEventListener('click', bodyClick)
     }
 
-    const bodyClick = (e) => {
+    const bodyClick = (e: any) => {
         const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
         if(!path.includes(sortRef.current)) {
             setSortShow(false)
@@ -34,13 +34,24 @@ const Sorting = props => {
 
     return  <div ref={sortRef} className='filter__sort sort'>
                 <i className="bi bi-sort-down"></i> <span>Сортировка:</span> <button onClick={sortShowChange}>
-                        { props.items?.map(item => item.isActive && item.title) }
+                    { props.items?.map(item => item.type === props.sortActive && item.title) }
                     </button>
 
                 <div className={sortShow ? 'sort__items show' : 'sort__items'}>
-                    { props.items?.map(item => <button key={item.id} onClick={changeSort}>{item.title}</button>) }
+                    { props.items.length > 0 && props.items?.map(item => <button key={item.id} onClick={() => changeSort(item.type)}>{item.title}</button>) }
                 </div>
             </div>
 }
 
 export default Sorting
+
+type PropsType = {
+    items: ItemType[],
+    sortActive: string
+}
+
+type ItemType = {
+    id: number,
+    title: string,
+    type: string
+}
