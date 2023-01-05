@@ -4,6 +4,7 @@ import { setSortActive } from '../../../../redux/filterSlice'
 
 
 const Sorting: React.FC<PropsType> = props => {
+    
     const sortRef = useRef<HTMLDivElement>(null)
     const dispatch = useDispatch()
     const [sortShow, setSortShow] = useState<boolean>(false)
@@ -18,15 +19,16 @@ const Sorting: React.FC<PropsType> = props => {
         }
     }
 
-    const changeSort = (item: any) => {
+    const changeSort = (item: string) => {
         dispatch(setSortActive(item))
         setSortShow(false)
         document.body.removeEventListener('click', bodyClick)
     }
 
-    const bodyClick = (e: any) => {
-        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(!path.includes(sortRef.current)) {
+    const bodyClick = (e: MouseEvent) => {
+        const _e = e as BodyClickType
+        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(sortRef.current && !path.includes(sortRef.current)) {
             setSortShow(false)
             document.body.removeEventListener('click', bodyClick)
         }
@@ -55,3 +57,5 @@ type ItemType = {
     title: string,
     type: string
 }
+
+type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

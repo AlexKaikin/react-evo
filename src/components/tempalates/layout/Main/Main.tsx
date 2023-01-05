@@ -16,27 +16,27 @@ const   Products =      React.lazy(() => import('../../pages/Products/Products')
         
 
 
-const Main = props => {
+const Main: React.FC = props => {
     return  <main className='main'>
                 <Suspense fallback={<div className='container'>Загрузка...</div>}>
                     <Routes>
-                        <Route exact path='/' element={<Navigate to='/products' />} />
+                        <Route path='/' element={<Navigate to='/products' />} />
                         
-                        <Route exact path='/products' element={<Products />} />
-                        <Route exact path='/products/:id' element={<Product />} />
+                        <Route path='/products' element={<Products />} />
+                        <Route path='/products/:id' element={<Product />} />
 
-                        <Route exact path='/cart' element={<Cart />} />
-                        <Route exact path='/favorites' element={<Favorites />} />
-                        <Route exact path='/compare' element={<Compare />} />
+                        <Route path='/cart' element={<Cart />} />
+                        <Route path='/favorites' element={<Favorites />} />
+                        <Route path='/compare' element={<Compare />} />
 
-                        <Route exact path='/posts' element={<Posts />} />
+                        <Route path='/posts' element={<Posts />} />
 
-                        <Route exact path='/contacts' element={<Contacts />} />
+                        <Route path='/contacts' element={<Contacts />} />
 
-                        <Route exact path='/login' element={<Login />} />
-                        <Route exact path='/register' element={<Register />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
                         
-                        <Route exact path='/search' element={<Search />} />
+                        <Route path='/search' element={<Search />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
                 </Suspense>

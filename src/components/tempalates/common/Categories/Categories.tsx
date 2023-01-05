@@ -5,8 +5,9 @@ import { setCurrentPage } from '../../../../redux/productsSlice'
 
 
 const Categories: React.FC<PropsType> = props => {
+    
     const dispatch = useDispatch()
-    const categoryRef = useRef(null)
+    const categoryRef = useRef<HTMLDivElement>(null)
     const [categoryShow, setCategoryShow] = useState<boolean>(false)
     const categoryShowChange = () => {
         if(categoryShow){
@@ -17,16 +18,17 @@ const Categories: React.FC<PropsType> = props => {
             document.body.addEventListener('click', bodyClick)
         }
     }
-    const bodyClick = (e: any) => {
-        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(!path.includes(categoryRef.current)) {
+    const bodyClick = (e: MouseEvent) => {
+        const _e = e as BodyClickType
+        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(categoryRef.current && !path.includes(categoryRef.current)) {
             setCategoryShow(false)
             document.body.removeEventListener('click', bodyClick)
         }
     }
     
     // смена категории
-    const changeCategory = (item: any) => {
+    const changeCategory = (item: string) => {
         dispatch(setCurrentPage(1))
         dispatch(setCategoryActive(item))
         setCategoryShow(false)
@@ -63,3 +65,5 @@ type ItemType = {
     title: string,
     type: string
 }
+
+type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

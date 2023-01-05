@@ -10,6 +10,7 @@
 
             .form_btn {
                 background-color: $primary;
+                background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
                 border: 2px solid white;
                 color: white;
                 padding: 20px;

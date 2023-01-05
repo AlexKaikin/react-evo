@@ -52,5 +52,5 @@ export default Pagination
 type PropsType = {
     pagesCount: number,
     currentPage: number,
-    currentPageChange: any,
+    currentPageChange: (number: number) => void,
 }

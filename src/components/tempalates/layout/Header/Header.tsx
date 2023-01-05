@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 
 const Header: React.FC = props => {
-    const [authShow, setAuthShow] = useState(false)
+    const [authShow, setAuthShow] = useState<boolean>(false)
     
     const AuthShowChange = () => {
         if(authShow){
@@ -15,17 +15,18 @@ const Header: React.FC = props => {
         }
     }
 
-    const authRef = useRef<any>()
+    const authRef = useRef<HTMLDivElement>(null)
 
-    const bodyClick = (e: any) => {
-        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(!path.includes(authRef.current)) {
+    const bodyClick = (e: MouseEvent) => {
+        const _e = e as BodyClickType
+        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(authRef.current && !path.includes(authRef.current)) {
             setAuthShow(false)
             document.body.removeEventListener('click', bodyClick)
         }
     }
 
-    const [menuShow, setMenuShow] = useState(false)
+    const [menuShow, setMenuShow] = useState<boolean>(false)
     const menuShowChange = () => {
         if(menuShow){
             setMenuShow(false)
@@ -35,10 +36,11 @@ const Header: React.FC = props => {
             document.body.addEventListener('click', bodyClick2)
         }
     }
-    const menuRef = useRef<any>()
-    const bodyClick2 = (e: any) => {
-        const path = e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(!path.includes(menuRef.current)) {
+    const menuRef = useRef<HTMLElement>(null)
+    const bodyClick2 = (e: MouseEvent) => {
+        const _e = e as BodyClickType
+        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(menuRef.current && !path.includes(menuRef.current)) {
             setMenuShow(false)
             document.body.removeEventListener('click', bodyClick2)
         }
@@ -69,3 +71,5 @@ const Header: React.FC = props => {
 }
 
 export default Header
+
+type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

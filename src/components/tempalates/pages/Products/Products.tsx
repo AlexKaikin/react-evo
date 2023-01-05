@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import ContentLoader from 'react-content-loader'
 
 import Store from '../../layout/Store/Store'
@@ -9,19 +9,19 @@ import Pagination from '../../common/Pagination/Pagination'
 import Categories from '../../common/Categories/Categories'
 import Sorting from '../../common/Sorting/Sorting'
 import { filterSelector } from '../../../../redux/filterSlice'
+import { useAppDispatch } from '../../../../redux/store'
 
 
 const Products: React.FC = props => {
-    const dispatch = useDispatch()
-    const { productItems, isLoaded, currentPage, pagesCount } = useSelector(productsSelector)
+    const dispatch = useAppDispatch()
+    const { productItems, isLoaded, currentPage, pagesCount, error } = useSelector(productsSelector)
     const { categories, categoryActive, sortingItems, sortActive } = useSelector(filterSelector)
 
     // пагинация, смена страницы
     const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
     
     useEffect(() => {
-        dispatch(// @ts-ignore
-            getProducts(categoryActive, sortActive, currentPage))
+        dispatch(getProducts(categoryActive, sortActive, currentPage))
         window.scrollTo(0, 0)
     }, [dispatch, categoryActive, sortActive, currentPage])
 
@@ -35,7 +35,7 @@ const Products: React.FC = props => {
                 </div>
                 <div className='section products'>
                     <div className='container'>
-                        <ProductItems productItems={productItems} isLoaded={isLoaded} />
+                        <ProductItems productItems={productItems} isLoaded={isLoaded} error={error} />
                         <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
@@ -45,15 +45,16 @@ const Products: React.FC = props => {
 export default Products
 
 const ProductItems: React.FC<ProductItemsPropsType> = props => {
+    if(props.error) return  <>
+                                <div className='section__title'>Произошла ошибка</div>
+                                <p>К сожалению, не удалось загрузить товары</p>
+                            </>
     if(!props.isLoaded) return  <>
                                     {
                                         props.productItems.map(item => <ProductsLoader key={item.id} />)
                                     }
                                 </>
-    // if(props.isLoaded === 'error') return   <>
-    //                                             <div className='section__title'>Произошла ошибка</div>
-    //                                             <p>К сожалению, не удалось загрузить товары</p>
-    //                                         </>
+    
 
     return  <div className='products__items product'>
                 {
@@ -72,6 +73,7 @@ const ProductItems: React.FC<ProductItemsPropsType> = props => {
 type ProductItemsPropsType = {
     isLoaded: boolean,
     productItems: ProductItem[],
+    error: boolean,
 }
 
 type ProductItem = {
