@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useAppDispatch } from '../../../../../redux/store'
-import { getCart, storeSelector } from '../../../../../redux/storeSlice'
-import { getLocalStorage } from '../../../../../utils/utils'
+import { useAppDispatch } from '../../../../redux/store'
+import { getCart, storeSelector } from '../../../../redux/storeSlice'
+import { getLocalStorage } from '../../../../utils/utils'
+import Modal from '../../../common/Modal/Modal'
 import Store from '../../../layout/Store/Store'
 
 
 const Cart: React.FC = props => {
     const { cartItems, totalCost } = useSelector(storeSelector)
+    const [modalShow, setModalShow] = useState<boolean>(false)
+    const modaltoggle = () => {
+        setModalShow(!modalShow)
+    }
 
     return  <>
                  <Store />
@@ -24,13 +29,19 @@ const Cart: React.FC = props => {
                                     </div>
                                     <div className='cart__btn'>
                                         <Link to='/products' className='btn btn__prev'><i className="bi bi-chevron-left"></i> Вернуться назад</Link>
-                                        <Link to='#' className='btn btn__buy'>Оформить заказ</Link>
+                                        <Link onClick={() => setModalShow(true)} to='#' className='btn btn__buy'>Оформить заказ</Link>
                                     </div></>
                                 :   <div className='cart__items'>В корзине пусто</div>
                         }
                     </div>
                 </div>
-                 
+                {
+                    modalShow &&    <Modal title='Оформить заказ' modaltoggle={modaltoggle}>
+                                        <p>Оформить заказ может только зарегистрированный пользователь</p>
+                                        <p>У вас есть аккаунт? <Link to='/login'>Вход</Link></p>
+                                        <p>У вас нет аккаунта? <Link to='/register'>Регистрация</Link></p>
+                                    </Modal>
+                }
             </>
 }
 

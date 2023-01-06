@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setSortActive } from '../../../../redux/filterSlice'
+import { setSortActive } from '../../../redux/navigationSlice'
 
 
 const Sorting: React.FC<PropsType> = props => {

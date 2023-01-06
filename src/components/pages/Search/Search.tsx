@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import ContentLoader from 'react-content-loader'
 
 import Store from '../../layout/Store/Store'
 //import { setCategoryActive, setSortActive } from '../../../../redux/productsFilterSlice'
-import { getSearchQuery, searchSelector, setCurrentPage } from '../../../../redux/searchSlice'
+import { getSearchQuery, searchSelector, setCurrentPage } from '../../../redux/searchSlice'
 import Pagination from '../../common/Pagination/Pagination'
-import { useAppDispatch } from '../../../../redux/store'
+import { useAppDispatch } from '../../../redux/store'
+import ProductSkeleton from '../../common/Skeleton/ProductSkeleton'
 
 
 const Search: React.FC = props => {
     //const productsCategoryItems = useSelector(state => state.productsFilter.category)
     //const productsSortItems = useSelector(state => state.productsFilter.sort)
-    const { items, isLoaded, query, pagesCount, currentPage } = useSelector(searchSelector)
+    const { items, status, query, pagesCount, currentPage } = useSelector(searchSelector)
 
     // пагинация
     const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
@@ -40,7 +40,7 @@ const Search: React.FC = props => {
                 <div className='section products'>
                     <div className='container'>
                         <div className='section__title'>Результаты поиска по запросу «{query}»</div>
-                        <SearchItems items={items} isLoaded={isLoaded} />
+                        <SearchItems items={items} status={status} />
                         <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
@@ -50,7 +50,11 @@ const Search: React.FC = props => {
 export default Search
 
 const SearchItems: React.FC<PropsType> = props => {
-    if(!props.isLoaded) return <>{props.items.map(item => <ProductsLoader key={item.id} />)}</>
+    if(props.status === 'loading') {
+        return  <div className='products__items product'>
+                    { Array(8).fill('item').map((item, i) => <ProductSkeleton key={i} />)}
+                </div>
+    }
     if(props.items.length < 1) return <div>Товар не найден</div>
 
     return  <div className='products__items product'>
@@ -68,7 +72,7 @@ const SearchItems: React.FC<PropsType> = props => {
 }
 
 type PropsType = {
-    isLoaded: boolean,
+    status: string,
     items: Item[],
 }
 
@@ -81,18 +85,3 @@ type Item = {
     volume: number,
     volumeMeasurement: string,
 }
-
-const ProductsLoader: React.FC = props => (
-    <ContentLoader 
-      speed={2}
-      width={175}
-      height={175}
-      viewBox="0 0 175 175"
-      backgroundColor="#f3f3f3"
-      foregroundColor="#ecebeb"
-      {...props}
-    >
-      <circle cx="87" cy="62" r="60" /> 
-      <rect x="27" y="138" rx="5" ry="5" width="118" height="23" />
-    </ContentLoader>
-  )

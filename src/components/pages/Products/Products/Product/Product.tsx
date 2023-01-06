@@ -2,15 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import Store from '../../../layout/Store/Store'
+import Store from '../../../../layout/Store/Store'
 import { getProduct, productsSelector } from '../../../../../redux/productsSlice'
 import { getCart, getCompare, getFavorites, storeSelector } from '../../../../../redux/storeSlice'
 import { useAppDispatch } from '../../../../../redux/store'
 import { getLocalStorage } from '../../../../../utils/utils'
+import ProductFullSkeleton from '../../../../common/Skeleton/ProductFullSkeleton'
 
 
 const Product: React.FC = props => {
-    const { productItem, isLoaded, error } = useSelector(productsSelector) // получить товар, индикатор загрузки
+    const { productItem, status } = useSelector(productsSelector) // получить товар, индикатор загрузки
 
     const { compareItems, favoritesItems } = useSelector(storeSelector) // получить товары для сранения, избранные
 
@@ -176,13 +177,16 @@ const Product: React.FC = props => {
         setCost(productItem.price) // синхронизация цены
     }, [dispatch, productItem.id, productId, productItem.price, productItem.imgUrl])
 
-    if(error) return    <>
-                            <Store />
-                            <div className='section__title'>Произошла ошибка</div>
-                            <p>К сожалению, не удалось загрузить товар</p>
-                        </>
+    if(status === 'error') return   <>
+                                        <Store />
+                                        <div className='section__title'>Произошла ошибка</div>
+                                        <p>К сожалению, не удалось загрузить товар</p>
+                                    </>
     
-    if(!isLoaded) return <Store />
+    if(status === 'loading') return <>
+                                        <Store />
+                                        <ProductFullSkeleton />
+                                    </>
 
     return  <>
                 <Store />

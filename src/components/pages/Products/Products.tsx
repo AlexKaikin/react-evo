@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import ContentLoader from 'react-content-loader'
 
 import Store from '../../layout/Store/Store'
-import { getProducts, productsSelector, setCurrentPage } from '../../../../redux/productsSlice'
+import { getProducts, productsSelector, setCurrentPage } from '../../../redux/productsSlice'
 import Pagination from '../../common/Pagination/Pagination'
 import Categories from '../../common/Categories/Categories'
 import Sorting from '../../common/Sorting/Sorting'
-import { filterSelector } from '../../../../redux/filterSlice'
-import { useAppDispatch } from '../../../../redux/store'
+import { navigationSelector } from '../../../redux/navigationSlice'
+import { useAppDispatch } from '../../../redux/store'
+import ProductSkeleton from '../../common/Skeleton/ProductSkeleton'
 
 
 const Products: React.FC = props => {
     const dispatch = useAppDispatch()
-    const { productItems, isLoaded, currentPage, pagesCount, error } = useSelector(productsSelector)
-    const { categories, categoryActive, sortingItems, sortActive } = useSelector(filterSelector)
+    const { productItems, currentPage, pagesCount, status } = useSelector(productsSelector)
+    const { navigation, categoryActive, sortActive } = useSelector(navigationSelector)
+    const categories = navigation.find(item => item.title === 'Магазин')?.filter
+    const sortingItems = navigation.find(item => item.title === 'Магазин')?.sort
 
     // пагинация, смена страницы
     const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
@@ -29,13 +31,13 @@ const Products: React.FC = props => {
                 <Store />
                 <div className='section filter'>
                     <div className='container'>
-                        <Categories items={categories} categoryActive={categoryActive} />
-                        <Sorting items={sortingItems} sortActive={sortActive} />
+                        { categories && <Categories items={categories} categoryActive={categoryActive} /> }
+                        { sortingItems && <Sorting items={sortingItems} sortActive={sortActive} /> }
                     </div>
                 </div>
                 <div className='section products'>
                     <div className='container'>
-                        <ProductItems productItems={productItems} isLoaded={isLoaded} error={error} />
+                        <ProductItems productItems={productItems} status={status} />
                         <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
@@ -45,15 +47,15 @@ const Products: React.FC = props => {
 export default Products
 
 const ProductItems: React.FC<ProductItemsPropsType> = props => {
-    if(props.error) return  <>
+    if(props.status === 'error') return  <>
                                 <div className='section__title'>Произошла ошибка</div>
                                 <p>К сожалению, не удалось загрузить товары</p>
                             </>
-    if(!props.isLoaded) return  <>
-                                    {
-                                        props.productItems.map(item => <ProductsLoader key={item.id} />)
-                                    }
-                                </>
+    if(props.status === 'loading') {
+        return  <div className='products__items product'>
+                    { Array(8).fill('item').map((item, i) => <ProductSkeleton key={i} />)}
+                </div>
+    }
     
 
     return  <div className='products__items product'>
@@ -71,9 +73,8 @@ const ProductItems: React.FC<ProductItemsPropsType> = props => {
 }
 
 type ProductItemsPropsType = {
-    isLoaded: boolean,
     productItems: ProductItem[],
-    error: boolean,
+    status: string,
 }
 
 type ProductItem = {
@@ -85,18 +86,3 @@ type ProductItem = {
     volume: number,
     volumeMeasurement: string,
 }
-
-const ProductsLoader: React.FC = (props) => (
-    <ContentLoader 
-      speed={2}
-      width={175}
-      height={175}
-      viewBox="0 0 175 175"
-      backgroundColor="#f3f3f3"
-      foregroundColor="#ecebeb"
-      {...props}
-    >
-      <circle cx="87" cy="62" r="60" /> 
-      <rect x="27" y="138" rx="5" ry="5" width="118" height="23" />
-    </ContentLoader>
-  )

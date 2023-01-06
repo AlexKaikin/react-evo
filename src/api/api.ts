@@ -33,6 +33,12 @@ export const searchAPI = {
     },
 }
 
+export const navigationhAPI = {
+    getNavigation(){
+        return instance.get<any>(`navigation`)
+    },
+}
+
 type ItemType = {
     id: number,
     title: string,
@@ -55,3 +61,7 @@ type ItemType = {
     town: string,
     year: number,
   }
+
+//   type NavigateType = {
+
+//   }

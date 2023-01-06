@@ -6,7 +6,7 @@ import { RootState } from './store'
 const initialState: SearchType = {
   items: [],
   query: '',
-  isLoaded: false,  // индикатор загрузки товаров/товара
+  status: 'loading', // статус загрузки товаров/товара loading, success, error
 
   pagesCount: 0,    // количество страниц товаров
   totalItems: 0,    // количество товаров на сервере
@@ -20,10 +20,10 @@ export const searchSlice = createSlice({
   reducers: {
     setSearchQuery: (state, action: PayloadAction<ItemType[]>) => {
       state.items = action.payload
-      state.isLoaded = true
+      state.status = 'success'
     },
-    setLoaded: (state, action: PayloadAction<boolean>) => {
-      state.isLoaded = action.payload
+    setStatus: (state, action: PayloadAction<string>) => {
+      state.status = action.payload
     },
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload
@@ -39,7 +39,7 @@ export const searchSlice = createSlice({
 })
 
 // Action
-export const { setSearchQuery, setLoaded, setQuery, setTotalItems, setCurrentPage } = searchSlice.actions
+export const { setSearchQuery, setStatus, setQuery, setTotalItems, setCurrentPage } = searchSlice.actions
 
 export default searchSlice.reducer
 
@@ -47,19 +47,24 @@ export default searchSlice.reducer
 export const searchSelector = (state: RootState) => state.search
 
 // thunk
-export const getSearchQuery = (searchValue: string, currentPage: number) => (dispatch: Function) => {
-  dispatch(setLoaded(false))
-  searchAPI.getSearchQuery(searchValue, currentPage, initialState.limitItems).then(res => {
+export const getSearchQuery = (searchValue: string, currentPage: number) => async (dispatch: Function) => {
+  dispatch(setStatus('loading'))
+  try{
+    const res = await searchAPI.getSearchQuery(searchValue, currentPage, initialState.limitItems)
     dispatch(setSearchQuery(res.data))
     res.headers['x-total-count'] && dispatch(setTotalItems(res.headers['x-total-count']))
-  })
-  dispatch(setQuery(searchValue))
+    dispatch(setQuery(searchValue))
+  } catch(err){
+    dispatch(setStatus('error'))
+    console.log(err)
+  }
+  
 }
 
 interface SearchType {
   items: ItemType[],
   query: string,
-  isLoaded: boolean, 
+  status: string, 
   pagesCount: number,
   totalItems: number,
   limitItems: number,

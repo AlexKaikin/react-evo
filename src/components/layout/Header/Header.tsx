@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { navigationSelector } from '../../../redux/navigationSlice'
 
 
 const Header: React.FC = props => {
     const [authShow, setAuthShow] = useState<boolean>(false)
+    const { navigation } = useSelector(navigationSelector)
     
     const AuthShowChange = () => {
         if(authShow){
@@ -51,10 +54,7 @@ const Header: React.FC = props => {
                     <div className='header__logo'>EVO</div>
                     <nav ref={menuRef} className='header__nav nav'>
                         <ul className={menuShow ? 'nav__items show' : 'nav__items'}>
-                            <li className='nav__item'><NavLink to="/" onClick={menuShowChange} className='nav__link'>Главная</NavLink></li>
-                            <li className='nav__item'><NavLink to="/products" onClick={menuShowChange} className='nav__link'>Магазин</NavLink></li>
-                            <li className='nav__item'><NavLink to="/posts" onClick={menuShowChange} className='nav__link'>Блог</NavLink></li>
-                            <li className='nav__item'><NavLink to="/contacts" onClick={menuShowChange} className='nav__link'>Контакты</NavLink></li>
+                            <Nav items={navigation} menuShowChange={menuShowChange} />
                         </ul>
                         <button onClick={menuShowChange} className='mobile__menu'><i className="bi bi-list"></i> Меню</button>
                     </nav>
@@ -73,3 +73,22 @@ const Header: React.FC = props => {
 export default Header
 
 type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event
+
+const Nav: React.FC<PropsType> = props => {
+    return  <>
+                {
+                    props.items.map(item => <li key={item.id} className='nav__item'><NavLink to={item.url} onClick={props.menuShowChange} className='nav__link'>{item.title}</NavLink></li>)
+                }
+            </>
+}
+
+type PropsType = {
+    items: NavigationItemType[],
+    menuShowChange: () => void,
+}
+
+type NavigationItemType = {
+    id: number, 
+    title: string, 
+    url: string,
+  }

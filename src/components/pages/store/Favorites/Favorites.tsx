@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Store from '../../../layout/Store/Store'
-import { storeSelector } from '../../../../../redux/storeSlice'
+import { storeSelector } from '../../../../redux/storeSlice'
 
 
 const Favorites: React.FC = props => {

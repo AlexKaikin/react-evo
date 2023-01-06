@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setCategoryActive } from '../../../../redux/filterSlice'
-import { setCurrentPage } from '../../../../redux/productsSlice'
+import { setCategoryActive } from '../../../redux/navigationSlice'
+import { setCurrentPage } from '../../../redux/productsSlice'
 
 
 const Categories: React.FC<PropsType> = props => {

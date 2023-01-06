@@ -1,4 +1,23 @@
 {
+    "navigation": [
+        {"id": 1, "title": "Главная", "url": "/"},
+        {"id": 2, "title": "Магазин", "url": "/products",
+          "filter": [
+            { "id": 1, "title": "Все чаи", "type": "all" }, 
+            { "id": 2, "title": "Красные", "type": "red" }, 
+            { "id": 3, "title": "Зелёные", "type": "green" }, 
+            { "id": 4, "title": "Белые", "type": "white" }
+          ],
+          "sort": [
+            { "id": 1, "title": "новые", "type": "new" }, 
+            { "id": 2, "title": "популярные", "type": "pop" }, 
+            { "id": 3, "title": "убывание цены", "type": "priceDecrease" }, 
+            { "id": 4, "title": "возрастание цены", "type": "priceIncrease" }
+          ]
+        },
+        {"id": 3, "title": "Блог", "url": "/posts"},
+        {"id": 4, "title": "Контакты", "url": "/contacts"}
+    ],
     "products": [
         {
             "id": 1,

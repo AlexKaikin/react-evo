@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '../../../../redux/store'
-import { getCart, getStore, storeSelector } from '../../../../redux/storeSlice'
-import { getLocalStorage } from '../../../../utils/utils'
+import { useAppDispatch } from '../../../redux/store'
+import { getCart, getStore, storeSelector } from '../../../redux/storeSlice'
+import { getLocalStorage } from '../../../utils/utils'
 
 
 const Store: React.FC = props => {
@@ -43,6 +43,7 @@ const Store: React.FC = props => {
     const searchClick = (e: React.MouseEvent<HTMLButtonElement>, searchValue: string) => {
         e.preventDefault()
         if(searchValue !== '') {
+            setSearchValue('')
             navigate(`/search/?q=${searchValue}`)
         } else {
             const error = '<p class="error">Пожалуйста, введите запрос</p>'
