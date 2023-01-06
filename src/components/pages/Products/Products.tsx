@@ -16,8 +16,8 @@ const Products: React.FC = props => {
     const dispatch = useAppDispatch()
     const { productItems, currentPage, pagesCount, status } = useSelector(productsSelector)
     const { navigation, categoryActive, sortActive } = useSelector(navigationSelector)
-    const categories = navigation.find(item => item.title === 'Магазин')?.filter
-    const sortingItems = navigation.find(item => item.title === 'Магазин')?.sort
+    const categories = navigation.find(item => item.url === '/products')?.filter
+    const sortingItems = navigation.find(item => item.url === '/products')?.sort
 
     // пагинация, смена страницы
     const currentPageChange = (number: number) => dispatch(setCurrentPage(number))

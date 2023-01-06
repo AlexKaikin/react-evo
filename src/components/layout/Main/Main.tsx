@@ -18,7 +18,7 @@ const   Products =      React.lazy(() => import('../../pages/Products/Products')
 
 const Main: React.FC = props => {
     return  <main className='main'>
-                <Suspense fallback={<div className='container'>Загрузка...</div>}>
+                <Suspense>
                     <Routes>
                         <Route path='/' element={<Navigate to='/products' />} />
                         

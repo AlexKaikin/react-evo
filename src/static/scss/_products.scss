@@ -89,14 +89,15 @@
         .product__title {
           background-color: #e1e1e1;
           color: #e1e1e1;
-          border-radius: 5px;
+          border-radius: 10px;
+          margin: 10px 10px;
         }
 
         .product__price {
           span {
             background-color: #e1e1e1;
             color: #e1e1e1;
-            border-radius: 5px;
+            border-radius: 10px;
           }
         }
       }
