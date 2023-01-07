@@ -8,6 +8,7 @@ import { getSearchQuery, searchSelector, setCurrentPage } from '../../../redux/s
 import Pagination from '../../common/Pagination/Pagination'
 import { useAppDispatch } from '../../../redux/store'
 import ProductSkeleton from '../../common/Skeleton/ProductSkeleton'
+import { ProductItemType } from '../../../redux/productsSlice'
 
 
 const Search: React.FC = props => {
@@ -73,15 +74,5 @@ const SearchItems: React.FC<PropsType> = props => {
 
 type PropsType = {
     status: string,
-    items: Item[],
-}
-
-type Item = {
-    id: number,
-    imgUrl: string,
-    title: string,
-    price: number,
-    currency: string,
-    volume: number,
-    volumeMeasurement: string,
+    items: ProductItemType[],
 }

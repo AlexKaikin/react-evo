@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useAppDispatch } from '../../../../redux/store'
-import { getCart, storeSelector } from '../../../../redux/storeSlice'
+import { CartItemType, getCart, storeSelector } from '../../../../redux/storeSlice'
 import { getLocalStorage } from '../../../../utils/utils'
 import Modal from '../../../common/Modal/Modal'
 import Store from '../../../layout/Store/Store'
@@ -123,13 +123,4 @@ const CartItems: React.FC<PropsType> = props => {
 
 type PropsType = {
     cartItems: CartItemType[] 
-}
-
-type CartItemType = {
-    id: number, 
-    imgUrl: string,
-    title: string,
-    cost: number,
-    quantity: number,
-    price: number,
 }

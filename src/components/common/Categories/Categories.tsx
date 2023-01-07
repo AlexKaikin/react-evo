@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setCategoryActive } from '../../../redux/navigationSlice'
+import { CategoryItemType, setCategoryActive } from '../../../redux/navigationSlice'
 import { setCurrentPage } from '../../../redux/productsSlice'
 
 
@@ -39,14 +39,14 @@ const Categories: React.FC<PropsType> = props => {
                 <button onClick={categoryShowChange} className='category__mobile'>
                     <i className="bi bi-folder2-open"></i> 
                     <span>
-                        { props.items?.map(item => item.type === props.categoryActive && item.title) }
+                        { props.items?.map(item => item.title === props.categoryActive && item.title) }
                     </span>
                 </button>
                 <div className={categoryShow ? 'category__items show': 'category__items' }>
                     { 
                         props.items?.map(item => {
-                            return  <button key={item.id} className={ item.type === props.categoryActive ? 'btn active' : 'btn'}
-                                        onClick={() => changeCategory(item.type)}>{item.title}</button>
+                            return  <button key={item.id} className={ item.title === props.categoryActive ? 'btn active' : 'btn'}
+                                        onClick={() => changeCategory(item.title)}>{item.title}</button>
                         }) 
                     }
                 </div>
@@ -56,14 +56,8 @@ const Categories: React.FC<PropsType> = props => {
 export default Categories
 
 type PropsType = {
-    items: ItemType[],
+    items: CategoryItemType[],
     categoryActive: string
-}
-
-type ItemType = {
-    id: number,
-    title: string,
-    type: string
 }
 
 type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

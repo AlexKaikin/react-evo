@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useAppDispatch } from '../../../../redux/store'
-import { getCompare, storeSelector } from '../../../../redux/storeSlice'
+import { CompareItemType, getCompare, storeSelector } from '../../../../redux/storeSlice'
 import { getLocalStorage } from '../../../../utils/utils'
 import Store from '../../../layout/Store/Store'
 
@@ -93,18 +93,4 @@ const CompareItems: React.FC<PropsType> = props => {
 
 type PropsType = {
     compareItems: CompareItemType[] 
-}
-
-type CompareItemType = {
-    id: number, 
-    imgUrl: string,
-    title: string,
-    property: PropertyType,
-    text: string[]
-}
-
-type PropertyType = {
-    country: string,
-    town: string,
-    year: number,
 }

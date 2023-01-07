@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchAPI } from '../api/api'
+import { ProductItemType } from './productsSlice'
 import { RootState } from './store'
 
 
@@ -18,7 +19,7 @@ export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setSearchQuery: (state, action: PayloadAction<ItemType[]>) => {
+    setSearchQuery: (state, action: PayloadAction<ProductItemType[]>) => {
       state.items = action.payload
       state.status = 'success'
     },
@@ -62,27 +63,11 @@ export const getSearchQuery = (searchValue: string, currentPage: number) => asyn
 }
 
 interface SearchType {
-  items: ItemType[],
+  items: ProductItemType[],
   query: string,
   status: string, 
   pagesCount: number,
   totalItems: number,
   limitItems: number,
   currentPage: number,
-}
-
-type ItemType = {
-  id: number,
-  title: string,
-  imgUrl: string,
-  galleryUrl: string[],
-  volume: number,
-  volumeMeasurement: string,
-  currency: string,
-  price: number,
-  category: string,
-  rating: number,
-  text: string[],
-  cost: number,
-  quantity: number,
 }

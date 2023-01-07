@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setSortActive } from '../../../redux/navigationSlice'
+import { setSortActive, SortItemType } from '../../../redux/navigationSlice'
 
 
 const Sorting: React.FC<PropsType> = props => {
@@ -48,14 +48,8 @@ const Sorting: React.FC<PropsType> = props => {
 export default Sorting
 
 type PropsType = {
-    items: ItemType[],
+    items: SortItemType[],
     sortActive: string
-}
-
-type ItemType = {
-    id: number,
-    title: string,
-    type: string
 }
 
 type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

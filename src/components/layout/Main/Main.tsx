@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 
 const   Products =      React.lazy(() => import('../../pages/Products/Products')),
-        Product =       React.lazy(() => import('../../pages/Products/Products/Product/Product')),
+        Product =       React.lazy(() => import('../../pages/Products/Product/Product')),
         Posts =         React.lazy(() => import('../../pages/Posts/Posts')),
         Cart =          React.lazy(() => import('../../pages/store/Cart/Cart')),
         Compare =       React.lazy(() => import('../../pages/store/Compare/Compare')),

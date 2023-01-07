@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getLocalStorage } from '../utils/utils'
+import { ProductItemType } from './productsSlice'
 import { RootState } from './store'
 
 
@@ -19,14 +20,14 @@ export const cartSlice = createSlice({
   name: 'store',
   initialState,
   reducers: {
-    setCart: (state, action: PayloadAction<ItemType[]>) => {
+    setCart: (state, action: PayloadAction<CartItemType[]>) => {
       state.cartItems = action.payload || []
-      state.totalCost = action.payload?.reduce((totalCost: number, item: ItemType) => totalCost + item.cost , 0)
+      state.totalCost = action.payload?.reduce((totalCost: number, item: CartItemType) => totalCost + item.cost , 0)
     },
-    setCompare: (state, action: PayloadAction<ItemType[]>) => {
+    setCompare: (state, action: PayloadAction<CartItemType[]>) => {
       state.compareItems = action.payload || []
     },
-    setFavorites: (state, action: PayloadAction<ItemType[]>) => {
+    setFavorites: (state, action: PayloadAction<CartItemType[]>) => {
       state.favoritesItems = action.payload || []
     },
   },
@@ -60,13 +61,13 @@ export const getFavorites = () => (dispatch: Function) => {
 }
 
 interface StoreType {
-  cartItems: ItemType[],
+  cartItems: CartItemType[],
   totalCost: number,
-  compareItems: ItemType[],
-  favoritesItems: ItemType[],
+  compareItems: CompareItemType[],
+  favoritesItems: FavoriteItemType[],
 }
 
-type ItemType = {
+export type CartItemType = {
   id: number,
   title: string,
   imgUrl: string,
@@ -88,3 +89,7 @@ type PropertyType = {
   town: string,
   year: number,
 }
+
+export type CompareItemType = ProductItemType
+
+export type FavoriteItemType = ProductItemType

@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Store from '../../layout/Store/Store'
-import { getProducts, productsSelector, setCurrentPage } from '../../../redux/productsSlice'
+import { getProducts, ProductItemType, productsSelector, setCurrentPage } from '../../../redux/productsSlice'
 import Pagination from '../../common/Pagination/Pagination'
 import Categories from '../../common/Categories/Categories'
 import Sorting from '../../common/Sorting/Sorting'
 import { navigationSelector } from '../../../redux/navigationSlice'
 import { useAppDispatch } from '../../../redux/store'
 import ProductSkeleton from '../../common/Skeleton/ProductSkeleton'
+import CreateProductForm from './Crud/CreateProductForm'
 
 
 const Products: React.FC = props => {
@@ -21,6 +22,14 @@ const Products: React.FC = props => {
 
     // пагинация, смена страницы
     const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
+
+    // показать/скрыть CRUD операции
+    const [crudShow, setCrudShow] = useState(false)
+    const crudToggleClick = () => setCrudShow(!crudShow)
+    // показать/скрыть модальное окно создания товара     
+    const [createProductShow, setCreateProductShow] = useState<boolean>(false)
+    const modaltoggle = () => setCreateProductShow(!createProductShow)
+    
     
     useEffect(() => {
         dispatch(getProducts(categoryActive, sortActive, currentPage))
@@ -41,16 +50,23 @@ const Products: React.FC = props => {
                         <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
+                <div className='crud'>
+                    { crudShow && (<button onClick={() => setCreateProductShow(true)}><i className="bi bi-file-plus"></i></button>) }
+                    <button onClick={crudToggleClick}><i className="bi bi-three-dots-vertical"></i></button>
+                </div>
+                { createProductShow && <CreateProductForm modaltoggle={modaltoggle} /> }
             </>
 }
 
 export default Products
 
-const ProductItems: React.FC<ProductItemsPropsType> = props => {
-    if(props.status === 'error') return  <>
-                                <div className='section__title'>Произошла ошибка</div>
-                                <p>К сожалению, не удалось загрузить товары</p>
-                            </>
+const ProductItems: React.FC<PropsType> = props => {
+    if(props.status === 'error') {
+        return  <>
+                    <div className='section__title'>Произошла ошибка</div>
+                    <p>К сожалению, не удалось загрузить товары</p>
+                </>
+    }
     if(props.status === 'loading') {
         return  <div className='products__items product'>
                     { Array(8).fill('item').map((item, i) => <ProductSkeleton key={i} />)}
@@ -72,17 +88,8 @@ const ProductItems: React.FC<ProductItemsPropsType> = props => {
             </div>
 }
 
-type ProductItemsPropsType = {
-    productItems: ProductItem[],
+type PropsType = {
+    productItems: ProductItemType[],
     status: string,
 }
 
-type ProductItem = {
-    id: number,
-    imgUrl: string,
-    title: string,
-    price: number,
-    currency: string,
-    volume: number,
-    volumeMeasurement: string,
-}

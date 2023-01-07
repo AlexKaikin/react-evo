@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import Store from '../../../../layout/Store/Store'
-import { getProduct, productsSelector } from '../../../../../redux/productsSlice'
-import { getCart, getCompare, getFavorites, storeSelector } from '../../../../../redux/storeSlice'
-import { useAppDispatch } from '../../../../../redux/store'
-import { getLocalStorage } from '../../../../../utils/utils'
-import ProductFullSkeleton from '../../../../common/Skeleton/ProductFullSkeleton'
+import Store from '../../../layout/Store/Store'
+import { getProduct, productsSelector } from '../../../../redux/productsSlice'
+import { CartItemType, CompareItemType, FavoriteItemType, getCart, getCompare, getFavorites, storeSelector } from '../../../../redux/storeSlice'
+import { useAppDispatch } from '../../../../redux/store'
+import { getLocalStorage } from '../../../../utils/utils'
+import ProductFullSkeleton from '../../../common/Skeleton/ProductFullSkeleton'
+import CreateProductForm from '../Crud/CreateProductForm'
+import UpdateProductForm from '../Crud/UpdateProductForm'
+import DeleteProductForm from '../Crud/DeleteProductForm'
 
 
 const Product: React.FC = props => {
@@ -128,9 +131,8 @@ const Product: React.FC = props => {
     const addCartClick = () => {
         const cartItems: CartItemType[] = getLocalStorage('cart') // запросить localStorage
         const findProduct = cartItems.find(item => item.id === productItem.id) // проверить наличие товара в корзине
-        let  {text, galleryUrl, ...product} = productItem // создание товара
-        product = {
-            ...product,
+        const product = { // создание товара
+            ...productItem,
             quantity: quantity,
             cost: cost
         }
@@ -171,22 +173,44 @@ const Product: React.FC = props => {
     const dispatch = useAppDispatch()
     const productId: string | undefined = useParams().id // получить id товара из url
 
+    // показать/скрыть CRUD операции
+    const [crudShow, setCrudShow] = useState(false)
+    const crudToggleClick = () => setCrudShow(!crudShow)
+
+    // показать/скрыть модальное окно создать товар
+    const [createProductShow, setCreateProductShow] = useState<boolean>(false)
+    const createModaltoggle = () => setCreateProductShow(!createProductShow)
+
+    // показать/скрыть модальное окно обновить товар
+    const [updateProductShow, setUpdateProductShow] = useState<boolean>(false)
+    const updateModaltoggle = () => setUpdateProductShow(!updateProductShow)
+
+    // показать/скрыть модальное окно удалить товар
+    const [deleteProductShow, setDeleteProductShow] = useState<boolean>(false)
+    const deleteModaltoggle = () => setDeleteProductShow(!deleteProductShow)
+
+
     useEffect(() => {
         if(productId !== undefined && productItem.id !== +productId) dispatch(getProduct(+productId)) // получить товар
         setImgActive(productItem.imgUrl)
         setCost(productItem.price) // синхронизация цены
+        window.scrollTo(0, 0)
     }, [dispatch, productItem.id, productId, productItem.price, productItem.imgUrl])
 
-    if(status === 'error') return   <>
-                                        <Store />
-                                        <div className='section__title'>Произошла ошибка</div>
-                                        <p>К сожалению, не удалось загрузить товар</p>
-                                    </>
+    if(status === 'error') {
+        return  <>
+                    <Store />
+                    <div className='section__title'>Произошла ошибка</div>
+                    <p>К сожалению, не удалось загрузить товар</p>
+                </>
+    }
     
-    if(status === 'loading') return <>
-                                        <Store />
-                                        <ProductFullSkeleton />
-                                    </>
+    if(status === 'loading') {
+        return  <>
+                    <Store />
+                    <ProductFullSkeleton />
+                </>
+    }
 
     return  <>
                 <Store />
@@ -263,39 +287,21 @@ const Product: React.FC = props => {
                         </div>
                     </div>
                 </div>
+                <div className='crud'>
+                    {
+                        crudShow && <>
+                                        <button onClick={() => setCreateProductShow(true)}><i className="bi bi-file-plus"></i></button>
+                                        <button onClick={() => setUpdateProductShow(true)}><i className="bi bi-pencil-square"></i></button>
+                                        <button onClick={() => setDeleteProductShow(true)}><i className="bi bi-trash3"></i></button>
+                                    </>
+                    }
+                    <button onClick={crudToggleClick}><i className="bi bi-three-dots-vertical"></i></button>
+                </div>
+
+                { createProductShow && <CreateProductForm modaltoggle={createModaltoggle} /> }
+                { updateProductShow && <UpdateProductForm item={productItem} modaltoggle={updateModaltoggle} /> }
+                { deleteProductShow && <DeleteProductForm id={productItem.id} modaltoggle={deleteModaltoggle} /> }
             </>
 }
 
 export default Product
-
-type CompareItemType = {
-    id: number,
-    imgUrl: string,
-    title: string,
-    price: number,
-    currency: string,
-    volume: number,
-    volumeMeasurement: string,
-}
-
-type FavoriteItemType = {
-    id: number,
-    imgUrl: string,
-    title: string,
-    price: number,
-    currency: string,
-    volume: number,
-    volumeMeasurement: string,
-}
-
-type CartItemType = {
-    id: number,
-    imgUrl: string,
-    title: string,
-    price: number,
-    currency: string,
-    volume: number,
-    volumeMeasurement: string,
-    quantity: number,
-    cost: number,
-}

@@ -82,6 +82,16 @@ p {
   border-radius: 30px;
   transition: all .5s ease 0s;
 
+  &.btn-light {
+    color: black;
+    background: linear-gradient(141deg, $light 0%, $white 100%);
+  }
+
+  &.btn-warning {
+    color: white;
+    background: linear-gradient(141deg, $dark 0%, $darkLight 100%);
+  }
+
   &:hover {
     background-color: $primary;
     border: 2px solid white;
@@ -110,10 +120,104 @@ p {
       background-color: #f0f0f0;
       background: linear-gradient(141deg, $light 0%, $white 100%);
     }
+
+    textarea {
+      height: 150px;
+    }
+  }
+
+  .form__select{
+    position: relative;
+    margin-bottom: 20px;
+
+    label{
+      position: absolute;
+      font-size: 13px;
+      top: 3px;
+      left: 10px;
+      opacity: .5;
+    }
+
+    select{
+      font-size: inherit;
+      padding: 30px 10px 14px 10px;
+      transition: all .5s ease 0s;
+      width: 100%;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+      background: linear-gradient(141deg, $light 0%, $white 100%);
+    }
   }
 
   .form__checkbox {
     margin-bottom: 20px;
+  }
+}
+
+.button-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.form.create-product {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .form__left, .form__right {
+    flex: 0 0 45%;
+
+    @media only screen and (max-width : 600px) {
+      flex: 0 0 100%;
+    }
+  }
+
+  .form__full{
+    flex: 0 0 100%;
+
+    button {
+      background-color: $primary;
+      background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+      border: 2px solid white;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      transition: all .5s ease 0s;
+
+      &:hover {
+          background-color: $primary;
+          border: 2px solid white;
+          box-shadow: 0 0 0 3px $primary;
+      }
+    }
+
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.crud {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  button {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #e1e1e1;
+    background: linear-gradient(141deg, rgb(224, 224, 224) 0%, rgb(255, 255, 255) 100%);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.5s ease 0s;
+    margin-top: 10px;
   }
 }
 

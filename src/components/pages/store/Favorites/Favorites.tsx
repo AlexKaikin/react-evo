@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Store from '../../../layout/Store/Store'
-import { storeSelector } from '../../../../redux/storeSlice'
+import { FavoriteItemType, storeSelector } from '../../../../redux/storeSlice'
 
 
 const Favorites: React.FC = props => {
@@ -42,12 +42,5 @@ const ProductItems: React.FC<PropsType> = props => {
 }
 
 type PropsType = {
-    favoritesItems: FavoritesItem[],
-}
-
-type FavoritesItem = {
-    id: number,
-    imgUrl: string,
-    title: string,
-    price: number,
+    favoritesItems: FavoriteItemType[],
 }

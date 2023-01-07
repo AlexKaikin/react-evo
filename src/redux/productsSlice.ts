@@ -18,8 +18,7 @@ const initialState: ProductsType = {
     rating: 1,
     property: {country: 'string', town: 'string', year: 1},
     text: ['string[]'],
-    cost: 1,
-    quantity: 1},
+    },
 
   // статус загрузки товаров/товара
   status: 'loading', // loading, success, error
@@ -35,11 +34,11 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    setProducts: (state, action: PayloadAction<ItemType[]>) => {
+    setProducts: (state, action: PayloadAction<ProductItemType[]>) => {
       state.productItems = action.payload
       state.status = 'success'
     },
-    setProduct: (state, action: PayloadAction<ItemType>) => {
+    setProduct: (state, action: PayloadAction<ProductItemType>) => {
       state.productItem = action.payload
       state.status = 'success'
     },
@@ -68,7 +67,6 @@ export const productsSelector = (state: RootState) => state.products
 // загрузка товаров
 export const getProducts = (categoryActive: string, sortActive: string, currentPage: number) => async (dispatch: Function) => {
   dispatch(setStatus('loading'))
-  
   try {
     const res = await productsAPI.getProducts(categoryActive, sortActive, currentPage, initialState.limitItems)
     dispatch(setProducts(res.data))
@@ -91,9 +89,39 @@ export const getProduct = (id: number) => async (dispatch: Function) => {
   }
 }
 
+// создать товар
+export const createProduct = (data: ProductItemType) => async (dispatch: Function) => {
+  try {
+      console.log(data)
+      //const res = await productsAPI.createProduct(data)
+  } catch (err) {
+      console.log(err)
+  }
+}
+
+// обновить товар
+export const updateProduct = (data: ProductItemType) => async (dispatch: Function) => {
+  try {
+      console.log(data)
+      //const res = await productsAPI.updateProduct(data)
+  } catch (err) {
+      console.log(err)
+  }
+}
+
+// удалить товар
+export const deleteProduct = (id: number) => async (dispatch: Function) => {
+  try {
+      console.log('delete')
+      //const res = await productsAPI.deleteProduct(id)
+  } catch (err) {
+      console.log(err)
+  }
+}
+
 interface ProductsType {
-  productItems: ItemType[],
-  productItem: ItemType,
+  productItems: ProductItemType[],
+  productItem: ProductItemType,
   pagesCount: number,
   totalItems: number,
   limitItems: number,
@@ -101,7 +129,7 @@ interface ProductsType {
   status: string,
 }
 
-type ItemType = {
+export type ProductItemType = {
   id: number,
   title: string,
   imgUrl: string,
@@ -114,8 +142,8 @@ type ItemType = {
   rating: number,
   property: PropertyType,
   text: string[],
-  cost: number,
-  quantity: number,
+  //cost: number,
+  //quantity: number,
 }
 
 type PropertyType = {

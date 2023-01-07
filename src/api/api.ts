@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ProductItemType } from '../redux/productsSlice'
 
 const instance = axios.create({
     baseURL: 'https://json-server-react-evo.vercel.app/',
@@ -7,7 +8,7 @@ const instance = axios.create({
 
 export const productsAPI = {
     getProducts(categoryActive: string, sortActive: string, currentPage: number, limitItems: number) {
-        const category = categoryActive === 'all' ? `` : `category=${categoryActive}&`
+        const category = categoryActive === 'Все чаи' ? `` : `category=${categoryActive}&`
         const pagination = `_page=${currentPage}&_limit=${limitItems}`
         const sorting = (sortActive: string) => {
             switch(sortActive) {
@@ -18,18 +19,39 @@ export const productsAPI = {
             }
         }
 
-        return instance.get<ItemType[]>(`products/?${ category + sorting(sortActive) + pagination }`)
+        return instance.get<ProductItemType[]>(`products/?${ category + sorting(sortActive) + pagination }`)
     },
     
     getProduct(id: number) {
-        return instance.get<ItemType>(`products/${id}`)
+        return instance.get<ProductItemType>(`products/${id}`)
+    },
+    createProduct(data: any) {
+        return instance.post<ProductItemType>(`products/`, data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    },
+    updateProduct(data: any) {
+        return instance.patch<ProductItemType>(`products/`, data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    },
+    deleteProduct(id: number) {
+        return instance.post<ProductItemType>(`products/`, id, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
     },
 }
 
 export const searchAPI = {
     getSearchQuery(searchValue: string, currentPage: number, limitItems: number){
         const pagination = `&_page=${currentPage}&_limit=${limitItems}`
-        return instance.get<ItemType[]>(`products/?q=${searchValue + pagination}`)
+        return instance.get<ProductItemType[]>(`products/?q=${searchValue + pagination}`)
     },
 }
 
@@ -38,30 +60,3 @@ export const navigationhAPI = {
         return instance.get<any>(`navigation`)
     },
 }
-
-type ItemType = {
-    id: number,
-    title: string,
-    imgUrl: string,
-    galleryUrl: string[],
-    volume: number,
-    volumeMeasurement: string,
-    currency: string,
-    price: number,
-    category: string,
-    rating: number,
-    property: PropertyType,
-    text: string[],
-    cost: number,
-    quantity: number,
-  }
-  
-  type PropertyType = {
-    country: string,
-    town: string,
-    year: number,
-  }
-
-//   type NavigateType = {
-
-//   }

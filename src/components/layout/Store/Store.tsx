@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../redux/store'
-import { getCart, getStore, storeSelector } from '../../../redux/storeSlice'
+import { CartItemType, getCart, getStore, storeSelector } from '../../../redux/storeSlice'
 import { getLocalStorage } from '../../../utils/utils'
 
 
@@ -105,7 +105,7 @@ const CartItems: React.FC<PropsType> = props => {
     const dispatch = useAppDispatch()
 
     const deleteProductClick = (id: number) => {
-        const cartItems: CartItem[] = getLocalStorage('cart') // запросить localStorage
+        const cartItems: CartItemType[] = getLocalStorage('cart') // запросить localStorage
         const findProduct = cartItems.find(item => item.id === id) // проверить наличие товара в корзине
         findProduct && cartItems.splice(cartItems.indexOf(findProduct), 1)
         localStorage.setItem('cart', JSON.stringify(cartItems))
@@ -123,13 +123,8 @@ const CartItems: React.FC<PropsType> = props => {
 }
 
 type PropsType = {
-    cartItems: CartItem[],
+    cartItems: CartItemType[],
     showCartClick: () => void,
-}
-
-type CartItem = {
-    id: number,
-    title: string 
 }
 
 type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

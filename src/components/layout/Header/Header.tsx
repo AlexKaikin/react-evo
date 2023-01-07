@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { navigationSelector } from '../../../redux/navigationSlice'
+import { NavigationItemType, navigationSelector } from '../../../redux/navigationSlice'
 
 
 const Header: React.FC = props => {
@@ -86,9 +86,3 @@ type PropsType = {
     items: NavigationItemType[],
     menuShowChange: () => void,
 }
-
-type NavigationItemType = {
-    id: number, 
-    title: string, 
-    url: string,
-  }

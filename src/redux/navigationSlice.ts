@@ -5,7 +5,7 @@ import { RootState } from './store'
 
 const initialState: NavigationType = {
   navigation: [],
-  categoryActive: 'all',
+  categoryActive: 'Все чаи',
   sortActive: 'new',
   status: 'loading', // loading, success, error
 }
@@ -59,21 +59,21 @@ interface NavigationType {
   status: string,
 }
 
-type NavigationItemType = {
+export type NavigationItemType = {
   id: number, 
   title: string, 
   url: string,
-  filter: CategoryType[],
-  sort: SortType[],
+  filter: CategoryItemType[],
+  sort: SortItemType[],
 }
 
-type CategoryType = {
+export type CategoryItemType = {
   id: number,
   title: string,
   type: string,
 }
 
-type SortType = {
+export type SortItemType = {
   id: number,
   title: string,
   type: string,
