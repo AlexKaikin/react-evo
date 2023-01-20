@@ -105,10 +105,10 @@
 
 
 ::selection {
-background: $primary; /* Safari */
+background: var(--primary); /* Safari */
 color: white;
 }
 ::-moz-selection {
-background: $primary; /* Firefox */
+background: var(--primary); /* Firefox */
 color: white;
 }

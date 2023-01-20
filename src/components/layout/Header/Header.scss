@@ -59,7 +59,7 @@
                 position: absolute;
                 top: 30px;
                 padding: 20px;
-                background-color: $primary;
+                background-color: var(--primary);
                 transition: all .5s ease 0s;
 
                 &.show {
@@ -105,8 +105,8 @@
                 .nav__items{
                     opacity: 0;
                     visibility: hidden;
-                    background-color: $primary;
-                    background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+                    background-color: var(--primary);
+                    background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
                     border-radius: 10px;
                     display: flex;
                     flex-direction: column;
@@ -160,8 +160,8 @@
             .auth__items {
                 opacity: 0;
                 visibility: hidden;
-                background-color: $primary;
-                background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+                background-color: var(--primary);
+                background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
                 border-radius: 10px;
                 display: flex;
                 flex-direction: column;

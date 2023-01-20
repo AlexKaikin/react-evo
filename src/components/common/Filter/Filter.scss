@@ -19,18 +19,18 @@
                 .btn {
                     padding: 10px 20px;
                     background-color: #f9f9f9;
-                    background: linear-gradient(141deg, $light 0%, $white 100%);
+                    background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
                     color: black;
                     transition: all .5s ease 0s;
     
                     &.active {
-                        background-color: $brown;
-                        background: linear-gradient(141deg, $brown 0%, $brownLight 100%);
+                        background-color: var(--brown);
+                        background: linear-gradient(141deg, var(--brown) 0%, var(--brownLight) 100%);
                         color: white;
                     }
     
                     &:hover {
-                        box-shadow: 0 0 0 3px $brown;
+                        box-shadow: 0 0 0 3px var(--brown);
                     }
     
                 }
@@ -61,8 +61,8 @@
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
-                    background-color: $primary;
-                    background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+                    background-color: var(--primary);
+                    background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
                     padding: 20px;
                     border-radius: 10px;
                     position: absolute;
@@ -122,8 +122,8 @@
             }
 
             button {
-                color: $primary;
-                border-bottom: 4px dotted $primary;
+                color: var(--primary);
+                border-bottom: 4px dotted var(--primary);
             }
 
             .sort__items {
@@ -134,8 +134,8 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-                background-color: $primary;
-                background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+                background-color: var(--primary);
+                background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
                 padding: 20px;
                 border-radius: 10px;
                 position: absolute;

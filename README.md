@@ -1,5 +1,28 @@
 <h1>EVO</h1>
 
+<h3>Архитектура</h3>
+<ul>
+    <li>Business Logic Layer: @reduxjs/toolkit</li>
+    <li>Data Access Layer: axios</li>
+    <li>User Interface: react</li>
+</ul>
+
+<h3>Препроцессор</h3>
+<ul>
+    <li>SASS</li>
+</ul>
+
+<h3>Frontend:</h3>
+<ul>
+    <li>TypeScript</li>
+    <li>Библиотека Reactjs</li>
+</ul>
+
+<h3>Backend:</h3>
+<ul>
+    <li>json-server</li>
+</ul>
+
 <h3>EVO включает в себя</h3>
 <ul>
     <li>Интернет магазин</li>
@@ -11,18 +34,6 @@
 <ul>
     <li>Бонусный счёт в личном кабинете</li>
     <li>Бонусная программа</li>
-</ul>
-
-<h3>Frontend:</h3>
-<ul>
-    <li>Язык JavaScript + TypeScript</li>
-    <li>Библиотека Reactjs</li>
-</ul>
-
-<h3>Backend:</h3>
-<ul>
-    <li>БД json-server</li>
-    <li>Сервер vercel.app</li>
 </ul>
 
 <h3>DEMO</h3>

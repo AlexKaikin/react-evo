@@ -1,34 +1,49 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useAppDispatch } from '../../../../redux/store'
-import { CartItemType, getCart } from '../../../../redux/storeSlice'
+import { useAppDispatch } from '../../../../store/store'
+import { CartItemType, getCart } from '../../../../store/storeSlice'
 import { getLocalStorage } from '../../../../utils/utils'
 
-
-const CartItems: React.FC<PropsType> = props => {
+const CartItems: React.FC<PropsType> = (props) => {
     const dispatch = useAppDispatch()
 
     const deleteProductClick = (id: number) => {
         const cartItems: CartItemType[] = getLocalStorage('cart') // запросить localStorage
-        const findProduct = cartItems.find(item => item.id === id) // проверить наличие товара в корзине
+        const findProduct = cartItems.find((item) => item.id === id) // проверить наличие товара в корзине
         findProduct && cartItems.splice(cartItems.indexOf(findProduct), 1)
         localStorage.setItem('cart', JSON.stringify(cartItems))
         dispatch(getCart())
     }
 
-    return  <>
-                {
-                    props.cartItems?.map(item => <div key={item.id} className='cart__item'>
-                        <div><Link to={`/products/${item.id}`} onClick={props.showCartClick}>{item.title}</Link></div>
-                        <div><button onClick={() => deleteProductClick(item.id)} className='delete__btn'><i className="bi bi-x-lg"></i></button></div>
-                    </div>)
-                }
-            </>
+    return (
+        <>
+            {props.cartItems?.map((item) => (
+                <div key={item.id} className="cart__item">
+                    <div>
+                        <Link
+                            to={`/products/${item.id}`}
+                            onClick={props.showCartClick}
+                        >
+                            {item.title}
+                        </Link>
+                    </div>
+                    <div>
+                        <button
+                            onClick={() => deleteProductClick(item.id)}
+                            className="delete__btn"
+                        >
+                            <i className="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            ))}
+        </>
+    )
 }
 
 export default React.memo(CartItems)
 
 type PropsType = {
-    cartItems: CartItemType[],
-    showCartClick: () => void,
+    cartItems: CartItemType[]
+    showCartClick: () => void
 }

@@ -1,8 +1,9 @@
 import React from 'react'
-
+import './Modal.scss'
+import cn from 'classnames'
 
 const Modal: React.FC<PropsType> = props => {
-    return  <div className={props.full ? 'modal full' : 'modal'}>
+    return <div className={cn('modal', {'full': props.full})}>
                 <div className="modal__wrapper">
                     <div className='modal__body'>
                         <div className='modal__close' onClick={props.modaltoggle}></div>

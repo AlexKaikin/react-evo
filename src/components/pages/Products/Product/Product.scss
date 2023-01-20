@@ -78,7 +78,7 @@
 
                 button {
                     background-color: #f0f0f0;
-                    background: linear-gradient(141deg, $light 0%, $white 100%);
+                    background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
                     width: 45px;
                     height: 45px;
                     border-radius: 50%;
@@ -94,13 +94,13 @@
                     }
 
                     &.active {
-                        background-color: $primary;
-                        background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+                        background-color: var(--primary);
+                        background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
                         color: white;
                     }
 
                     &:hover {
-                        box-shadow: 0 0 0 3px $primary;
+                        box-shadow: 0 0 0 3px var(--primary);
                     }
                 }
 
@@ -132,7 +132,7 @@
                     font-size: 1.5rem;
                     background-color: #f0f0f0;
                     border: 2px solid white;
-                    background: linear-gradient(141deg, $light 0%, $white 100%);
+                    background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
                     padding: 5px 20px;
                     border-radius: 30px;
                     display: inline-block;
@@ -146,7 +146,7 @@
                     }
 
                     &:hover {
-                        box-shadow: 0 0 0 3px $primary;
+                        box-shadow: 0 0 0 3px var(--primary);
                     }
                 }
 
@@ -203,19 +203,23 @@
                     border-radius: 40px;
                     color: black;
                     background-color: #f0f0f0;
-                    background: linear-gradient(141deg, $light 0%, $white 100%);
+                    background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
                     
 
                     &.active {
-                        background-color: $brown;
-                        background: linear-gradient(141deg, $brown 0%, $brownLight 100%);
+                        background-color: var(--brown);
+                        background: linear-gradient(141deg, var(--brown) 0%, var(--brownLight) 100%);
                         color: white;
                     }
 
                     &:hover {
-                        box-shadow: 0 0 0 3px $brown;
+                        box-shadow: 0 0 0 3px var(--brown);
                     }
                 }
+            }
+
+            .tab__content {
+                padding: 0 20px;
             }
         }
 

@@ -1,4 +1,6 @@
 import React from 'react'
+import './Pagination.scss'
+import cn from 'classnames'
 
 
 const Pagination: React.FC<PropsType> = props => {
@@ -37,12 +39,12 @@ const Pagination: React.FC<PropsType> = props => {
                                         </button>
                 }
                 { // страницы
-                    pages?.map(page => <button key={page} onClick={() => currentPage !== page && props.currentPageChange(page)} className={currentPage === page ? 'page active' : 'page'}>{page}</button>) 
+                    pages?.map(page => <button key={page} onClick={() => currentPage !== page && props.currentPageChange(page)} className={cn('page', {'active': currentPage === page})}>{page}</button>) 
                 }
                 { // стрелка вперёд
                     currentPage < pagesCount && <button onClick={() => props.currentPageChange(currentPage + 1)} className='page'>
-                                    <i className="bi bi-chevron-right"></i>
-                                </button>
+                                                    <i className="bi bi-chevron-right"></i>
+                                                </button>
                 }
             </div>
 }

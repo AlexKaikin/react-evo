@@ -1,16 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setSortActive, SortItemType } from '../../../redux/navigationSlice'
+import { setSortActive, SortItemType } from '../../../../store/navigationSlice'
 
-
-const Sorting: React.FC<PropsType> = props => {
-    
+const Sorting: React.FC<PropsType> = (props) => {
     const sortRef = useRef<HTMLDivElement>(null)
     const dispatch = useDispatch()
     const [sortShow, setSortShow] = useState<boolean>(false)
 
     const sortShowChange = () => {
-        if(sortShow){
+        if (sortShow) {
             setSortShow(false)
             document.body.removeEventListener('click', bodyClick)
         } else {
@@ -28,27 +26,39 @@ const Sorting: React.FC<PropsType> = props => {
     const bodyClick = (e: MouseEvent) => {
         const _e = e as BodyClickType
         const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(sortRef.current && !path.includes(sortRef.current)) {
+        if (sortRef.current && !path.includes(sortRef.current)) {
             setSortShow(false)
             document.body.removeEventListener('click', bodyClick)
         }
     }
 
-    return  <div ref={sortRef} className='filter__sort sort'>
-                <i className="bi bi-sort-down"></i> <span>Сортировка:</span> <button onClick={sortShowChange}>
-                    { props.items?.map(item => item.type === props.sortActive && item.title) }
-                    </button>
-
-                <div className={sortShow ? 'sort__items show' : 'sort__items'}>
-                    { props.items.length > 0 && props.items?.map(item => <button key={item.id} onClick={() => changeSort(item.type)}>{item.title}</button>) }
-                </div>
+    return (
+        <div ref={sortRef} className="filter__sort sort">
+            <i className="bi bi-sort-down"></i> <span>Сортировка:</span>{' '}
+            <button onClick={sortShowChange}>
+                {props.items?.map(
+                    (item) => item.type === props.sortActive && item.title
+                )}
+            </button>
+            <div className={sortShow ? 'sort__items show' : 'sort__items'}>
+                {props.items.length > 0 &&
+                    props.items?.map((item) => (
+                        <button
+                            key={item.id}
+                            onClick={() => changeSort(item.type)}
+                        >
+                            {item.title}
+                        </button>
+                    ))}
             </div>
+        </div>
+    )
 }
 
 export default React.memo(Sorting)
 
 type PropsType = {
-    items: SortItemType[],
+    items: SortItemType[]
     sortActive: string
 }
 

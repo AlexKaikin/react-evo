@@ -5,25 +5,26 @@ import { BrowserRouter } from 'react-router-dom'
 import Footer from './components/layout/Footer/Footer'
 import Header from './components/layout/Header/Header'
 import Main from './components/layout/Main/Main'
-import { getNavigation, navigationSelector } from './redux/navigationSlice'
-import { useAppDispatch } from './redux/store'
-
+import { getNavigation, navigationSelector } from './store/navigationSlice'
+import { useAppDispatch } from './store/store'
 
 const App = () => {
-  const dispatch = useAppDispatch()
-  const { status } = useSelector(navigationSelector)
+    const dispatch = useAppDispatch()
+    const { status } = useSelector(navigationSelector)
 
-  useEffect(() => {
-    dispatch(getNavigation())
-  }, [dispatch])
+    useEffect(() => {
+        dispatch(getNavigation())
+    }, [dispatch])
 
-  if(status === 'loading') return null
+    if (status === 'loading') return null
 
-  return  <BrowserRouter>
+    return (
+        <BrowserRouter>
             <Header />
             <Main />
             <Footer />
-          </BrowserRouter>
+        </BrowserRouter>
+    )
 }
 
 export default App

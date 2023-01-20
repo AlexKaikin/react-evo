@@ -9,8 +9,8 @@
             }
 
             .form_btn {
-                background-color: $primary;
-                background: linear-gradient(141deg, $primaryDark 0%, $primary 100%);
+                background-color: var(--primary);
+                background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
                 border: 2px solid white;
                 color: white;
                 padding: 20px;
@@ -19,9 +19,9 @@
                 transition: all .5s ease 0s;
 
                 &:hover {
-                    background-color: $primary;
+                    background-color: var(--primary);
                     border: 2px solid white;
-                    box-shadow: 0 0 0 3px $primary;
+                    box-shadow: 0 0 0 3px var(--primary);
                 }
             }
         }

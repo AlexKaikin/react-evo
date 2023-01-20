@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import './Register.scss'
 
 const Register: React.FC = props => {
     return  <div className='section auth'>
