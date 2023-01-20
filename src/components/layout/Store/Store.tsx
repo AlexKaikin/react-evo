@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../redux/store'
-import { CartItemType, getCart, getStore, storeSelector } from '../../../redux/storeSlice'
-import { getLocalStorage } from '../../../utils/utils'
+import { getStore, storeSelector } from '../../../redux/storeSlice'
+import CartItems from './CartItems/CartItems'
 
 
 const Store: React.FC = props => {
@@ -11,7 +11,18 @@ const Store: React.FC = props => {
 
     const { cartItems, compareItems, favoritesItems } = useSelector(storeSelector)
 
-    const showCartClick = () => {
+    const cartRef = useRef<HTMLDivElement>(null)
+
+    const bodyClick = React.useCallback((e: MouseEvent) => {
+            const _e = e as BodyClickType
+            const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
+            if(cartRef.current && !path.includes(cartRef.current)) {
+                setShowCart(false)
+                document.body.removeEventListener('click', bodyClick)
+            }
+    },[])
+
+    const showCartClick = React.useCallback(() => {
         if(showCart){
             setShowCart(false)
             document.body.removeEventListener('click', bodyClick)
@@ -19,18 +30,7 @@ const Store: React.FC = props => {
             setShowCart(true)
             document.body.addEventListener('click', bodyClick)
         }
-    }
-
-    const cartRef = useRef<HTMLDivElement>(null)
-
-    const bodyClick = (e: MouseEvent) => {
-        const _e = e as BodyClickType
-        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(cartRef.current && !path.includes(cartRef.current)) {
-            setShowCart(false)
-            document.body.removeEventListener('click', bodyClick)
-        }
-    }
+    }, [showCart, bodyClick])
 
     // форма поиска
     const [searchValue, setSearchValue] = useState<string>('')
@@ -100,31 +100,5 @@ const Store: React.FC = props => {
 }
 
 export default Store
-
-const CartItems: React.FC<PropsType> = props => {
-    const dispatch = useAppDispatch()
-
-    const deleteProductClick = (id: number) => {
-        const cartItems: CartItemType[] = getLocalStorage('cart') // запросить localStorage
-        const findProduct = cartItems.find(item => item.id === id) // проверить наличие товара в корзине
-        findProduct && cartItems.splice(cartItems.indexOf(findProduct), 1)
-        localStorage.setItem('cart', JSON.stringify(cartItems))
-        dispatch(getCart())
-    }
-
-    return  <>
-                {
-                    props.cartItems?.map(item => <div key={item.id} className='cart__item'>
-                        <div><Link to={`/products/${item.id}`} onClick={props.showCartClick}>{item.title}</Link></div>
-                        <div><button onClick={() => deleteProductClick(item.id)} className='delete__btn'><i className="bi bi-x-lg"></i></button></div>
-                    </div>)
-                }
-            </>
-}
-
-type PropsType = {
-    cartItems: CartItemType[],
-    showCartClick: () => void,
-}
 
 type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event

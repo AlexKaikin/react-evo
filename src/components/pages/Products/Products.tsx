@@ -10,7 +10,7 @@ import Sorting from '../../common/Sorting/Sorting'
 import { navigationSelector } from '../../../redux/navigationSlice'
 import { useAppDispatch } from '../../../redux/store'
 import ProductSkeleton from '../../common/Skeleton/ProductSkeleton'
-import CreateProductForm from './Crud/CreateProductForm'
+import { CreateProductForm } from './Crud'
 
 
 const Products: React.FC = props => {
@@ -19,17 +19,14 @@ const Products: React.FC = props => {
     const { navigation, categoryActive, sortActive } = useSelector(navigationSelector)
     const categories = navigation.find(item => item.url === '/products')?.filter
     const sortingItems = navigation.find(item => item.url === '/products')?.sort
-
-    // пагинация, смена страницы
-    const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
-
-    // показать/скрыть CRUD операции
-    const [crudShow, setCrudShow] = useState(false)
-    const crudToggleClick = () => setCrudShow(!crudShow)
-    // показать/скрыть модальное окно создания товара     
-    const [createProductShow, setCreateProductShow] = useState<boolean>(false)
-    const modaltoggle = () => setCreateProductShow(!createProductShow)
     
+    const currentPageChange = (number: number) => dispatch(setCurrentPage(number)) // пагинация, смена страницы
+
+    const [crudShow, setCrudShow] = useState(false) // показать/скрыть CRUD операции
+    const crudToggleClick = () => setCrudShow(!crudShow)
+       
+    const [createProductShow, setCreateProductShow] = useState<boolean>(false) // показать/скрыть модальное окно создания товара  
+    const modaltoggle = () => setCreateProductShow(!createProductShow)
     
     useEffect(() => {
         dispatch(getProducts(categoryActive, sortActive, currentPage))
@@ -46,7 +43,7 @@ const Products: React.FC = props => {
                 </div>
                 <div className='section products'>
                     <div className='container'>
-                        <ProductItems productItems={productItems} status={status} />
+                        <ProductItems items={productItems} status={status} />
                         <Pagination pagesCount={pagesCount} currentPage={currentPage} currentPageChange={currentPageChange} />
                     </div>
                 </div>
@@ -72,11 +69,10 @@ const ProductItems: React.FC<PropsType> = props => {
                     { Array(8).fill('item').map((item, i) => <ProductSkeleton key={i} />)}
                 </div>
     }
-    
 
     return  <div className='products__items product'>
                 {
-                    props.productItems?.map(item => {
+                    props.items?.map(item => {
                         return  <Link to={`/products/${item.id}`} key={item.id} className='product__item'>
                                     <div className='product__img'><img src={item.imgUrl} alt={`${item.imgUrl} фото`} /></div>
                                     <div className='product__title'>{item.title}</div>
@@ -84,12 +80,11 @@ const ProductItems: React.FC<PropsType> = props => {
                                 </Link>
                     }) 
                 }
-            
             </div>
 }
 
 type PropsType = {
-    productItems: ProductItemType[],
-    status: string,
+    items: ProductItemType[],
+    status: string
 }
 

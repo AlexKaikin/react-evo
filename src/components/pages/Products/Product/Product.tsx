@@ -8,9 +8,7 @@ import { CartItemType, CompareItemType, FavoriteItemType, getCart, getCompare, g
 import { useAppDispatch } from '../../../../redux/store'
 import { getLocalStorage } from '../../../../utils/utils'
 import ProductFullSkeleton from '../../../common/Skeleton/ProductFullSkeleton'
-import CreateProductForm from '../Crud/CreateProductForm'
-import UpdateProductForm from '../Crud/UpdateProductForm'
-import DeleteProductForm from '../Crud/DeleteProductForm'
+import { CreateProductForm, UpdateProductForm, DeleteProductForm } from '../Crud'
 
 
 const Product: React.FC = props => {
@@ -26,15 +24,15 @@ const Product: React.FC = props => {
 
     // увеличить количество товара на 1
     const Increment = () => {
-        setQuantity(quantity + 1)
-        setCost(productItem.price * (quantity + 1))
+        setQuantity(prevQuantity => prevQuantity + 1)
+        setCost(prevCost => prevCost + productItem.price)
     }
 
     // уменьшить количество товара на 1
     const Decriment = () => {
         if(quantity > 1) {
-            setQuantity(quantity - 1)
-            setCost(productItem.price * (quantity - 1))
+            setQuantity(prevQuantity => prevQuantity - 1)
+            setCost(prevCost => prevCost - productItem.price)
         }
     }
 
@@ -60,23 +58,7 @@ const Product: React.FC = props => {
     const compareClick = () => {
         const comapreItems: CompareItemType[] = getLocalStorage('compare') // запросить localStorage
         const findProduct = comapreItems.find(item => item.id === productItem.id) // проверить наличие товара в сравнении
-        if(findProduct){
-            comapreItems.splice(comapreItems.indexOf(findProduct), 1)
-
-            // сообщение о добавлении
-            const msg = '<p class="msg">Товар исключён из сравнения</p>'
-            info.current?.insertAdjacentHTML('beforeend', msg)
-            setTimeout(() => {
-                if(info.current?.querySelector(".msg")) {
-                    let msgShow = info.current.querySelector(".msg")
-                    if(msgShow !== null) msgShow.outerHTML = ""
-                }
-            }, 5000)
-        } else {
-            comapreItems.push(productItem)
-
-            // сообщение о добавлении
-            const msg = '<p class="msg">Товар добавлен для сравнения</p>'
+        const msgShow = (msg: string) => { // добавление сообщения на 5 секунд
             info.current?.insertAdjacentHTML('beforeend', msg)
             setTimeout(() => {
                 if(info.current?.querySelector(".msg")) {
@@ -85,33 +67,25 @@ const Product: React.FC = props => {
                 }
             }, 5000)
         }
+        
+        if(findProduct){
+            comapreItems.splice(comapreItems.indexOf(findProduct), 1)
+            const msg = '<p class="msg">Товар исключён из сравнения</p>' // сообщение о исключении
+            msgShow(msg)
+        } else {
+            comapreItems.push(productItem)
+            const msg = '<p class="msg">Товар добавлен для сравнения</p>' // сообщение о добавлении
+            msgShow(msg)
+        }
         localStorage.setItem('compare', JSON.stringify(comapreItems))
         dispatch(getCompare())
-
-        
     }
 
     // добавить товар в избранное
     const favoritesClick = () => {
         const favoritesItems: FavoriteItemType[] = getLocalStorage('favorites') // запросить localStorage
         const findProduct = favoritesItems.find(item => item.id === productItem.id) // проверить наличие товара в избранном
-        if(findProduct){
-            favoritesItems.splice(favoritesItems.indexOf(findProduct), 1)
-
-            // сообщение о добавлении
-            const msg = '<p class="msg">Товар исключён из избранных</p>'
-            info.current?.insertAdjacentHTML('beforeend', msg)
-            setTimeout(() => {
-                if(info.current?.querySelector(".msg")) {
-                    let msgShow = info.current.querySelector(".msg")
-                    if(msgShow !== null) msgShow.outerHTML = ""
-                }
-            }, 5000)
-        } else {
-            favoritesItems.push(productItem)
-
-            // сообщение о добавлении
-            const msg = '<p class="msg">Товар добавлен в избранное</p>'
+        const msgShow = (msg: string) => { // добавление сообщения на 5 секунд
             info.current?.insertAdjacentHTML('beforeend', msg)
             setTimeout(() => {
                 if(info.current?.querySelector(".msg")) {
@@ -120,8 +94,17 @@ const Product: React.FC = props => {
                 }
             }, 5000)
         }
+
+        if(findProduct){
+            favoritesItems.splice(favoritesItems.indexOf(findProduct), 1)
+            const msg = '<p class="msg">Товар исключён из избранных</p>' // сообщение о исключении
+            msgShow(msg)
+        } else {
+            favoritesItems.push(productItem)
+            const msg = '<p class="msg">Товар добавлен в избранное</p>' // сообщение о добавлении
+            msgShow(msg)
+        }
         localStorage.setItem('favorites', JSON.stringify(favoritesItems))
-        
         dispatch(getFavorites())
     }
 
@@ -200,8 +183,10 @@ const Product: React.FC = props => {
     if(status === 'error') {
         return  <>
                     <Store />
-                    <div className='section__title'>Произошла ошибка</div>
-                    <p>К сожалению, не удалось загрузить товар</p>
+                    <div className='section product'>
+                        <div className='section__title'>Произошла ошибка</div>
+                        <p>К сожалению, не удалось загрузить товар</p>
+                    </div>
                 </>
     }
     

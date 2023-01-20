@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { NavigationItemType, navigationSelector } from '../../../redux/navigationSlice'
+import { navigationSelector } from '../../../redux/navigationSlice'
+import Nav from './Nav/Nav'
 
-
-const Header: React.FC = props => {
+const Header: React.FC = props => {    
     const [authShow, setAuthShow] = useState<boolean>(false)
     const { navigation } = useSelector(navigationSelector)
     
@@ -29,8 +29,18 @@ const Header: React.FC = props => {
         }
     }
 
+    const menuRef = useRef<HTMLElement>(null)
+    const bodyClick2 = React.useCallback((e: MouseEvent) => {
+        const _e = e as BodyClickType
+        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
+        if(menuRef.current && !path.includes(menuRef.current)) {
+            setMenuShow(false)
+            document.body.removeEventListener('click', bodyClick2)
+        }
+    }, [])
+
     const [menuShow, setMenuShow] = useState<boolean>(false)
-    const menuShowChange = () => {
+    const menuShowChange = React.useCallback(() => {
         if(menuShow){
             setMenuShow(false)
             document.body.removeEventListener('click', bodyClick2)
@@ -38,16 +48,8 @@ const Header: React.FC = props => {
             setMenuShow(true)
             document.body.addEventListener('click', bodyClick2)
         }
-    }
-    const menuRef = useRef<HTMLElement>(null)
-    const bodyClick2 = (e: MouseEvent) => {
-        const _e = e as BodyClickType
-        const path = _e.path || (e.composedPath && e.composedPath()) // for firefox browser
-        if(menuRef.current && !path.includes(menuRef.current)) {
-            setMenuShow(false)
-            document.body.removeEventListener('click', bodyClick2)
-        }
-    }
+    }, [menuShow, bodyClick2])
+    
 
     return  <header className='header'>
                 <div className='container'>
@@ -70,19 +72,7 @@ const Header: React.FC = props => {
             </header>
 }
 
-export default Header
+export default React.memo(Header)
 
 type BodyClickType = MouseEvent & { path: Node[] } // добавить path в event
 
-const Nav: React.FC<PropsType> = props => {
-    return  <>
-                {
-                    props.items.map(item => <li key={item.id} className='nav__item'><NavLink to={item.url} onClick={props.menuShowChange} className='nav__link'>{item.title}</NavLink></li>)
-                }
-            </>
-}
-
-type PropsType = {
-    items: NavigationItemType[],
-    menuShowChange: () => void,
-}

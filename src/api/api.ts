@@ -25,14 +25,14 @@ export const productsAPI = {
     getProduct(id: number) {
         return instance.get<ProductItemType>(`products/${id}`)
     },
-    createProduct(data: any) {
+    createProduct(data: ProductItemType) {
         return instance.post<ProductItemType>(`products/`, data, {
             headers: {
                 "Content-Type": "application/json"
             }
         })
     },
-    updateProduct(data: any) {
+    updateProduct(data: ProductItemType) {
         return instance.patch<ProductItemType>(`products/`, data, {
             headers: {
                 "Content-Type": "application/json"

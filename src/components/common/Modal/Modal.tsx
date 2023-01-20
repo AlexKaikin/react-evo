@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const Modal: React.FC<PropsType> = props => {
-    return  <div className='modal'>
+    return  <div className={props.full ? 'modal full' : 'modal'}>
                 <div className="modal__wrapper">
                     <div className='modal__body'>
                         <div className='modal__close' onClick={props.modaltoggle}></div>
@@ -17,6 +17,7 @@ export default Modal
 
 type PropsType = {
     title: string,
+    full?: boolean,
     children: any,
     modaltoggle: () => void,
 }

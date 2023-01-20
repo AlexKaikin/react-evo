@@ -12,11 +12,11 @@ const CreateProductForm: React.FC<PropsType> = props => {
     const { navigation } = useSelector(navigationSelector)
     const categories = navigation.find(item => item.url === '/products')?.filter.slice(1)
     const productId = new Date().getTime()
-    const formState: ProductItemType = { id: productId, title: '', category: 'Красные', price: 0, text: [''], imgUrl: '/products/1.jpg', galleryUrl: ['/products/2.jpg'], rating: 0,
+    const formState: ProductItemType = { id: productId, title: '', category: 'Красные', price: 0, text: [], imgUrl: '', galleryUrl: [], rating: 0,
         volume: 100, volumeMeasurement: 'грамм', currency: 'руб.', property: {country: '', town: '', year: 0} }
     
 
-    return <Modal title='Добавить товар' modaltoggle={props.modaltoggle}>
+    return <Modal title='Добавить товар' modaltoggle={props.modaltoggle} full>
                 <Formik
                     initialValues={formState}
                     validate={formValidate}
@@ -45,8 +45,8 @@ const CreateProductForm: React.FC<PropsType> = props => {
 
                                 <div className='hidden'>
                                     <Field type="number" name="id" />
-                                    <Field type="text" name="imgUrl" />
-                                    <Field type="text" name="galleryUrl" />
+                                    {/* <Field type="text" name="imgUrl" />
+                                    <Field type="text" name="galleryUrl" /> */}
                                     <Field type="number" name="rating" />
                                     <Field type="number" name="volume" />
                                     <Field type="text" name="volumeMeasurement" />
@@ -76,7 +76,25 @@ const CreateProductForm: React.FC<PropsType> = props => {
                                     <label>Описание</label>
                                     <Field type="text" name="text" as="textarea" required />
                                 </div>
+                            </div>
 
+                            <div className='form__left'>
+                                <h3>Обложка</h3>
+                                {/* <div className='img-wrapper'><img src={props.item.imgUrl} alt=''  /></div> */}
+                                <input type="file" name="imgUrl" accept="image/png, image/jpeg" />
+                            </div>
+
+                            <div className='form__right'>
+                                <h3>Фотогалерея</h3>
+                                <div className='img-wrapper'>
+                                    {/* {
+                                        props.item.galleryUrl.map(item => <img key={item} src={item} alt='' />)
+                                    } */}
+                                </div>
+                                <input type="file" name="galleryUrl" accept="image/png, image/jpeg" />
+                            </div>
+                            
+                            <div className='form__full'>
                                 <button className='form__btn' type="submit" disabled={isSubmitting}>Отправить</button>
                             </div>
                         </Form>

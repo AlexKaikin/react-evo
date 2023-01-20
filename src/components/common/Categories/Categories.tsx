@@ -53,7 +53,8 @@ const Categories: React.FC<PropsType> = props => {
             </div>
 }
 
-export default Categories
+export default React.memo(Categories)
+
 
 type PropsType = {
     items: CategoryItemType[],

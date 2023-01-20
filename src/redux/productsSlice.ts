@@ -142,8 +142,6 @@ export type ProductItemType = {
   rating: number,
   property: PropertyType,
   text: string[],
-  //cost: number,
-  //quantity: number,
 }
 
 type PropertyType = {

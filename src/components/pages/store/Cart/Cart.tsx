@@ -49,7 +49,7 @@ export default Cart
 
 const CartItems: React.FC<PropsType> = props => {
     // проверка введённого значения в количество товара
-    const quantityBlur = (e: any) => {
+    const quantityBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         // let number = +e.target.value
         // if(Number.isNaN(number) || number < 1){ // если значение NaN или отрицательное, то
         //     setQuantity(1)
@@ -58,7 +58,7 @@ const CartItems: React.FC<PropsType> = props => {
     }
 
     // изменить количество товара через input
-    const quantityChange = (e: any) => {
+    const quantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // if(!Number.isNaN(+e.target.value)){ // если значение не NaN, то... 
         //     setQuantity(+e.target.value)
         //     setCost(productItem.price * (+e.target.value))

@@ -19,6 +19,7 @@ body {
 
 h3 {
   font-size: 1.5rem;
+  font-weight: bold;
 }
 
 #root{
@@ -167,8 +168,28 @@ p {
   .form__left, .form__right {
     flex: 0 0 45%;
 
+    img {
+      width: 100%;
+    }
+
     @media only screen and (max-width : 600px) {
       flex: 0 0 100%;
+    }
+  }
+
+  .form__left {
+    .img-wrapper {
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .form__right {
+    .img-wrapper {
+      img {
+        width: 50%;
+      }
     }
   }
 

@@ -9,8 +9,8 @@ const   Products =      React.lazy(() => import('../../pages/Products/Products')
         Compare =       React.lazy(() => import('../../pages/store/Compare/Compare')),
         Favorites =     React.lazy(() => import('../../pages/store/Favorites/Favorites')),
         Contacts =      React.lazy(() => import('../../pages/Contacts/Contacts')),
-        Login =         React.lazy(() => import('../../pages/Auth/Login/Login')),
-        Register =      React.lazy(() => import('../../pages/Auth/Register/Register')),
+        Login =         React.lazy(() => import('../../pages/account/Login/Login')),
+        Register =      React.lazy(() => import('../../pages/account/Register/Register')),
         Search =        React.lazy(() => import('../../pages/Search/Search')),
         NotFound =      React.lazy(() => import('../../pages/NotFound/NotFound'))
         

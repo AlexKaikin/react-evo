@@ -45,7 +45,7 @@ const Sorting: React.FC<PropsType> = props => {
             </div>
 }
 
-export default Sorting
+export default React.memo(Sorting)
 
 type PropsType = {
     items: SortItemType[],

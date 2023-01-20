@@ -11,7 +11,7 @@ const UpdateProductForm: React.FC<PropsType> = props => {
     const dispatch = useAppDispatch()
     const { navigation } = useSelector(navigationSelector)
     const categories = navigation.find(item => item.url === '/products')?.filter.slice(1)
-    const formState: ProductItemType = { id: props.item.id, title: `${props.item.title}`, category: `${props.item.category}`, price: props.item.price, text: props.item.text, imgUrl: '/products/1.jpg', galleryUrl: ['/products/2.jpg'], rating: props.item.rating,
+    const formState: ProductItemType = { id: props.item.id, title: `${props.item.title}`, category: `${props.item.category}`, price: props.item.price, text: props.item.text, imgUrl: props.item.imgUrl, galleryUrl: props.item.galleryUrl, rating: props.item.rating,
         volume: props.item.volume, volumeMeasurement: `${props.item.volumeMeasurement}`, currency: `${props.item.currency}`, property: {country: `${props.item.property.country}`, town: `${props.item.property.town}`, year: props.item.property.year} }
 
     const formSubmit = (values: ProductItemType) => {
@@ -19,7 +19,7 @@ const UpdateProductForm: React.FC<PropsType> = props => {
         props.modaltoggle()
     }
 
-    return <Modal title='Обновить товар' modaltoggle={props.modaltoggle}>
+    return <Modal title='Обновить товар' modaltoggle={props.modaltoggle} full >
                 <Formik initialValues={formState} validate={formValidate} onSubmit={formSubmit} >
                     {({ isSubmitting }) => (
                         <Form className="form create-product">
@@ -75,7 +75,25 @@ const UpdateProductForm: React.FC<PropsType> = props => {
                                 <label>Описание</label>
                                     <Field type="text" name="text" as="textarea" required />
                                 </div>
+                            </div>
 
+                            <div className='form__left'>
+                                <h3>Обложка</h3>
+                                <div className='img-wrapper'><img src={props.item.imgUrl} alt=''  /></div>
+                                <input type="file" name="imgUrl" accept="image/png, image/jpeg" />
+                            </div>
+
+                            <div className='form__right'>
+                                <h3>Фотогалерея</h3>
+                                <div className='img-wrapper'>
+                                    {
+                                        props.item.galleryUrl.map(item => <img key={item} src={item} alt='' />)
+                                    }
+                                </div>
+                                <input type="file" name="imgUrl" accept="image/png, image/jpeg" />
+                            </div>
+                            
+                            <div className='form__full'>
                                 <button className='form__btn' type="submit" disabled={isSubmitting}>Отправить</button>
                             </div>
                         </Form>
@@ -92,6 +110,6 @@ const formValidate = (values: ProductItemType) => {
 }
 
 type PropsType = {
-    item: any,
+    item: ProductItemType,
     modaltoggle: () => void
 }
