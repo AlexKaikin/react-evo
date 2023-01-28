@@ -58,9 +58,8 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
     }
   }
 
-  const galleryRemove = () => {
-    const arr: string[] = galleryUrl
-    setGalleryUrl(arr)
+  const galleryRemoveClick = (item: string) => {
+    setGalleryUrl((arr) => arr.filter(i => i !== item))
   }
 
   const formState: ProductItemType = {
@@ -84,6 +83,9 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
   }
 
   const formSubmit = (values: ProductItemType) => {
+    console.log(values)
+    values.imgUrl = imgUrl
+    values.galleryUrl = galleryUrl
     dispatch(updateProduct(values))
     props.modaltoggle()
     props.updateComponent()
@@ -128,8 +130,6 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
 
               <div className="hidden">
                 <Field type="number" name="id" />
-                <Field type="text" name="imgUrl" />
-                <Field type="text" name="galleryUrl" />
                 <Field type="number" name="rating" />
                 <Field type="number" name="volume" />
                 <Field type="text" name="volumeMeasurement" />
@@ -166,9 +166,9 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
 
               {imgUrl && (
                 <div className="img__item">
-                  <button onClick={onClickRemoveImage} className="remove">
+                  <div onClick={onClickRemoveImage} className="remove">
                     Удалить
-                  </button>
+                  </div>
                   <img
                     src={(process.env.REACT_APP_SERVER_URL || '') + imgUrl}
                     alt="фото"
@@ -193,9 +193,9 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
                 {galleryUrl &&
                   galleryUrl.map((item) => (
                     <div key={item} className="img__item">
-                      <button onClick={galleryRemove} className="remove">
+                      <div onClick={() => galleryRemoveClick(item)} className="remove">
                         Удалить
-                      </button>
+                      </div>
                       <img
                         src={(process.env.REACT_APP_SERVER_URL || '') + item}
                         alt="фото"

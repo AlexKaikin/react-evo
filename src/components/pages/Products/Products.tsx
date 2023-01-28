@@ -8,7 +8,6 @@ import {
   ProductItemType,
   productsSelector,
   setCurrentPage,
-  setStatus,
 } from '../../../store/productsSlice'
 import Pagination from '../../common/Pagination/Pagination'
 import { navigationSelector } from '../../../store/navigationSlice'
