@@ -1,0 +1,126 @@
+.admin {
+  .container {
+    .admin__items {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .admin__item {
+        display: grid; 
+        grid-auto-columns: 1fr; 
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1fr; 
+        align-items: center;
+        gap: 20px;
+
+        .item__title {
+          flex: 1 1 auto;
+        }
+      }
+    }
+  }
+}
+
+.form.create-product {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .form__left,
+  .form__right {
+    flex: 0 0 45%;
+
+    img {
+      width: 100%;
+    }
+
+    @media only screen and (max-width: 600px) {
+      flex: 0 0 100%;
+    }
+  }
+
+  .form__left {
+    .img__item {
+      position: relative;
+
+      img {
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 10px;
+      }
+
+      .remove {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 1;
+        background-color: #ba5148;
+        color: white;
+        padding: 5px;
+        border-radius: 10px;
+      }
+    }
+
+    .btn {
+      display: inline-block;
+    }
+  }
+
+  .form__right {
+    .img__items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .img__item {
+        position: relative;
+        width: 46%;
+
+        img {
+          width: 100%;
+          margin-bottom: 20px;
+          border-radius: 10px;
+        }
+
+        .remove {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          z-index: 1;
+          background-color: #ba5148;
+          color: white;
+          padding: 5px;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    .btn {
+      display: inline-block;
+    }
+
+    
+  }
+
+  .form__full {
+    flex: 0 0 100%;
+
+    button {
+      background-color: var(--primary);
+      background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
+      border: 2px solid white;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      transition: all 0.5s ease 0s;
+
+      &:hover {
+        background-color: var(--primary);
+        border: 2px solid white;
+        box-shadow: 0 0 0 3px var(--primary);
+      }
+    }
+  }
+}

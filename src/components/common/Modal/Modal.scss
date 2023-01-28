@@ -12,6 +12,7 @@
 
     &.full {
         align-items: flex-start;
+        display: inline-block;
 
         .modal__wrapper {
             max-width: 1000px;

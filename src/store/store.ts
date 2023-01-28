@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
 
 import productsReducer from './productsSlice'
 import navigationReducer from './navigationSlice'
 import searchReducer from './searchSlice'
 import storeReducer from './storeSlice'
-import { useDispatch } from 'react-redux'
+import authReducer from './authSlice'
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     navigation: navigationReducer,
     search: searchReducer,
     store: storeReducer,
+    auth: authReducer,
   },
 })
 

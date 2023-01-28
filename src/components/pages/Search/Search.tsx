@@ -87,7 +87,7 @@ const SearchItems: React.FC<PropsType> = (props) => {
                         className="product__item"
                     >
                         <div className="product__img">
-                            <img src={item.imgUrl} alt="" />
+                            <img src={(process.env.REACT_APP_SERVER_URL || '') + item.imgUrl} alt="" />
                         </div>
                         <div className="product__title">{item.title}</div>
                         <div className="product__price">

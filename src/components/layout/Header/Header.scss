@@ -1,51 +1,51 @@
-.header{
+.header {
     padding: 30px 0;
 
-    @media only screen and (max-width : 940px) {
+    @media only screen and (max-width: 940px) {
         padding: 20px 0;
     }
 
-    .container{
+    .container {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .header__logo{
+        .header__logo {
             color: black;
             margin-right: 20px;
             font-size: 40px;
             font-weight: bold;
         }
 
-        .header__nav.nav{
+        .header__nav.nav {
             position: relative;
 
-            .nav__items{
+            .nav__items {
                 display: flex;
                 align-items: center;
                 gap: 20px;
 
-                .nav__item{
+                .nav__item {
                     position: relative;
-                    
-                    .nav__link{
+
+                    .nav__link {
                         color: black;
                         position: relative;
                         font-weight: bold;
-                        
 
                         &:after {
-                            content: '';
+                            content: "";
                             position: absolute;
                             left: 0;
                             bottom: -3px;
                             height: 2px;
                             width: 30px;
                             background-color: transparent;
-                            transition: all .5s ease 0s;
+                            transition: all 0.5s ease 0s;
                         }
 
-                        &.active, &:hover {
+                        &.active,
+                        &:hover {
                             &:after {
                                 background-color: black;
                             }
@@ -53,33 +53,32 @@
                     }
                 }
             }
-            .nav__sublist{
+            .nav__sublist {
                 opacity: 0;
                 visibility: hidden;
                 position: absolute;
                 top: 30px;
                 padding: 20px;
                 background-color: var(--primary);
-                transition: all .5s ease 0s;
+                transition: all 0.5s ease 0s;
 
                 &.show {
                     opacity: 1;
                     visibility: visible;
                 }
 
-                li{
+                li {
                     margin-bottom: 10px;
 
-                    &:last-child{
+                    &:last-child {
                         margin-bottom: 0px;
                     }
 
-                    a{
+                    a {
                         color: white;
-                        &:before{
+                        &:before {
                             border-bottom: 1px solid white;
                         }
-                        
                     }
                 }
             }
@@ -87,22 +86,22 @@
             .mobile__menu {
                 display: none;
             }
-    
-            @media only screen and (max-width : 940px) {
+
+            @media only screen and (max-width: 940px) {
                 flex: 1 0 auto;
-    
+
                 .mobile__menu {
                     flex: 1 0 auto;
                     display: flex;
                     align-items: center;
                     gap: 3px;
-    
+
                     i {
                         font-size: 2rem;
                     }
                 }
-    
-                .nav__items{
+
+                .nav__items {
                     opacity: 0;
                     visibility: hidden;
                     background-color: var(--primary);
@@ -118,32 +117,33 @@
                     left: 0;
                     z-index: 1;
                     min-width: 150px;
-                    transition: all .5s ease 0s;
-    
+                    transition: all 0.5s ease 0s;
+
                     &.show {
                         opacity: 1;
                         visibility: visible;
                     }
-    
-                    .nav__item{
+
+                    .nav__item {
                         position: relative;
-                        
-                        .nav__link{
+
+                        .nav__link {
                             color: white;
                             font-weight: normal;
 
                             &:after {
-                                content: '';
+                                content: "";
                                 position: absolute;
                                 left: 0;
                                 bottom: -3px;
                                 height: 2px;
                                 width: 30px;
                                 background-color: transparent;
-                                transition: all .5s ease 0s;
+                                transition: all 0.5s ease 0s;
                             }
-    
-                            &.active, &:hover {
+
+                            &.active,
+                            &:hover {
                                 &:after {
                                     background-color: white;
                                 }
@@ -156,6 +156,12 @@
 
         .auth {
             position: relative;
+            min-width: 150px;
+
+            .auth__btn {
+                width: 100%;
+                text-align: right;
+            }
 
             .auth__items {
                 opacity: 0;
@@ -172,7 +178,7 @@
                 left: 0;
                 z-index: 1;
                 width: 100%;
-                transition: all .5s ease 0s;
+                transition: all 0.5s ease 0s;
 
                 &.show {
                     opacity: 1;
@@ -181,22 +187,23 @@
 
                 .auth__item {
                     position: relative;
-                
+
                     .auth__link {
                         color: white;
 
                         &:after {
-                            content: '';
+                            content: "";
                             position: absolute;
                             left: 0;
                             bottom: -3px;
                             height: 2px;
                             width: 30px;
                             background-color: transparent;
-                            transition: all .5s ease 0s;
+                            transition: all 0.5s ease 0s;
                         }
 
-                        &.active, &:hover {
+                        &.active,
+                        &:hover {
                             &:after {
                                 background-color: white;
                             }
@@ -205,7 +212,7 @@
                 }
             }
 
-            @media only screen and (max-width : 940px) {
+            @media only screen and (max-width: 940px) {
                 i {
                     font-size: 1.5rem;
                     margin-right: 10px;
@@ -215,14 +222,12 @@
                     display: none;
                 }
 
-                .auth__items{
+                .auth__items {
                     right: 0;
                     left: auto;
                     width: auto;
                 }
             }
         }
-
-        
     }
 }

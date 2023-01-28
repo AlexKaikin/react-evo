@@ -1,31 +1,58 @@
+import { Field, Form, Formik } from 'formik'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link, Navigate } from 'react-router-dom'
+import { authSelector, login, LoginType } from '../../../../store/authSlice'
+import { useAppDispatch } from '../../../../store/store'
 import './Login.scss'
 
+const Login: React.FC = (props) => {
+  const dispatch = useAppDispatch()
+  const auth = useSelector(authSelector)
+  const formState: LoginType = {
+    email: '',
+    password: '',
+  }
 
-const Login: React.FC = props => {
-    return  <div className='section auth'>
-                <div className='container'>
-                    <div className='section__title'>Вход</div>
-                    <form className="form">
-                            
-                        <div className="form__field">
-                            <label>Логин</label>
-                            <input type="text" name="login"  />
-                        </div>
+  if (auth.data) return <Navigate to="/profile" />
 
-                        <div className="form__field">
-                            <label>Пароль</label>
-                            <input type="password" name="password"  />
-                        </div>
-
-                        <p>У вас нет аккаунта? <Link to='/register'>Регистрация</Link></p>
-
-                        <button className='form_btn'>Отправить</button>
-
-                    </form>
-                </div>
+  return (
+    <div className="section auth">
+      <div className="container">
+        <div className="section__title">Вход</div>
+        <Formik
+          initialValues={formState}
+          validate={formValidate}
+          onSubmit={(values) => dispatch(login(values))}
+        >
+          <Form className="form">
+            <div className="form__field">
+              <label>Логин</label>
+              <Field type="text" name="email" />
             </div>
+
+            <div className="form__field">
+              <label>Пароль</label>
+              <Field type="password" name="password" />
+            </div>
+
+            <p>
+              У вас нет аккаунта? <Link to="/register">Регистрация</Link>
+            </p>
+
+            <button type="submit" className="form_btn">
+              Отправить
+            </button>
+          </Form>
+        </Formik>
+      </div>
+    </div>
+  )
 }
 
 export default Login
+
+const formValidate = (values: LoginType) => {
+  const errors = {}
+  return errors
+}

@@ -15,7 +15,7 @@
 <h3>Frontend:</h3>
 <ul>
     <li>TypeScript</li>
-    <li>Библиотека Reactjs</li>
+    <li>Библиотек: Reactjs, @reduxjs/toolkit, react-redux, react-router-dom, axios, formik, classnames, sass </li>
 </ul>
 
 <h3>Backend:</h3>

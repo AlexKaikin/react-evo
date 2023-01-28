@@ -133,7 +133,7 @@ const CartItems: React.FC<PropsType> = (props) => {
                 return (
                     <div key={item.id} className="cart__item product">
                         <div className="product__img">
-                            <img src={item.imgUrl} alt={item.title} />
+                            <img src={(process.env.REACT_APP_SERVER_URL || '') + item.imgUrl} alt={item.title} />
                         </div>
                         <div className="product__title">
                             <Link to={`/products/${item.id}`}>

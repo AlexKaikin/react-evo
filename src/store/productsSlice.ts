@@ -2,32 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { productsAPI } from '../api/api'
 import { RootState } from './store'
 
-
 const initialState: ProductsType = {
   productItems: [],
-  productItem: {
-    id: 9999, 
-    title: 'string',
-    imgUrl: 'string',
-    galleryUrl: ['string[]'],
-    volume: 1,
-    volumeMeasurement: 'string',
-    currency: 'string',
-    price: 1,
-    category: 'string',
-    rating: 1,
-    property: {country: 'string', town: 'string', year: 1},
-    text: ['string[]'],
-    },
+  productItem: null,
 
   // статус загрузки товаров/товара
   status: 'loading', // loading, success, error
 
   // пагинация
-  pagesCount: 0,    // количество страниц товаров
-  totalItems: 0,    // количество товаров на сервере
-  limitItems: 8,    // лимит товаров на страницу
-  currentPage: 1,   // текущая страница
+  pagesCount: 0, // количество страниц товаров
+  totalItems: 0, // количество товаров на сервере
+  limitItems: 8, // лимит товаров на страницу
+  currentPage: 1, // текущая страница
 }
 
 export const productsSlice = createSlice({
@@ -56,7 +42,13 @@ export const productsSlice = createSlice({
 })
 
 // Action
-export const { setProducts, setProduct, setStatus, setTotalItems, setCurrentPage } = productsSlice.actions
+export const {
+  setProducts,
+  setProduct,
+  setStatus,
+  setTotalItems,
+  setCurrentPage,
+} = productsSlice.actions
 
 export default productsSlice.reducer
 
@@ -65,88 +57,97 @@ export const productsSelector = (state: RootState) => state.products
 
 // thunk
 // загрузка товаров
-export const getProducts = (categoryActive: string, sortActive: string, currentPage: number) => async (dispatch: Function) => {
-  dispatch(setStatus('loading'))
-  try {
-    const res = await productsAPI.getProducts(categoryActive, sortActive, currentPage, initialState.limitItems)
-    dispatch(setProducts(res.data))
-    res.headers['x-total-count'] && dispatch(setTotalItems(res.headers['x-total-count']))
-  } catch (err) {
-    dispatch(setStatus('error'))
-    console.log(err)
+export const getProducts =
+  (categoryActive: string, sortActive: string, currentPage: number) =>
+  async (dispatch: Function) => {
+    dispatch(setStatus('loading'))
+    try {
+      const res = await productsAPI.getProducts(
+        categoryActive,
+        sortActive,
+        currentPage,
+        initialState.limitItems
+      )
+      dispatch(setProducts(res.data))
+      res.headers['x-total-count'] &&
+        dispatch(setTotalItems(res.headers['x-total-count']))
+    } catch (err) {
+      dispatch(setStatus('error'))
+      console.log(err)
+    }
   }
-}
 
 // загрузка товара
 export const getProduct = (id: number) => async (dispatch: Function) => {
   dispatch(setStatus('loading'))
-  try{
+  try {
     const res = await productsAPI.getProduct(id)
     dispatch(setProduct(res.data))
-  }catch(err){
+  } catch (err) {
     dispatch(setStatus('error'))
     console.log(err)
   }
 }
 
 // создать товар
-export const createProduct = (data: ProductItemType) => async (dispatch: Function) => {
-  try {
-      console.log(data)
-      //const res = await productsAPI.createProduct(data)
-  } catch (err) {
+export const createProduct =
+  (data: ProductItemType) => async (dispatch: Function) => {
+    try {
+      const res = await productsAPI.createProduct(data)
+      dispatch(setProduct(res.data))
+    } catch (err) {
       console.log(err)
+    }
   }
-}
 
 // обновить товар
-export const updateProduct = (data: ProductItemType) => async (dispatch: Function) => {
-  try {
-      console.log(data)
-      //const res = await productsAPI.updateProduct(data)
-  } catch (err) {
+export const updateProduct =
+  (data: ProductItemType) => async (dispatch: Function) => {
+    try {
+      await productsAPI.updateProduct(data)
+      dispatch(setProduct(data))
+    } catch (err) {
       console.log(err)
+    }
   }
-}
 
 // удалить товар
 export const deleteProduct = (id: number) => async (dispatch: Function) => {
   try {
-      console.log('delete')
-      //const res = await productsAPI.deleteProduct(id)
+    await productsAPI.deleteProduct(id)
   } catch (err) {
-      console.log(err)
+    console.log(err)
   }
 }
 
 interface ProductsType {
-  productItems: ProductItemType[],
-  productItem: ProductItemType,
-  pagesCount: number,
-  totalItems: number,
-  limitItems: number,
-  currentPage: number,
-  status: string,
+  productItems: ProductItemType[]
+  productItem: ProductItemType | null
+  pagesCount: number
+  totalItems: number
+  limitItems: number
+  currentPage: number
+  status: string
 }
 
 export type ProductItemType = {
-  id: number,
-  title: string,
-  imgUrl: string,
-  galleryUrl: string[],
-  volume: number,
-  volumeMeasurement: string,
-  currency: string,
-  price: number,
-  category: string,
-  rating: number,
-  property: PropertyType,
-  text: string[],
+  id: number
+  title: string
+  imgUrl: string
+  galleryUrl: string[]
+  volume: number
+  volumeMeasurement: string
+  currency: string
+  price: number
+  quantity: number
+  category: string
+  rating: number
+  property: PropertyType
+  text: string[]
 }
 
 type PropertyType = {
-  country: string,
-  town: string,
-  year: number,
+  country: string
+  town: string
+  year: number
 }
-

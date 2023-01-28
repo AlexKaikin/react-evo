@@ -1,16 +1,15 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { deleteProduct } from '../../../../store/productsSlice'
 import { useAppDispatch } from '../../../../store/store'
 import Modal from '../../../common/Modal/Modal'
 
 const DeleteProductForm: React.FC<PropsType> = (props) => {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
 
     const deleteClick = () => {
         dispatch(deleteProduct(props.id))
-        navigate(`/products`)
+        props.updateComponent()
+        props.modaltoggle()
     }
 
     return (
@@ -33,4 +32,5 @@ export default DeleteProductForm
 type PropsType = {
     id: number
     modaltoggle: () => void
+    updateComponent: () => void
 }

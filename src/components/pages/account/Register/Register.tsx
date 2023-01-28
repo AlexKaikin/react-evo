@@ -1,35 +1,63 @@
+import { Field, Form, Formik } from 'formik'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link, Navigate } from 'react-router-dom'
+import { authSelector, register, RegisterType } from '../../../../store/authSlice'
+import { useAppDispatch } from '../../../../store/store'
 import './Register.scss'
 
-const Register: React.FC = props => {
-    return  <div className='section auth'>
-                <div className='container'>
-                    <div className='section__title'>Регистрация</div>
-                    <form className="form">
-                            
-                        <div className="form__field">
-                            <label>Логин</label>
-                            <input type="text" name="login"  />
-                        </div>
+const Register: React.FC = (props) => {
+  const dispatch = useAppDispatch()
+  const auth = useSelector(authSelector)
+  const formState: RegisterType = {
+    email: '',
+    fullName: '',
+    password: '',
+  }
 
-                        <div className="form__field">
-                            <label>Почта</label>
-                            <input type="email" name="email"  />
-                        </div>
-
-                        <div className="form__field">
-                            <label>Пароль</label>
-                            <input type="password" name="password"  />
-                        </div>
-
-                        <p>У вас есть аккаунт? <Link to='/login'>Вход</Link></p>
-
-                        <button className='form_btn'>Отправить</button>
-
-                    </form>
-                </div>
+  if (auth.data) {
+    return <Navigate to="/profile" />
+  }
+  return (
+    <div className="section auth">
+      <div className="container">
+        <div className="section__title">Регистрация</div>
+        <Formik
+          initialValues={formState}
+          validate={formValidate}
+          onSubmit={(values) => dispatch(register(values))}
+        >
+          <Form className="form">
+            <div className="form__field">
+              <label>Логин</label>
+              <Field type="text" name="fullName" />
             </div>
+
+            <div className="form__field">
+              <label>Почта</label>
+              <Field type="email" name="email" />
+            </div>
+
+            <div className="form__field">
+              <label>Пароль</label>
+              <Field type="password" name="password" />
+            </div>
+
+            <p>
+              У вас есть аккаунт? <Link to="/login">Вход</Link>
+            </p>
+
+            <button type="submit" className="form_btn">Отправить</button>
+          </Form>
+        </Formik>
+      </div>
+    </div>
+  )
 }
 
 export default Register
+
+const formValidate = (values: RegisterType) => {
+  const errors = {}
+  return errors
+}
