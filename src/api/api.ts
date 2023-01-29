@@ -47,7 +47,11 @@ export const productsAPI = {
     return instance.get<ProductItemType>(`products/${id}`)
   },
   uploadProductImg(formData: any) {
-    return instance.post('/upload', formData)
+    return instance.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   },
   createProduct(data: ProductItemType) {
     return instance.post<ProductItemType>(`products/`, data, {
