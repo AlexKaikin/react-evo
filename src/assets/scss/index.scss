@@ -62,7 +62,7 @@ h3 {
 .section__title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 40px;
+  margin: 0px 0 20px 0;
 }
 
 a {
@@ -160,6 +160,26 @@ p {
 
   .form__checkbox {
     margin-bottom: 20px;
+  }
+
+  .form__btn {
+    background-color: var(--primary);
+    background: linear-gradient(
+      141deg,
+      var(--primaryDark) 0%,
+      var(--primary) 100%
+    );
+    border: 2px solid white;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease 0s;
+
+    &:hover {
+      background-color: var(--primary);
+      border: 2px solid white;
+      box-shadow: 0 0 0 3px var(--primary);
+    }
   }
 }
 

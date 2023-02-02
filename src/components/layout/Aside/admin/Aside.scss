@@ -1,0 +1,26 @@
+.aside {
+  padding: 3% 0;
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light);
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 150px;
+
+    .item {
+      padding: 10px 20px;
+
+      &.active {
+        background-color: var(--primary);
+        background: linear-gradient(
+          141deg,
+          var(--primaryDark) 0%,
+          var(--primary) 100%
+        );
+        color: white;
+      }
+    }
+  }
+}

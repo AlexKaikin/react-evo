@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { LoginType } from '../store/authSlice'
-import { ProductItemType } from '../store/productsSlice'
+import { LoginType } from '../store/account/authSlice'
+import { OrderItemType } from '../store/products/orderSlice'
+import { ProductItemType } from '../store/products/productsSlice'
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL + '/',
@@ -17,11 +18,13 @@ instance.interceptors.request.use((config) => {
 
 export const productsAPI = {
   getProducts(
+    query: string,
     categoryActive: string,
     sortActive: string,
     currentPage: number,
     limitItems: number
   ) {
+    const q = query === '' ? `` : `q=${query}&`
     const category =
       categoryActive === 'Все чаи' ? `` : `category=${categoryActive}&`
     const pagination = `_page=${currentPage}&_limit=${limitItems}`
@@ -39,7 +42,7 @@ export const productsAPI = {
     }
 
     return instance.get<ProductItemType[]>(
-      `products/?${category + sorting(sortActive) + pagination}`
+      `products/?${q + category + sorting(sortActive) + pagination}`
     )
   },
 
@@ -49,8 +52,8 @@ export const productsAPI = {
   uploadProductImg(formData: any) {
     return instance.post('/upload', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        'Content-Type': 'multipart/form-data',
+      },
     })
   },
   createProduct(data: ProductItemType) {
@@ -72,15 +75,6 @@ export const productsAPI = {
   },
 }
 
-export const searchAPI = {
-  getSearchQuery(searchValue: string, currentPage: number, limitItems: number) {
-    const pagination = `&_page=${currentPage}&_limit=${limitItems}`
-    return instance.get<ProductItemType[]>(
-      `products/?q=${searchValue + pagination}`
-    )
-  },
-}
-
 export const navigationhAPI = {
   getNavigation() {
     return instance.get<any>(`navigation`)
@@ -97,4 +91,16 @@ export const authAPI = {
   getMe() {
     return instance.get<any>(`auth/me`)
   },
+}
+
+export const ordersAPI = {
+  getOrders() {
+    return instance.get<any>(`orders`)
+  },
+  getOrdersAdmin() {
+    return instance.get<any>(`admin/orders`)
+  },
+  createOrder(values: OrderItemType) {
+    return instance.post<any>(`orders`, values)
+  }
 }

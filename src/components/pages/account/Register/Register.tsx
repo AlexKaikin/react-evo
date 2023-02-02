@@ -2,7 +2,11 @@ import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
-import { authSelector, register, RegisterType } from '../../../../store/authSlice'
+import {
+  authSelector,
+  register,
+  RegisterType,
+} from '../../../../store/account/authSlice'
 import { useAppDispatch } from '../../../../store/store'
 import './Register.scss'
 
@@ -15,9 +19,8 @@ const Register: React.FC = (props) => {
     password: '',
   }
 
-  if (auth.data) {
-    return <Navigate to="/profile" />
-  }
+  if (auth.data) return <Navigate to="/profile" />
+
   return (
     <div className="section auth">
       <div className="container">
@@ -47,7 +50,9 @@ const Register: React.FC = (props) => {
               У вас есть аккаунт? <Link to="/login">Вход</Link>
             </p>
 
-            <button type="submit" className="form_btn">Отправить</button>
+            <button type="submit" className="form__btn">
+              Отправить
+            </button>
           </Form>
         </Formik>
       </div>

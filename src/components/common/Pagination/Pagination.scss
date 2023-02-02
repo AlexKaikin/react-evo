@@ -1,31 +1,35 @@
 .pagination {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 40px;
+
+  .page {
+    font-weight: bold;
     display: flex;
-    gap: 5px;
     justify-content: center;
-    margin-top: 40px;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #e1e1e1;
+    background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.5s ease 0s;
 
-    .page {
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        background-color: #e1e1e1;
-        background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
-        border: 2px solid white;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all .5s ease 0s;
-
-        &:hover {
-            box-shadow: 0 0 0 3px var(--primary);
-        }
-
-        &.active {
-            background-color: var(--primary);
-            background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
-            color: white;
-        }
+    &:hover {
+      box-shadow: 0 0 0 3px var(--primary);
     }
+
+    &.active {
+      background-color: var(--primary);
+      background: linear-gradient(
+        141deg,
+        var(--primaryDark) 0%,
+        var(--primary) 100%
+      );
+      color: white;
+    }
+  }
 }

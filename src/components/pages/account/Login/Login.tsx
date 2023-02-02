@@ -2,7 +2,11 @@ import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
-import { authSelector, login, LoginType } from '../../../../store/authSlice'
+import {
+  authSelector,
+  login,
+  LoginType,
+} from '../../../../store/account/authSlice'
 import { useAppDispatch } from '../../../../store/store'
 import './Login.scss'
 
@@ -40,7 +44,7 @@ const Login: React.FC = (props) => {
               У вас нет аккаунта? <Link to="/register">Регистрация</Link>
             </p>
 
-            <button type="submit" className="form_btn">
+            <button type="submit" className="form__btn">
               Отправить
             </button>
           </Form>

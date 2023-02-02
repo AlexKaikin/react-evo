@@ -1,20 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 
-import productsReducer from './productsSlice'
-import navigationReducer from './navigationSlice'
-import searchReducer from './searchSlice'
-import storeReducer from './storeSlice'
-import authReducer from './authSlice'
-
+import productsReducer from './products/productsSlice'
+import navigationReducer from './navigation/navigationSlice'
+import storeReducer from './products/storeSlice'
+import authReducer from './account/authSlice'
+import orderReducer from './products/orderSlice'
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
     navigation: navigationReducer,
-    search: searchReducer,
     store: storeReducer,
     auth: authReducer,
+    order: orderReducer,
   },
 })
 
@@ -23,4 +22,4 @@ export type RootState = ReturnType<typeof store.getState>
 
 // типизация dispatch
 export type AppDispatch = typeof store.dispatch
-export const useAppDispatch = () => useDispatch<AppDispatch>() 
+export const useAppDispatch = () => useDispatch<AppDispatch>()
