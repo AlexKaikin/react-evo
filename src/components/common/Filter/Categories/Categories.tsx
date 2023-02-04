@@ -39,7 +39,7 @@ const Categories: React.FC<PropsType> = ({ items, categoryActive }) => {
     document.body.removeEventListener('click', bodyClick)
   }
 
-  if(!items.length) return <CategoriesSkeleton />
+  if (!items.length) return <CategoriesSkeleton />
 
   return (
     <div ref={categoryRef} className="filter__category">
@@ -52,7 +52,9 @@ const Categories: React.FC<PropsType> = ({ items, categoryActive }) => {
           return (
             <button
               key={item.id}
-              className={cn('btn btn-light', { active: item.title === categoryActive })}
+              className={cn('btn btn-light', {
+                active: item.title === categoryActive,
+              })}
               onClick={() => changeCategory(item.title)}
             >
               {item.title}

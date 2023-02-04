@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { setCategoryActive } from '../../../../../store/navigation/navigationSlice'
 import {
   setCurrentPage,
   setQuery,
@@ -27,6 +28,7 @@ const Search: React.FC<PropsType> = ({ query }) => {
       navigate(`/products?q=${searchValue}`)
       dispatch(setQuery(searchValue))
       dispatch(setCurrentPage(1))
+      dispatch(setCategoryActive('Все чаи'))
     } else {
       const error = '<p class="error">Пожалуйста, введите запрос</p>'
       searchRef.current?.insertAdjacentHTML('beforeend', error)

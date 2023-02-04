@@ -33,17 +33,17 @@ const Register: React.FC = (props) => {
           <Form className="form">
             <div className="form__field">
               <label>Логин</label>
-              <Field type="text" name="fullName" />
+              <Field type="text" name="fullName" required />
             </div>
 
             <div className="form__field">
               <label>Почта</label>
-              <Field type="email" name="email" />
+              <Field type="email" name="email" required />
             </div>
 
             <div className="form__field">
               <label>Пароль</label>
-              <Field type="password" name="password" />
+              <Field type="password" name="password" required />
             </div>
 
             <p>
