@@ -6,6 +6,7 @@ import './Header.scss'
 import { authSelector } from '../../../store/account/authSlice'
 import Logo from './Logo/Logo'
 import Account from './Account/Account'
+import Theme from './Theme/Theme'
 
 const Header: React.FC = (props) => {
   const { navigation } = useSelector(navigationSelector)
@@ -17,6 +18,7 @@ const Header: React.FC = (props) => {
         <Logo />
         <Nav items={navigation} />
         <Account auth={auth} />
+        <Theme />
       </div>
     </header>
   )

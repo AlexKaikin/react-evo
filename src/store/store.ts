@@ -6,6 +6,7 @@ import navigationReducer from './navigation/navigationSlice'
 import storeReducer from './products/storeSlice'
 import authReducer from './account/authSlice'
 import orderReducer from './products/orderSlice'
+import themeReducer from './theme/themeSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     store: storeReducer,
     auth: authReducer,
     order: orderReducer,
+    theme: themeReducer,
   },
 })
 

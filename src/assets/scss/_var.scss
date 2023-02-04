@@ -1,4 +1,6 @@
-html{
+html[data-theme="light"] {
+    --bg-color: white;
+    --text-color: black;
     --primary: rgb(80 151 76);
     --primaryDark: rgb(35 65 33);
     --light: rgb(224 224 224);
@@ -7,4 +9,21 @@ html{
     --darkLight: rgba(145,145,145,1);
     --brown: rgb(87 78 72);
     --brownLight: rgb(98 98 98);
-}
+    --theme-icon-bg: #eaeaea;
+    --search-shadow-color: #cecece;
+  }
+  
+  html[data-theme="dark"] {
+    --bg-color: #35363a;
+    --text-color: white;
+    --primary: rgb(80 151 76);
+    --primaryDark: rgb(35 65 33);
+    --light: rgb(37, 37, 37);
+    --white: rgb(53, 54, 58);
+    --dark: rgba(0,0,0,1);
+    --darkLight: rgba(145,145,145,1);
+    --brown: rgb(87 78 72);
+    --brownLight: rgb(98 98 98);
+    --theme-icon-bg: #535353;
+    --search-shadow-color: #212121;
+  }

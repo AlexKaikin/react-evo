@@ -88,7 +88,7 @@
           justify-content: center;
           align-items: center;
           transition: all 0.5s ease 0s;
-          border: 2px solid white;
+          border: 2px solid var(--bg-color);
 
           .bi-heart {
             position: relative;
@@ -137,7 +137,7 @@
         .quantity__content {
           font-size: 1.5rem;
           background-color: #f0f0f0;
-          border: 2px solid white;
+          border: 2px solid var(--bg-color);
           background: linear-gradient(
             141deg,
             var(--light) 0%,
@@ -208,7 +208,6 @@
         .tab__title {
           padding: 10px 20px;
           border-radius: 40px;
-          color: black;
           background-color: #f0f0f0;
           background: linear-gradient(
             141deg,

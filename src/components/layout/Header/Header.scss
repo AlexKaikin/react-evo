@@ -1,17 +1,13 @@
 .header {
   padding: 30px 0;
 
-  @media only screen and (max-width: 940px) {
-    padding: 20px 0;
-  }
-
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     .header__logo {
-      color: black;
+      color: var(--text-color);
       margin-right: 20px;
       font-size: 40px;
       font-weight: bold;
@@ -29,7 +25,7 @@
           position: relative;
 
           .nav__link {
-            color: black;
+            color: var(--text-color);
             position: relative;
             font-weight: bold;
 
@@ -47,7 +43,7 @@
             &.active,
             &:hover {
               &:after {
-                background-color: black;
+                background-color: var(--text-color);
               }
             }
           }
@@ -158,9 +154,23 @@
       }
     }
 
+    .header__thema {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      .theme__btn {
+        cursor: pointer;
+        padding: 0 20px 0 10px;
+        background-color: var(--theme-icon-bg);
+        border-radius: 0 0 0 10px;
+      }
+    }
+
     .auth {
       position: relative;
-      min-width: 150px;
+      display: flex;
+      justify-content: space-between;
 
       .auth__btn {
         width: 100%;
@@ -183,9 +193,9 @@
         padding: 20px;
         position: absolute;
         top: 30px;
-        left: 0;
+        right: 0;
         z-index: 1;
-        width: 100%;
+        width: auto;
         transition: all 0.5s ease 0s;
 
         &.show {

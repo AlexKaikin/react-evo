@@ -52,7 +52,7 @@ const Categories: React.FC<PropsType> = ({ items, categoryActive }) => {
           return (
             <button
               key={item.id}
-              className={cn('btn', { active: item.title === categoryActive })}
+              className={cn('btn btn-light', { active: item.title === categoryActive })}
               onClick={() => changeCategory(item.title)}
             >
               {item.title}
