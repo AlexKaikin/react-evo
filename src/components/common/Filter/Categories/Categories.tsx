@@ -6,6 +6,7 @@ import {
   setCategoryActive,
 } from '../../../../store/navigation/navigationSlice'
 import { setCurrentPage } from '../../../../store/products/productsSlice'
+import CategoriesSkeleton from '../../Skeleton/CategoriesSkeleton/CategoriesSkeleton'
 
 const Categories: React.FC<PropsType> = ({ items, categoryActive }) => {
   const dispatch = useDispatch()
@@ -37,6 +38,8 @@ const Categories: React.FC<PropsType> = ({ items, categoryActive }) => {
     setCategoryShow(false)
     document.body.removeEventListener('click', bodyClick)
   }
+
+  if(!items.length) return <CategoriesSkeleton />
 
   return (
     <div ref={categoryRef} className="filter__category">

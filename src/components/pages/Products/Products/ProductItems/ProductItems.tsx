@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ProductItemType } from '../../../../../store/products/productsSlice'
-import ProductSkeleton from '../../../../common/Skeleton/ProductSkeleton'
+import ProductSkeleton from '../../../../common/Skeleton/ProductSkeleton/ProductSkeleton'
 
 const ProductItems: React.FC<PropsType> = ({ items, status }) => {
   if (status === 'error') {

@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 import { useAppDispatch } from '../../../../store/store'
 import { AuthType, logout } from '../../../../store/account/authSlice'
+import AuthSkeleton from '../../../common/Skeleton/AuthSkeleton/AuthSkeleton'
 
 const Account: React.FC<PropsType> = ({ auth }) => {
   const dispatch = useAppDispatch()
@@ -37,7 +38,7 @@ const Account: React.FC<PropsType> = ({ auth }) => {
     navigate('/login')
   }
 
-  if(auth.status === 'loading') return <div className="auth"></div>
+  if(auth.status === 'loading') return <AuthSkeleton />
 
   return (
     <div ref={authRef} className="auth">

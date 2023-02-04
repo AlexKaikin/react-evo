@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import cn from 'classnames'
 import { NavigationItemType } from '../../../../store/navigation/navigationSlice'
+import NavSkeleton from '../../../common/Skeleton/NavSkeleton/NavSkeleton'
 
 const Nav: React.FC<PropsType> = (props) => {
   const menuRef = useRef<HTMLElement>(null)
@@ -26,7 +27,7 @@ const Nav: React.FC<PropsType> = (props) => {
     }
   }, [menuShow, bodyClick])
 
-  if(!props.items.length) return <nav className="header__nav nav"></nav>
+  if(!props.items.length) return <NavSkeleton />
 
   return (
     <nav ref={menuRef} className="header__nav nav">

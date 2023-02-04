@@ -1,0 +1,25 @@
+.filter__sort.sort.skeleton {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  i {
+    display: inline-block;
+    position: relative;
+    left: -5px!important;
+    top: 0px!important;
+    font-size: 1.5rem;
+    background-color: #e1e1e1;
+    width: 21px;
+    height: 27px;
+    border-radius: 10px;
+  }
+
+  button {
+    border-bottom: 0!important;
+    background-color: #e1e1e1;
+    width: 43px;
+    height: 27px;
+    border-radius: 10px;
+  }
+}

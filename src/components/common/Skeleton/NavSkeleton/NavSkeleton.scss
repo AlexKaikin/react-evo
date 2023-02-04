@@ -1,0 +1,25 @@
+.header__nav.nav.skeleton {
+  position: relative;
+
+  .nav__items {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .nav__item {
+      position: relative;
+      background-color: #e1e1e1;
+      width: 60px;
+      height: 23px;
+      border-radius: 10px;
+    }
+  }
+
+  .mobile__menu {
+    display: none;
+    background-color: #e1e1e1;
+    width: 73px;
+    height: 40px;
+    border-radius: 10px;
+  }
+}

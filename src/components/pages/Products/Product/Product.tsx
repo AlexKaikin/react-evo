@@ -6,7 +6,7 @@ import {
   productsSelector,
 } from '../../../../store/products/productsSlice'
 import { useAppDispatch } from '../../../../store/store'
-import ProductFullSkeleton from '../../../common/Skeleton/ProductFullSkeleton'
+import ProductFullSkeleton from '../../../common/Skeleton/ProductFullSkeleton/ProductFullSkeleton'
 import './Product.scss'
 import Cloud from '../../../layout/Cloud/Product/Cloud'
 import FullProduct from './FullProduct/FullProduct'

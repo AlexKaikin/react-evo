@@ -5,6 +5,7 @@ import {
   setSortActive,
   SortItemType,
 } from '../../../../store/navigation/navigationSlice'
+import SortingSkeleton from '../../Skeleton/SortingSkeleton/SortingSkeleton'
 
 const Sorting: React.FC<PropsType> = ({ items, sortActive }) => {
   const sortRef = useRef<HTMLDivElement>(null)
@@ -35,6 +36,8 @@ const Sorting: React.FC<PropsType> = ({ items, sortActive }) => {
       document.body.removeEventListener('click', bodyClick)
     }
   }
+
+  if(!items.length) return <SortingSkeleton />
 
   return (
     <div ref={sortRef} className="filter__sort sort">
