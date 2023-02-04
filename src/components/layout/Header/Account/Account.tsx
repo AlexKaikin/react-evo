@@ -37,6 +37,8 @@ const Account: React.FC<PropsType> = ({ auth }) => {
     navigate('/login')
   }
 
+  if(auth.status === 'loading') return <div className="auth"></div>
+
   return (
     <div ref={authRef} className="auth">
       <button className="auth__btn" onClick={AuthShowChange}>

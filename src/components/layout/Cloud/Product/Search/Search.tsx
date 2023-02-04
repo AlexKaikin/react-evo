@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { setCurrentPage, setQuery } from '../../../../../store/products/productsSlice'
+import {
+  setCurrentPage,
+  setQuery,
+} from '../../../../../store/products/productsSlice'
 import { useAppDispatch } from '../../../../../store/store'
 
-const Search: React.FC<PropsType> = ({query}) => {
+const Search: React.FC<PropsType> = ({ query }) => {
   const [searchValue, setSearchValue] = useState<string>(query)
 
   const SearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
-    if(e.target.value === '') dispatch(setQuery(''))
+    if (e.target.value === '') dispatch(setQuery(''))
   }
 
   const navigate = useNavigate()
@@ -40,8 +43,10 @@ const Search: React.FC<PropsType> = ({query}) => {
   const queryValue = new URLSearchParams(useLocation().search).get('q') || ''
 
   useEffect(() => {
-    dispatch(setQuery(queryValue))
-    setSearchValue(queryValue)
+    if (queryValue !== '') {
+      dispatch(setQuery(queryValue))
+      setSearchValue(queryValue)
+    }
   }, [dispatch, queryValue])
 
   return (

@@ -26,6 +26,8 @@ const Nav: React.FC<PropsType> = (props) => {
     }
   }, [menuShow, bodyClick])
 
+  if(!props.items.length) return <nav className="header__nav nav"></nav>
+
   return (
     <nav ref={menuRef} className="header__nav nav">
       <ul className={cn('nav__items', { show: menuShow })}>
