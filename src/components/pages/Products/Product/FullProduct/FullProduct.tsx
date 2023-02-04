@@ -277,7 +277,7 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
           <div className="tab__titles items">
             <button
               onClick={() => setTabActive(1)}
-              className={cn('btn tab__title title-1', {
+              className={cn('btn btn-light tab__title title-1', {
                 active: tabActive === 1,
               })}
             >
@@ -285,7 +285,7 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
             </button>
             <button
               onClick={() => setTabActive(2)}
-              className={cn('btn tab__title title-2', {
+              className={cn('btn btn-light tab__title title-2', {
                 active: tabActive === 2,
               })}
             >
@@ -293,7 +293,7 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
             </button>
             <button
               onClick={() => setTabActive(3)}
-              className={cn('btn tab__title title-3', {
+              className={cn('btn btn-light tab__title title-3', {
                 active: tabActive === 3,
               })}
             >
