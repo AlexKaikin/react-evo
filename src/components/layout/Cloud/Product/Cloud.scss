@@ -51,7 +51,7 @@
         align-items: center;
 
         i {
-            color: var(--text-color);
+          color: var(--text-color);
         }
 
         .count {
@@ -138,9 +138,17 @@
               border-radius: 50%;
               transition: all 0.5s ease 0s;
 
+              i {
+                color: white;
+              }
+
               &:hover {
                 background-color: white;
                 color: var(--primary);
+
+                i {
+                  color: black;
+                }
               }
             }
           }
