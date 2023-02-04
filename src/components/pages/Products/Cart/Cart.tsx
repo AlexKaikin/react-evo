@@ -50,7 +50,7 @@ const Cart: React.FC = (props) => {
                 </div>
               </div>
               <div className="cart__btn">
-                <Link to="/products" className="btn btn__prev">
+                <Link to="/products" className="btn btn-light">
                   <i className="bi bi-chevron-left"></i> Вернуться назад
                 </Link>
                 <Link onClick={orderFormClick} to="#" className="btn btn__buy">

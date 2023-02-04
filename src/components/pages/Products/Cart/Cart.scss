@@ -21,6 +21,7 @@
 
           img {
             width: 90%;
+            border-radius: 10px;
           }
         }
 
@@ -135,11 +136,6 @@
       display: flex;
       justify-content: flex-end;
       gap: 20px;
-
-      .btn__prev {
-        background: linear-gradient(141deg, var(--light) 0%, var(--white) 100%);
-        color: #4b4b4b;
-      }
 
       @media only screen and (max-width: 530px) {
         flex-direction: column;
