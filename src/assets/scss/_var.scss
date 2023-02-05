@@ -1,4 +1,5 @@
 html[data-theme="light"] {
+    --bg-body-color: rgb(226, 226, 226);
     --bg-color: white;
     --text-color: black;
     --primary: rgb(80 151 76);
@@ -14,6 +15,7 @@ html[data-theme="light"] {
   }
   
   html[data-theme="dark"] {
+    --bg-body-color: #35363a;
     --bg-color: #35363a;
     --text-color: white;
     --primary: rgb(80 151 76);
@@ -25,5 +27,5 @@ html[data-theme="light"] {
     --brown: rgb(87 78 72);
     --brownLight: rgb(98 98 98);
     --theme-icon-bg: #535353;
-    --search-shadow-color: #212121;
+    --search-shadow-color: #626262;
   }
