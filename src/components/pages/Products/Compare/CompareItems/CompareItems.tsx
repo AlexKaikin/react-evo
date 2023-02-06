@@ -41,8 +41,8 @@ const CompareItems: React.FC<PropsType> = ({ compareItems }) => {
             {item.property.year && <div>Год: {item.property.year}</div>}
 
             <div className="product__text">
-              {item.text.map((item) => (
-                <p key={item.toString()}>{item}</p>
+              {item.text.split('\n').map((item, i) => (
+                <p key={i}>{item}</p>
               ))}
             </div>
             <div className="product__delete delete">

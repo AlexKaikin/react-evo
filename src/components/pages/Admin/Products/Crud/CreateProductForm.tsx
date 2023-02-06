@@ -77,7 +77,7 @@ const CreateProductForm: React.FC<PropsType> = (props) => {
     category: 'Красные',
     price: 0,
     quantity: 0,
-    text: [],
+    text: '',
     imgUrl: '',
     galleryUrl: [],
     rating: 0,

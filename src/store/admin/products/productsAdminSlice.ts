@@ -150,7 +150,7 @@ export type ProductItemType = {
   category: string
   rating: number
   property: PropertyType
-  text: string[]
+  text: string
   published: boolean,
 }
 

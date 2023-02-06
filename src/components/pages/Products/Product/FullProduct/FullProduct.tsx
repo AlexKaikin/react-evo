@@ -304,9 +304,10 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
           <div className="tab__content content-1">
             <div className="product__text">
               {tabActive === 1 &&
-                productItem.text?.map((item) => (
-                  <p key={item.toString()}>{item}</p>
-                ))}
+                productItem.text
+                  .split('\n')
+                  .map((item, i) => <p key={i}>{item}</p>)}
+
               {tabActive === 2 && (
                 <div className="product__property">
                   {productItem.property.country && (
@@ -320,6 +321,7 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
                   )}
                 </div>
               )}
+
               {tabActive === 3 && 'Отзывов нет'}
             </div>
           </div>
