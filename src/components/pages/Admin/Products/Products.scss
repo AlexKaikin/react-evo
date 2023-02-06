@@ -14,8 +14,8 @@
 
       .admin__item {
         display: grid; 
-        grid-auto-columns: 1fr; 
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+        grid-auto-columns: 10fr;
+        grid-template-columns: 5fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr; 
         align-items: center;
         gap: 20px;
@@ -63,9 +63,14 @@
         z-index: 1;
         background-color: #ba5148;
         color: white;
-        padding: 5px;
-        border-radius: 10px;
+        padding-top: 2px;
+        border-radius: 50%;
         cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
 
@@ -97,9 +102,14 @@
           z-index: 1;
           background-color: #ba5148;
           color: white;
-          padding: 5px;
-          border-radius: 10px;
+          padding-top: 2px;
+          border-radius: 50%;
           cursor: pointer;
+          width: 35px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
@@ -117,7 +127,7 @@
     button {
       background-color: var(--primary);
       background: linear-gradient(141deg, var(--primaryDark) 0%, var(--primary) 100%);
-      border: 2px solid white;
+      border: 2px solid var(--bg-color);
       color: white;
       padding: 20px;
       border-radius: 10px;
@@ -126,7 +136,7 @@
 
       &:hover {
         background-color: var(--primary);
-        border: 2px solid white;
+        border: 2px solid var(--bg-color);
         box-shadow: 0 0 0 3px var(--primary);
       }
     }

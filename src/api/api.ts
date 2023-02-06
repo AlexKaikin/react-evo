@@ -49,6 +49,42 @@ export const productsAPI = {
   getProduct(id: number) {
     return instance.get<ProductItemType>(`products/${id}`)
   },
+  
+}
+
+export const productsAdminAPI = {
+  getProducts(
+    query: string,
+    categoryActive: string,
+    sortActive: string,
+    currentPage: number,
+    limitItems: number
+  ) {
+    const q = query === '' ? `` : `q=${query}&`
+    const category =
+      categoryActive === 'Все чаи' ? `` : `category=${categoryActive}&`
+    const pagination = `_page=${currentPage}&_limit=${limitItems}`
+    const sorting = (sortActive: string) => {
+      switch (sortActive) {
+        case 'priceDecrease':
+          return `_sort=price&_order=desc&`
+        case 'priceIncrease':
+          return `_sort=price&_order=asc&`
+        case 'pop':
+          return `_sort=rating&_order=desc&`
+        default:
+          return `_sort=id&_order=desc&`
+      }
+    }
+
+    return instance.get<ProductItemType[]>(
+      `admin/products/?${q + category + sorting(sortActive) + pagination}`
+    )
+  },
+
+  getProduct(id: number) {
+    return instance.get<ProductItemType>(`admin/products/${id}`)
+  },
   uploadProductImg(formData: any) {
     return instance.post('/upload', formData, {
       headers: {
@@ -57,21 +93,21 @@ export const productsAPI = {
     })
   },
   createProduct(data: ProductItemType) {
-    return instance.post<ProductItemType>(`products/`, data, {
+    return instance.post<ProductItemType>(`admin/products/`, data, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
   },
   updateProduct(data: ProductItemType) {
-    return instance.patch<ProductItemType>(`products/${data.id}`, data, {
+    return instance.patch<ProductItemType>(`admin/products/${data.id}`, data, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
   },
   deleteProduct(id: number) {
-    return instance.delete<ProductItemType>(`products/${id}`)
+    return instance.delete<ProductItemType>(`admin/products/${id}`)
   },
 }
 

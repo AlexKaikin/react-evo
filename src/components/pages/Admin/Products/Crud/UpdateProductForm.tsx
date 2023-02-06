@@ -1,12 +1,12 @@
 import { Formik, Form, Field } from 'formik'
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { productsAPI } from '../../../../../api/api'
+import { productsAdminAPI } from '../../../../../api/api'
 import { navigationSelector } from '../../../../../store/navigation/navigationSlice'
 import {
   ProductItemType,
   updateProduct,
-} from '../../../../../store/products/productsSlice'
+} from '../../../../../store/admin/products/productsAdminSlice'
 import { useAppDispatch } from '../../../../../store/store'
 import Modal from '../../../../common/Modal/Modal'
 
@@ -17,6 +17,8 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
   const [galleryUrl, setGalleryUrl] = useState<string[]>(props.item.galleryUrl)
   const imgRef = useRef(null)
   const galleryRef = useRef(null)
+  const [publishedChecked, setPublishedChecked] = useState(props.item.published)
+
   const categories = navigation
     .find((item) => item.url === '/products')
     ?.filter.slice(1)
@@ -26,7 +28,7 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
       const formData = new FormData()
       const file = e.target.files[0]
       formData.append('image', file)
-      const { data } = await productsAPI.uploadProductImg(formData)
+      const { data } = await productsAdminAPI.uploadProductImg(formData)
       setImgUrl(data.url)
     } catch (err) {
       console.warn(err)
@@ -53,7 +55,7 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
       const formData = new FormData()
       const file = e.target.files[0]
       formData.append('image', file)
-      const { data } = await productsAPI.uploadProductImg(formData)
+      const { data } = await productsAdminAPI.uploadProductImg(formData)
       setGalleryUrl((arr) => [...arr, `${data.url}`])
     } catch (err) {
       console.warn(err)
@@ -63,6 +65,10 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
 
   const galleryRemoveClick = (item: string) => {
     setGalleryUrl((arr) => arr.filter((i) => i !== item))
+  }
+
+  const publishedClick = () => {
+    setPublishedChecked(!publishedChecked)
   }
 
   const formState: ProductItemType = {
@@ -83,11 +89,13 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
       town: `${props.item.property.town}`,
       year: props.item.property.year,
     },
+    published: props.item.published,
   }
 
   const formSubmit = (values: ProductItemType) => {
     values.imgUrl = imgUrl
     values.galleryUrl = galleryUrl
+    values.published = publishedChecked
     dispatch(updateProduct(values))
     props.modaltoggle()
     props.updateComponent()
@@ -163,13 +171,27 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
               </div>
             </div>
 
+            <div className="form__full">
+              <div className="form__checkbox">
+                <Field
+                  type="checkbox"
+                  name="published"
+                  value={publishedChecked}
+                  checked={publishedChecked}
+                />
+                <label onClick={publishedClick} className="form-check-label">
+                  Опубликовать
+                </label>
+              </div>
+            </div>
+
             <div className="form__left">
               <h3>Обложка</h3>
 
               {imgUrl && (
                 <div className="img__item">
                   <div onClick={onClickRemoveImage} className="remove">
-                    Удалить
+                    <i className="bi bi-trash3"></i>
                   </div>
                   <img
                     src={(process.env.REACT_APP_SERVER_URL || '') + imgUrl}
@@ -199,7 +221,7 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
                         onClick={() => galleryRemoveClick(item)}
                         className="remove"
                       >
-                        Удалить
+                        <i className="bi bi-trash3"></i>
                       </div>
                       <img
                         src={(process.env.REACT_APP_SERVER_URL || '') + item}

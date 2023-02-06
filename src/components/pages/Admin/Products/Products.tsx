@@ -5,7 +5,7 @@ import {
   ProductItemType,
   productsSelector,
   setCurrentPage,
-} from '../../../../store/products/productsSlice'
+} from '../../../../store/admin/products/productsAdminSlice'
 import { useAppDispatch } from '../../../../store/store'
 import { navigationSelector } from '../../../../store/navigation/navigationSlice'
 import Filter from '../../../common/Filter/Filter'
@@ -117,8 +117,9 @@ const ProductItems: React.FC<PropsType> = (props) => {
     <div className="admin__items">
       <div className="admin__item item">
         <div className="item__title">Заголовок</div>
-        <div>Количество, шт.</div>
+        <div>Кол-во, шт.</div>
         <div>Цена, руб.</div>
+        <div>Опубли-кован</div>
         <div></div>
         <div></div>
       </div>
@@ -128,17 +129,18 @@ const ProductItems: React.FC<PropsType> = (props) => {
             <div className="item__title">{item.title}</div>
             <div>{item.quantity}</div>
             <div>{item.price}</div>
+            <div>{item.published ? 'Да' : 'Нет'}</div>
             <button
               onClick={() => updateProduct(item)}
               className="btn btn-light p10"
             >
-              Редактировать
+              <i className="bi bi-pencil-square"></i>
             </button>
             <button
               onClick={() => deleteProduct(item)}
               className="btn btn-light p10"
             >
-              Удалить
+              <i className="bi bi-trash3"></i>
             </button>
           </div>
         )

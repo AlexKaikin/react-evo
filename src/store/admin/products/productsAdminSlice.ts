@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { productsAPI } from '../../api/api'
-import { RootState } from '../store'
+import { productsAdminAPI } from '../../../api/api'
+import { RootState } from '../../store'
 
 const initialState: ProductsType = {
   productItems: [],
@@ -17,7 +17,7 @@ const initialState: ProductsType = {
   currentPage: 1, // текущая страница
 }
 
-export const productsSlice = createSlice({
+export const productsAdminSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
@@ -53,9 +53,9 @@ export const {
   setTotalItems,
   setCurrentPage,
   setQuery,
-} = productsSlice.actions
+} = productsAdminSlice.actions
 
-export default productsSlice.reducer
+export default productsAdminSlice.reducer
 
 // Selector
 export const productsSelector = (state: RootState) => state.products
@@ -67,7 +67,7 @@ export const getProducts =
   async (dispatch: Function, getState: Function) => {
     dispatch(setStatus('loading'))
     try {
-      const res = await productsAPI.getProducts(
+      const res = await productsAdminAPI.getProducts(
         getState().products.query,
         categoryActive,
         sortActive,
@@ -87,10 +87,41 @@ export const getProducts =
 export const getProduct = (id: number) => async (dispatch: Function) => {
   dispatch(setStatus('loading'))
   try {
-    const res = await productsAPI.getProduct(id)
+    const res = await productsAdminAPI.getProduct(id)
     dispatch(setProduct(res.data))
   } catch (err) {
     dispatch(setStatus('error'))
+    console.log(err)
+  }
+}
+
+// создать товар
+export const createProduct =
+  (data: ProductItemType) => async (dispatch: Function) => {
+    try {
+      const res = await productsAdminAPI.createProduct(data)
+      dispatch(setProduct(res.data))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+// обновить товар
+export const updateProduct =
+  (data: ProductItemType) => async (dispatch: Function) => {
+    try {
+      await productsAdminAPI.updateProduct(data)
+      dispatch(setProduct(data))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+// удалить товар
+export const deleteProduct = (id: number) => async (dispatch: Function) => {
+  try {
+    await productsAdminAPI.deleteProduct(id)
+  } catch (err) {
     console.log(err)
   }
 }
@@ -119,8 +150,8 @@ export type ProductItemType = {
   category: string
   rating: number
   property: PropertyType
-  text: string[],
-  published: boolean
+  text: string[]
+  published: boolean,
 }
 
 type PropertyType = {

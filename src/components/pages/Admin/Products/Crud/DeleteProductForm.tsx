@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteProduct } from '../../../../../store/products/productsSlice'
+import { deleteProduct } from '../../../../../store/admin/products/productsAdminSlice'
 import { useAppDispatch } from '../../../../../store/store'
 import Modal from '../../../../common/Modal/Modal'
 

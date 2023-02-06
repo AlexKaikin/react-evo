@@ -32,7 +32,7 @@ const CartItems: React.FC<PropsType> = (props) => {
               onClick={() => deleteProductClick(item.id)}
               className="delete__btn"
             >
-              <i className="bi bi-x-lg"></i>
+              <i className="bi bi-trash3"></i>
             </button>
           </div>
         </div>
