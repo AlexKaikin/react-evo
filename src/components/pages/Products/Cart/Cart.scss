@@ -144,3 +144,20 @@
     }
   }
 }
+
+.order-form {
+  .container {
+    max-width: 700px;
+    
+    .form {
+      .form__wrapper {
+        display: flex;
+        gap: 20px;
+
+        .form__column {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

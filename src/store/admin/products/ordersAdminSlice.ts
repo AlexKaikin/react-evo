@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ordersAPI } from '../../api/api'
-import { RootState } from '../store'
-import { CartItemType } from './storeSlice'
+import { ordersAPI } from '../../../api/api'
+import { CartItemType } from '../../products/storeSlice'
+import { RootState } from '../../store'
 
 const initialState: OrderType = {
   orderItems: [],
@@ -12,13 +12,21 @@ const initialState: OrderType = {
   currentPage: 1, // текущая страница
 }
 
-export const orderSlice = createSlice({
-  name: 'order',
+export const ordersAdminSlice = createSlice({
+  name: 'ordersAdmin',
   initialState,
   reducers: {
     setOrders: (state, action: PayloadAction<OrderItemType[]>) => {
       state.orderItems = action.payload
       state.status = 'success'
+    },
+    setUpdateOrder: (state, action: PayloadAction<OrderItemType>) => {
+      const newItem = action.payload
+      state.orderItems.splice(
+        state.orderItems.findIndex((item) => item.id === newItem.id),
+        1,
+        newItem
+      )
     },
     setStatus: (state, action: PayloadAction<string>) => {
       state.status = action.payload
@@ -34,25 +42,42 @@ export const orderSlice = createSlice({
 })
 
 // Action
-export const { setOrders, setStatus, setTotalItems, setCurrentPage } = orderSlice.actions
+export const {
+  setOrders,
+  setUpdateOrder,
+  setStatus,
+  setTotalItems,
+  setCurrentPage,
+} = ordersAdminSlice.actions
 
-export default orderSlice.reducer
+export default ordersAdminSlice.reducer
 
 // Selector
-export const orderSelector = (state: RootState) => state.order
+export const ordersAdminSelector = (state: RootState) => state.ordersAdmin
 
 // thunk
-export const getOrders = () => async (dispatch: Function) => {
+export const getOrdersAdmin = () => async (dispatch: Function) => {
   dispatch(setStatus('loading'))
   try {
-    const res = await ordersAPI.getOrders()
+    const res = await ordersAPI.getOrdersAdmin()
     dispatch(setOrders(res.data))
     res.headers['x-total-count'] &&
-        dispatch(setTotalItems(res.headers['x-total-count']))
+      dispatch(setTotalItems(res.headers['x-total-count']))
   } catch (err) {
     console.warn(err)
   }
 }
+
+export const updateOrder =
+  (value: OrderItemType) => async (dispatch: Function) => {
+    try {
+      await ordersAPI.updateOrder(value)
+      dispatch(setUpdateOrder(value))
+      return 'ok'
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
 export type OrderType = {
   orderItems: OrderItemType[]

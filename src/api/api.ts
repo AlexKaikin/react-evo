@@ -131,12 +131,15 @@ export const authAPI = {
 
 export const ordersAPI = {
   getOrders() {
-    return instance.get<any>(`orders`)
+    return instance.get<OrderItemType[]>(`orders`)
   },
   getOrdersAdmin() {
-    return instance.get<any>(`admin/orders`)
+    return instance.get<OrderItemType[]>(`admin/orders`)
   },
   createOrder(values: OrderItemType) {
-    return instance.post<any>(`orders`, values)
-  }
+    return instance.post<OrderItemType>(`orders`, values)
+  },
+  updateOrder(data: OrderItemType) {
+    return instance.patch<OrderItemType>(`admin/orders/${data.id}`, data)
+  },
 }

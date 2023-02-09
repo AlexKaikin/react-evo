@@ -33,53 +33,60 @@ const OrderForm: React.FC<PropsType> = ({ orderFormRef }) => {
   return (
     <div ref={orderFormRef} id="order-form" className="section order-form">
       <div className="container">
-        <div className="section__title">Данные получателя</div>
         <Formik
           initialValues={formState}
           validate={formValidate}
           onSubmit={formSubmit}
         >
           <Form className="form">
-            <div className="form__field">
-              <label>Фамилия</label>
-              <Field type="text" name="surname" />
-            </div>
+            <div className='form__wrapper'>
+              <div className='form__column'>
+                <div className="section__title">Данные получателя</div>
 
-            <div className="form__field">
-              <label>Имя</label>
-              <Field type="text" name="name" />
-            </div>
+                <div className="form__field">
+                  <label>Фамилия</label>
+                  <Field type="text" name="surname" />
+                </div>
 
-            <div className="form__field">
-              <label>Отчество</label>
-              <Field type="text" name="middleName" />
-            </div>
+                <div className="form__field">
+                  <label>Имя</label>
+                  <Field type="text" name="name" />
+                </div>
 
-            <div className="section__title">Адрес доставки</div>
+                <div className="form__field">
+                  <label>Отчество</label>
+                  <Field type="text" name="middleName" />
+                </div>
+              </div>
 
-            <div className="form__field">
-              <label>Область/край</label>
-              <Field type="text" name="region" />
-            </div>
+              <div className='form__column'>
+                <div className="section__title">Адрес доставки</div>
 
-            <div className="form__field">
-              <label>Населённый пункт</label>
-              <Field type="text" name="city" />
-            </div>
+                <div className="form__field">
+                  <label>Область/край</label>
+                  <Field type="text" name="region" />
+                </div>
 
-            <div className="form__field">
-              <label>Улица</label>
-              <Field type="text" name="street" />
-            </div>
+                <div className="form__field">
+                  <label>Населённый пункт</label>
+                  <Field type="text" name="city" />
+                </div>
 
-            <div className="form__field">
-              <label>Дом и квартира</label>
-              <Field type="text" name="home" />
-            </div>
+                <div className="form__field">
+                  <label>Улица</label>
+                  <Field type="text" name="street" />
+                </div>
 
-            <div className="form__field">
-              <label>Индекс</label>
-              <Field type="text" name="index" />
+                <div className="form__field">
+                  <label>Дом и квартира</label>
+                  <Field type="text" name="home" />
+                </div>
+
+                <div className="form__field">
+                  <label>Индекс</label>
+                  <Field type="text" name="index" />
+                </div>
+              </div>
             </div>
 
             <button type="submit" className="form__btn">

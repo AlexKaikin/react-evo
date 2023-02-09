@@ -165,6 +165,14 @@
   }
 }
 
+.order__status {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 40px;
+
+}
+
 .cart__btn {
   display: flex;
   justify-content: flex-end;

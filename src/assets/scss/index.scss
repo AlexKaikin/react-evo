@@ -171,7 +171,7 @@ p {
       var(--primaryDark) 0%,
       var(--primary) 100%
     );
-    border: 2px solid white;
+    border: 2px solid var(--bg-color);
     color: white;
     padding: 20px;
     border-radius: 10px;
@@ -179,7 +179,7 @@ p {
 
     &:hover {
       background-color: var(--primary);
-      border: 2px solid white;
+      border: 2px solid var(--bg-color);
       box-shadow: 0 0 0 3px var(--primary);
     }
   }
@@ -189,7 +189,6 @@ p {
   display: flex;
   gap: 20px;
 }
-
 
 
 .hidden {

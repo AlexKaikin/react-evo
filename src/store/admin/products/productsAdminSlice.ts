@@ -18,7 +18,7 @@ const initialState: ProductsType = {
 }
 
 export const productsAdminSlice = createSlice({
-  name: 'products',
+  name: 'productsAdmin',
   initialState,
   reducers: {
     setProducts: (state, action: PayloadAction<ProductItemType[]>) => {
@@ -58,7 +58,7 @@ export const {
 export default productsAdminSlice.reducer
 
 // Selector
-export const productsSelector = (state: RootState) => state.products
+export const productsSelector = (state: RootState) => state.productsAdmin
 
 // thunk
 // загрузка товаров

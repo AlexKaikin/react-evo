@@ -9,6 +9,7 @@ import orderReducer from './products/orderSlice'
 import themeReducer from './theme/themeSlice'
 
 import productsAdminReducer from './admin/products/productsAdminSlice'
+import ordersAdminReducer from './admin/products/ordersAdminSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +19,9 @@ export const store = configureStore({
     auth: authReducer,
     order: orderReducer,
     theme: themeReducer,
+
     productsAdmin: productsAdminReducer,
+    ordersAdmin: ordersAdminReducer,
   },
 })
 
