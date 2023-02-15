@@ -34,7 +34,8 @@ export const orderSlice = createSlice({
 })
 
 // Action
-export const { setOrders, setStatus, setTotalItems, setCurrentPage } = orderSlice.actions
+export const { setOrders, setStatus, setTotalItems, setCurrentPage } =
+  orderSlice.actions
 
 export default orderSlice.reducer
 
@@ -42,17 +43,21 @@ export default orderSlice.reducer
 export const orderSelector = (state: RootState) => state.order
 
 // thunk
-export const getOrders = () => async (dispatch: Function) => {
-  dispatch(setStatus('loading'))
-  try {
-    const res = await ordersAPI.getOrders()
-    dispatch(setOrders(res.data))
-    res.headers['x-total-count'] &&
+export const getOrders =
+  (currentPage: number) => async (dispatch: Function) => {
+    dispatch(setStatus('loading'))
+    try {
+      const res = await ordersAPI.getOrders(
+        currentPage,
+        initialState.limitItems
+      )
+      dispatch(setOrders(res.data))
+      res.headers['x-total-count'] &&
         dispatch(setTotalItems(res.headers['x-total-count']))
-  } catch (err) {
-    console.warn(err)
+    } catch (err) {
+      console.warn(err)
+    }
   }
-}
 
 export type OrderType = {
   orderItems: OrderItemType[]

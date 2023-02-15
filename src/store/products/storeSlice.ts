@@ -68,7 +68,6 @@ export const createOrder =
   (values: OrderItemType) => async (dispatch: Function, getState: Function) => {
     values.cartItems = getState().store.cartItems
     values.totalCost = getState().store.totalCost
-    console.log(values)
     try {
       await ordersAPI.createOrder(values)
     } catch (err) {

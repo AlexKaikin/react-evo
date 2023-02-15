@@ -138,6 +138,7 @@ interface ProductsType {
 }
 
 export type ProductItemType = {
+  _id: string
   id: number
   title: string
   imgUrl: string

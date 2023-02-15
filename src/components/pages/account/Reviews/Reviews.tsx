@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getOrders, orderSelector, setCurrentPage } from '../../../../store/products/orderSlice'
+import { getReviewsProfile, reviewSelector, setCurrentPage } from '../../../../store/products/reviewsSlice'
 import { useAppDispatch } from '../../../../store/store'
 import Pagination from '../../../common/Pagination/Pagination'
 import Aside from '../../../layout/Aside/profile/Aside'
-import OrderItems from './OrderItems/OrderItems'
-import './Orders.scss'
+import ReviewItems from './ReviewItems/ReviewItems'
+import './Reviews.scss'
 
-const Orders: React.FC = (props) => {
+const Reviews: React.FC = (props) => {
   const dispatch = useAppDispatch()
-  const {orderItems, status, pagesCount, currentPage} = useSelector(orderSelector)
+  const {reviewItems, pagesCount, currentPage} = useSelector(reviewSelector)
   const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
   
   useEffect(() => {
-    dispatch(getOrders(currentPage))
+    dispatch(getReviewsProfile(currentPage))
   }, [dispatch, currentPage])
   return (
     <div className="two">
       <Aside />
       <div className="section orders">
         <div className="container">
-          <OrderItems orderItems={orderItems} status={status} />
+          <ReviewItems items={reviewItems} />
           <Pagination
             pagesCount={pagesCount}
             currentPage={currentPage}
@@ -32,4 +32,4 @@ const Orders: React.FC = (props) => {
   )
 }
 
-export default Orders
+export default Reviews

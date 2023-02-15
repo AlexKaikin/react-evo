@@ -72,6 +72,7 @@ const CreateProductForm: React.FC<PropsType> = (props) => {
     ?.filter.slice(1)
   const productId = new Date().getTime()
   const formState: ProductItemType = {
+    _id: '',
     id: productId,
     title: '',
     category: 'Красные',

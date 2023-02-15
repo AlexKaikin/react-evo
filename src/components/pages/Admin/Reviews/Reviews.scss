@@ -1,0 +1,52 @@
+.two {
+  display: flex;
+  gap: 20px;
+
+  .admin.reviews {
+    .container {
+      .review__items {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        margin-bottom: 20px;
+        overflow: auto;
+        padding: 3px;
+
+        .review__item {
+          display: grid;
+          grid-auto-columns: 10fr;
+          grid-template-columns: 3fr 2fr 1fr 2fr 1fr 1fr;
+          grid-template-rows: 1fr;
+          align-items: center;
+          gap: 20px;
+
+          button {
+            font-weight: bold;
+          }
+        }
+      }
+
+      .container {
+        max-width: 700px;
+        padding: 40px 0;
+      }
+    }
+  }
+}
+
+.review-full.items {
+  .item {
+    margin-bottom: 10px;
+
+    a {
+      border-bottom: 1px solid var(--text-color);
+    }
+  }
+
+  .review__status {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 40px;
+  }
+}

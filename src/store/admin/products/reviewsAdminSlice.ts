@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ordersAPI } from '../../../api/api'
-import { CartItemType } from '../../products/storeSlice'
+import { reviewsAPI } from '../../../api/api'
 import { RootState } from '../../store'
 
-const initialState: OrderType = {
-  orderItems: [],
+const initialState: ReviewsType = {
+  reviewItems: [],
   status: 'loading', // loading, success, error
   pagesCount: 0, // количество страниц товаров
   totalItems: 0, // количество товаров на сервере
@@ -12,18 +11,18 @@ const initialState: OrderType = {
   currentPage: 1, // текущая страница
 }
 
-export const ordersAdminSlice = createSlice({
-  name: 'ordersAdmin',
+export const reviewsAdminSlice = createSlice({
+  name: 'reviewsAdmin',
   initialState,
   reducers: {
-    setOrders: (state, action: PayloadAction<OrderItemType[]>) => {
-      state.orderItems = action.payload
+    setReviews: (state, action: PayloadAction<ReviewItemType[]>) => {
+      state.reviewItems = action.payload
       state.status = 'success'
     },
-    setUpdateOrder: (state, action: PayloadAction<OrderItemType>) => {
+    setUpdateReview: (state, action: PayloadAction<ReviewItemType>) => {
       const newItem = action.payload
-      state.orderItems.splice(
-        state.orderItems.findIndex((item) => item.id === newItem.id),
+      state.reviewItems.splice(
+        state.reviewItems.findIndex((item) => item.id === newItem.id),
         1,
         newItem
       )
@@ -43,28 +42,28 @@ export const ordersAdminSlice = createSlice({
 
 // Action
 export const {
-  setOrders,
-  setUpdateOrder,
+  setReviews,
+  setUpdateReview,
   setStatus,
   setTotalItems,
   setCurrentPage,
-} = ordersAdminSlice.actions
+} = reviewsAdminSlice.actions
 
-export default ordersAdminSlice.reducer
+export default reviewsAdminSlice.reducer
 
 // Selector
-export const ordersAdminSelector = (state: RootState) => state.ordersAdmin
+export const reviewsAdminSelector = (state: RootState) => state.reviewsAdmin
 
 // thunk
-export const getOrdersAdmin =
+export const getReviewsAdmin =
   (currentPage: number) => async (dispatch: Function) => {
     dispatch(setStatus('loading'))
     try {
-      const res = await ordersAPI.getOrdersAdmin(
+      const res = await reviewsAPI.getReviewsAdmin(
         currentPage,
         initialState.limitItems
       )
-      dispatch(setOrders(res.data))
+      dispatch(setReviews(res.data))
       res.headers['x-total-count'] &&
         dispatch(setTotalItems(res.headers['x-total-count']))
     } catch (err) {
@@ -72,27 +71,27 @@ export const getOrdersAdmin =
     }
   }
 
-export const updateOrder =
-  (value: OrderItemType) => async (dispatch: Function) => {
+export const updateReview =
+  (value: ReviewItemType) => async (dispatch: Function) => {
     try {
-      await ordersAPI.updateOrder(value)
-      dispatch(setUpdateOrder(value))
+      await reviewsAPI.updateReview(value)
+      dispatch(setUpdateReview(value))
       return 'ok'
     } catch (err) {
       console.warn(err)
     }
   }
 
-export const deleteOrder = (id: number) => async (dispatch: Function) => {
+export const deleteReview = (id: number) => async (dispatch: Function) => {
   try {
-    await ordersAPI.deleteOrder(id)
+    await reviewsAPI.deleteReview(id)
   } catch (err) {
     console.log(err)
   }
 }
 
-export type OrderType = {
-  orderItems: OrderItemType[]
+export type ReviewsType = {
+  reviewItems: ReviewItemType[]
   status: string
   pagesCount: number
   totalItems: number
@@ -100,19 +99,20 @@ export type OrderType = {
   currentPage: number
 }
 
-export type OrderItemType = {
-  _id?: number
+export type ReviewItemType = {
+  _id: string
   id: number
-  name: string
-  surname: string
-  middleName: string
-  region: string
-  city: string
-  street: string
-  home: string
-  index: number
-  cartItems: CartItemType[]
-  totalCost: number
-  status: string
+  rating: number
+  body: string
+  published: string
   created: string
+  updated: string
+  product: string | ProductType
+  user?: any
+}
+
+export type ProductType = {
+  _id: string
+  title: string
+  id: number
 }

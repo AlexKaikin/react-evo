@@ -16,8 +16,10 @@ const Products = React.lazy(
   Register = React.lazy(() => import('../../pages/account/Register/Register')),
   Profile = React.lazy(() => import('../../pages/account/Profile/Profile')),
   Orders = React.lazy(() => import('../../pages/account/Orders/Orders')),
+  Reviews = React.lazy(() => import('../../pages/account/Reviews/Reviews')),
   Dashboard = React.lazy(() => import('../../pages/Admin/Dashboard/Dashboard')),
   AdminProducts = React.lazy(() => import('../../pages/Admin/Products/Products')),
+  AdminReviews = React.lazy(() => import('../../pages/Admin/Reviews/Reviews')),
   AdminOrders = React.lazy(() => import('../../pages/Admin/Orders/Orders')),
   AdminMessages = React.lazy(() => import('../../pages/Admin/Messages/Messages')),
   NotFound = React.lazy(() => import('../../pages/NotFound/NotFound'))
@@ -42,11 +44,14 @@ const Main: React.FC = (props) => {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          
           <Route path="/profile" element={<Profile />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/profile/orders" element={<Orders />} />
+          <Route path="/profile/reviews" element={<Reviews />} />
 
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/admin/messages" element={<AdminMessages />} />
 

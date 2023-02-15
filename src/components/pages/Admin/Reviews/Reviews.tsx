@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {
-  getOrdersAdmin,
-  ordersAdminSelector,
+  getReviewsAdmin,
+  reviewsAdminSelector,
   setCurrentPage,
-} from '../../../../store/admin/products/ordersAdminSlice'
+} from '../../../../store/admin/products/reviewsAdminSlice'
 import { useAppDispatch } from '../../../../store/store'
 import Pagination from '../../../common/Pagination/Pagination'
 import Aside from '../../../layout/Aside/admin/Aside'
-import OrderItems from './OrderItems/OrderItems'
-import './Orders.scss'
+import ReviewItems from './ReviewItems/ReviewItems'
+import './Reviews.scss'
 
-const Orders: React.FC = (props) => {
+const Reviews: React.FC = (props) => {
   const dispatch = useAppDispatch()
-  const { orderItems, pagesCount, currentPage } =
-    useSelector(ordersAdminSelector)
+  const { reviewItems, pagesCount, currentPage } =
+    useSelector(reviewsAdminSelector)
   const currentPageChange = (number: number) => dispatch(setCurrentPage(number))
 
   const [update, setUpdate] = useState(false)
   const updateComponent = () => setUpdate(true)
 
   useEffect(() => {
-    dispatch(getOrdersAdmin(currentPage))
+    dispatch(getReviewsAdmin(currentPage))
     window.scrollTo(0, 0)
     setUpdate(false)
   }, [dispatch, currentPage, update])
+
   return (
     <div className="two">
       <Aside />
-      <div className="section admin orders">
+      <div className="section admin reviews">
         <div className="container">
-          <OrderItems
-            orderItems={orderItems}
-            updateComponent={updateComponent}
-          />
+          <ReviewItems items={reviewItems} updateComponent={updateComponent} />
           <Pagination
             pagesCount={pagesCount}
             currentPage={currentPage}
@@ -45,4 +43,4 @@ const Orders: React.FC = (props) => {
   )
 }
 
-export default Orders
+export default Reviews

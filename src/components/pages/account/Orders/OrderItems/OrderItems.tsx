@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { OrderItemType } from '../../../../../store/products/orderSlice'
 import OrderFull from '../OrderFull/OrderFull'
 
-const OrderItems: React.FC<PropsType> = ({ orderItems }) => {
+const OrderItems: React.FC<PropsType> = ({ orderItems, status }) => {
   const [orderShow, setOrderShow] = useState<OrderItemType | null>(null)
   const modaltoggle = () => setOrderShow(null)
-  if (!orderItems.length) return <div>Заказов нет</div>
+  if (status === 'success' && !orderItems.length) return <div>Заказов нет</div>
 
   return (
     <div>
@@ -39,4 +39,5 @@ export default OrderItems
 
 type PropsType = {
   orderItems: OrderItemType[]
+  status: string
 }

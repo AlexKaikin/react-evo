@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux'
 import { getLocalStorage } from '../../../../../utils/utils'
 import { useAppDispatch } from '../../../../../store/store'
 import { ProductItemType } from '../../../../../store/products/productsSlice'
+import Review from './Reviews/Reviews'
+import Rating from '../../../../common/Rating/Rating'
 
 const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
   const { compareItems, favoritesItems } = useSelector(storeSelector) // получить товары для сранения, избранные
@@ -150,15 +152,6 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
     }, 5000)
   }
 
-  // рейтинг товара
-  let ratingStarFill: string[] = [] // полные звёзды
-  let ratingStar: string[] = [] // пустые звезды
-  if (productItem.rating > 0) {
-    ratingStarFill = Array(productItem.rating).fill('ratingStarFill')
-    if (productItem.rating < 5)
-      ratingStar = Array(5 - productItem.rating).fill('ratingStar')
-  }
-
   // Большая картинка товара
   const [imgActive, setImgActive] = useState(productItem.imgUrl)
 
@@ -225,14 +218,7 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
             </button>
 
             <div className="info__rating">
-              {ratingStarFill.length > 0 &&
-                ratingStarFill.map((item, i) => (
-                  <i key={i} className="bi bi-star-fill"></i>
-                ))}
-              {ratingStar.length > 0 &&
-                ratingStar.map((item, i) => (
-                  <i key={i} className="bi bi-star"></i>
-                ))}
+              <Rating number={productItem.rating} />
             </div>
           </div>
 
@@ -322,7 +308,7 @@ const FullProduct: React.FC<FullProductPropsType> = ({ productItem }) => {
                 </div>
               )}
 
-              {tabActive === 3 && 'Отзывов нет'}
+              {tabActive === 3 && (<Review product_Id={productItem._id} />)}
             </div>
           </div>
         </div>

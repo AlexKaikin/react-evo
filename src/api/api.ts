@@ -2,6 +2,7 @@ import axios from 'axios'
 import { LoginType } from '../store/account/authSlice'
 import { OrderItemType } from '../store/products/orderSlice'
 import { ProductItemType } from '../store/products/productsSlice'
+import { ReviewItemType } from '../store/products/reviewsSlice'
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL + '/',
@@ -49,7 +50,6 @@ export const productsAPI = {
   getProduct(id: number) {
     return instance.get<ProductItemType>(`products/${id}`)
   },
-  
 }
 
 export const productsAdminAPI = {
@@ -130,16 +130,49 @@ export const authAPI = {
 }
 
 export const ordersAPI = {
-  getOrders() {
-    return instance.get<OrderItemType[]>(`orders`)
+  getOrders(currentPage: number, limitItems: number) {
+    const pagination = `_page=${currentPage}&_limit=${limitItems}`
+    return instance.get<OrderItemType[]>(`orders?${pagination}`)
   },
-  getOrdersAdmin() {
-    return instance.get<OrderItemType[]>(`admin/orders`)
+  getOrdersAdmin(currentPage: number, limitItems: number) {
+    const pagination = `_page=${currentPage}&_limit=${limitItems}`
+    return instance.get<OrderItemType[]>(`admin/orders?${pagination}`)
   },
   createOrder(values: OrderItemType) {
     return instance.post<OrderItemType>(`orders`, values)
   },
   updateOrder(data: OrderItemType) {
     return instance.patch<OrderItemType>(`admin/orders/${data.id}`, data)
+  },
+  deleteOrder(id: number) {
+    return instance.delete<OrderItemType>(`admin/orders/${id}`)
+  },
+}
+
+export const reviewsAPI = {
+  getReviews(product_Id: string) {
+    //const pagination = `_page=${currentPage}&_limit=${limitItems}`
+    return instance.get<ReviewItemType[]>(
+      `products/${product_Id}/reviews`
+    )
+  },
+  getReviewsProfile(currentPage: number, limitItems: number) {
+    const pagination = `_page=${currentPage}&_limit=${limitItems}`
+    return instance.get<ReviewItemType[]>(
+      `profile/reviews?${pagination}`
+    )
+  },
+  getReviewsAdmin(currentPage: number, limitItems: number) {
+    const pagination = `_page=${currentPage}&_limit=${limitItems}`
+    return instance.get<ReviewItemType[]>(`admin/reviews?${pagination}`)
+  },
+  createReview(values: ReviewItemType) {
+    return instance.post<ReviewItemType>(`reviews`, values)
+  },
+  updateReview(data: ReviewItemType) {
+    return instance.patch<ReviewItemType>(`admin/reviews/${data.id}`, data)
+  },
+  deleteReview(id: number) {
+    return instance.delete<ReviewItemType>(`admin/reviews/${id}`)
   },
 }

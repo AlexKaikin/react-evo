@@ -72,6 +72,7 @@ const UpdateProductForm: React.FC<PropsType> = (props) => {
   }
 
   const formState: ProductItemType = {
+    _id: props.item._id,
     id: props.item.id,
     title: `${props.item.title}`,
     category: `${props.item.category}`,
