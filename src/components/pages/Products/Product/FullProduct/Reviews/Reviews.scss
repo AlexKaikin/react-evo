@@ -4,6 +4,12 @@
     margin-bottom: 20px;
   }
 
+  .not-auth {
+    a {
+      border-bottom: 1px solid var(--text-color);
+    }
+  }
+
   .reviews__items {
     margin-top: 40px;
 

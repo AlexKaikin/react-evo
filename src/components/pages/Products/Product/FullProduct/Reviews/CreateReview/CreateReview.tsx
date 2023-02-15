@@ -6,8 +6,12 @@ import {
   ReviewItemType,
 } from '../../../../../../../store/products/reviewsSlice'
 import Modal from '../../../../../../common/Modal/Modal'
+import { useSelector } from 'react-redux'
+import { authSelector } from '../../../../../../../store/account/authSlice'
+import { Link } from 'react-router-dom'
 
 const CreateReview: React.FC<PropsType> = ({ product_Id }) => {
+  const { data } = useSelector(authSelector)
   const [modalShow, setModalShow] = useState(false)
   const modaltoggle2 = () => setModalShow(!modalShow)
 
@@ -23,12 +27,20 @@ const CreateReview: React.FC<PropsType> = ({ product_Id }) => {
   }
 
   const dispatch = useAppDispatch()
-  const formSubmit = async (values: ReviewItemType, {resetForm}: any ) => {
+  const formSubmit = async (values: ReviewItemType, { resetForm }: any) => {
     const res = await dispatch(createReview(values))
     res === 'ok' && setModalShow(true)
     console.log(resetForm)
     resetForm()
   }
+
+  if (!data)
+    return (
+      <div className='not-auth'>
+        Чтобы написать отзыв нужно авторизоваться. <Link to="/login">Вход</Link>{' '}
+        | <Link to="/register">Регистрация</Link>
+      </div>
+    )
 
   return (
     <>
@@ -61,7 +73,9 @@ const CreateReview: React.FC<PropsType> = ({ product_Id }) => {
         </Form>
       </Formik>
       {modalShow && (
-        <Modal title='' modaltoggle={modaltoggle2}>Отзыв отправлен на модерации</Modal>
+        <Modal title="" modaltoggle={modaltoggle2}>
+          Отзыв отправлен на модерации
+        </Modal>
       )}
     </>
   )

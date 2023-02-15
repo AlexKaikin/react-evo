@@ -16,6 +16,8 @@ const ReviewItems: React.FC<PropsType> = ({ product_Id }) => {
     dispatch(getReviews(product_Id))
   }, [dispatch, product_Id])
 
+  if(!reviewItems.length) return <div>Отзывов нет</div>
+
   return (
     <div className="reviews__items">
       {reviewItems.map((item) => (
